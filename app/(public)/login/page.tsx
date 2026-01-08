@@ -1,64 +1,94 @@
+// src/app/(public)/login/page.tsx
 "use client";
 
 import Image from "next/image";
 import { useState } from "react";
-import imgSystemLogo from "../../../public/brand/secp_logo_sistema.png"
-import imgcanto from "../../../public/brand/secp_canto_login.png"
-
 
 export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
 
     function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        // TODO: integrar com seu provedor (LDAP/AD/SSO/NextAuth/auth.js etc.)
     }
 
     return (
-        <main className="min-h-screen bg-white/85 relative overflow-hidden">
-            {/* Glow de fundo (somente paleta SECP em opacidade) */}
-            <div className="pointer-events-none absolute inset-0">
-                <div className="absolute -top-40 left-1/2 h-130 w-245 -translate-x-1/2 rounded-full blur-3xl bg-secp-gray/10" />
-                <div className="absolute top-24 left-1/2 h-80 w-180 -translate-x-1/2 rounded-full blur-3xl bg-secp-blu/10" />
+        <main className="relative min-h-dvh overflow-hidden bg-secp-blue">
+            
+            {/* Fundo suave (opcional) */}
+            <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-white via-white to-slate-50 mt-15" />
+            {/* Ondas (canto inferior esquerdo) */}
+            <div className="pointer-events-none absolute bottom-0 right-0 w-480 max-w-[140vw]">
+                {/* Camada 1 (azul) */}
+                <svg
+                    className="absolute bottom-0 left-0 h-85 w-full opacity-95"
+                    viewBox="0 0 1440 320"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                >
+                    <path
+                        fill="#0B5FA5"
+                        d="M0,300L48,266.7C96,245,192,203,288,197.3C384,192,480,224,576,240C672,256,768,256,864,245.3C960,235,1056,213,1152,202.7C1248,192,1344,192,1392,192L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+                    />
+                </svg>
+
+                {/* Camada 2 (cinza) */}
+                <svg
+                    className="absolute bottom-0 left-0 h-70 w-full opacity-70"
+                    viewBox="0 0 1440 320"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                >
+                    <path
+                        fill="#9E9E9E"
+                        d="M0,320L48,304C96,288,192,256,288,240C384,224,480,224,576,229.3C672,235,768,245,864,234.7C960,224,1056,192,1152,186.7C1248,181,1344,203,1392,213.3L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+                    />
+                </svg>
+
+                {/* Camada 3 (verde) */}
+                <svg
+                    className="relative h-65 w-full opacity-90"
+                    viewBox="0 0 1440 300"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                >
+                    <path
+                        fill="#2E7D32"
+                        d="M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,170.7C672,192,768,256,864,272C960,288,1056,256,1152,240C1248,224,1344,224,1392,224L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+                    />
+                </svg>
             </div>
 
-            {/* Header estilo Azure */}
-            {/* <HeaderAzure /> */}
+            {/* Conteúdo */}
+            <section className="relative mx-auto flex min-h-dvh max-w-6xl items-center justify-center px-6  ">
+                <div className="w-full max-w-md">
+                    {/* Logo */}
+                    <div className="mb-8 flex justify-center">
+                        <Image
+                            src="/brand/secp-logo.png"
+                            alt="SECP"
+                            width={220}
+                            height={220}
+                            priority
+                            className="h-auto w-55"
+                        />
+                    </div>
 
-            {/* Faixas canto inferior direito (mockup) */}
-            <CornerBands />
-
-            <div className="relative mx-auto flex mt-12   max-w-275 flex-col items-center justify-center px-4">
-                {/* Logo com tagline (central, acima do card) */}
-                <div className=" flex flex-col items-center">
-                    <Image
-                        src={imgSystemLogo}
-                        alt="SECP — Sistema Eletrônico de Controle de Ponto"
-                        width={520}
-                        height={80}
-                        priority
-                        className="h-auto w-80 sm:w-105 md:w-130"
-
-                    />
-
-                </div>
-
-                {/* Card */}
-                <section className="w-full mt-12 max-w-130 rounded-2xl border border-secp-gray shadow-2xl bg-white/30 shadow-soft">
-                    <div className="px-7 pt-7 pb-6">
-                        <h1 className="text-lg font-semibold text-secp-blue">Acesso ao sistema</h1>
-                        <p className=" text-sm text-secp-blue/70">
-                            Informe suas credenciais para continuar.
+                    {/* Card */}
+                    <div className="rounded-2xl border border-slate-200 bg-white/90 p-6 shadow-lg backdrop-blur">
+                        <h1 className="text-center text-xl font-semibold tracking-tight text-slate-900">
+                            Acesso ao sistema
+                        </h1>
+                        <p className="mt-1 text-center text-sm text-slate-500">
+                            Entre com suas credenciais institucionais.
                         </p>
 
-                        <form className="mt-6 space-y-4" onSubmit={onSubmit}>
+                        <form className="mt-6 space-y-4">
                             <Field
                                 label="Matrícula"
                                 placeholder="Digite sua matrícula"
                                 icon={<UserIcon />}
                                 autoComplete="username"
                             />
-
                             <Field
                                 label="Senha"
                                 placeholder="Digite sua senha"
@@ -75,77 +105,44 @@ export default function LoginPage() {
                                     </button>
                                 }
                             />
-                             <div className="flex items-center justify-between rounded-b-2xl  px-3 py-0 -mt-3">
-                        <span className="text-xs text-zinc-700">
-                            Dica: utilize a mesma senha usada para acessar o SEI.
-                        </span>
-                       
-                    </div>
+
+                            <div className="flex items-center justify-between px-3 -mt-2 py-1">
+                                <span className="text-xs text-secp-gray">
+                                    Dica: utilize a mesma senha usada para acessar o SEI.
+                                </span>
+                                
+                            </div>
 
                             <button
                                 type="submit"
-                                className="mt-2 w-full rounded-xl bg-secp-green px-4 py-3 text-base font-semibold text-white shadow-sm
-                           hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-secp-green/40 focus:ring-offset-2"
+                                className="h-11 w-full rounded-xl bg-[#0B5FA5] font-semibold text-white shadow-sm transition hover:brightness-110 focus:outline-none focus:ring-4 focus:ring-[#0B5FA5]/25"
                             >
                                 Entrar
                             </button>
 
-                          
+                            <div className="flex items-center justify-between text-xs text-slate-500">
+                                <span className="inline-flex items-center gap-2">
+                                    <span className="h-2 w-2 rounded-full bg-[#2E7D32]" />
+                                    Ambiente institucional
+                                </span>
+                                <a href="#" className="text-xs font-medium text-secp-blue hover:underline">
+                                    Esqueci minha senha
+                                </a>
+                            </div>
                         </form>
                     </div>
 
-                    <div className="flex items-center justify-end rounded-b-2xl border-t border-secp-gray/20 bg-white px-7 py-4">
-                        
-                        <a href="#" className="text-xs font-medium text-secp-blue hover:underline">
-                            Ajuda e suporte
-                        </a>
-                    </div>
-                </section>
-
-                <footer className="mt-48 text-center text-xs text-secp-gray">
-                    © {new Date().getFullYear()} SECP — Sistema Eletrônico de Controle de Ponto.
-                </footer>
-            </div>
+                    {/* Rodapé discreto */}
+                    <p className="mt-4 text-center text-xs text-slate-400 ">
+                        © {new Date().getFullYear()} SECP — Sistema Eletrônico de Controle de Ponto 
+                    </p>
+                </div>
+            </section>
         </main>
     );
 }
 
-/* ================= HEADER ================= */
-/* imgSystemLogo */
-function HeaderAzure() {
-    return (
-        <header className="relative z-10 h-22 w-full bg-secp-blue">
-            <div className="mx-auto flex h-full max-w-275 items-center justify-between px-4">
-                <div className="flex items-center gap-3 mt-8">
-                    {/* Ícone pequeno no header (fallback).
-             Se preferir, use também a logo pequena aqui: /brand/secp-mark.png */}
-                    <Image
-                        src={imgSystemLogo}
-                        alt="SECP"
-                        width={580}
-                        height={180}
-                        priority
 
-                    // className="h-30 w-100"
-                    />
-
-
-                </div>
-
-                <nav className="flex items-center gap-3">
-                    <a href="#" className="rounded-lg px-3 py-2 text-sm font-medium text-white/90 hover:bg-white/10">
-                        Ajuda
-                    </a>
-                    <a href="#" className="rounded-lg px-3 py-2 text-sm font-medium text-white/90 hover:bg-white/10">
-                        Suporte
-                    </a>
-                </nav>
-            </div>
-
-            <div className="absolute bottom-0 left-0 right-0 h-px bg-white/10" />
-        </header>
-    );
-}
 
 /* ================= FORM FIELD ================= */
 
@@ -178,28 +175,6 @@ function Field(props: {
     );
 }
 
-/* ================= DECOR ================= */
-
-function CornerBands() {
-    return (
-        <div className="pointer-events-none absolute bottom-0 right-0 h-65 w-130 overflow-hidden">
-            {/* <div className="absolute -botton-55 -right-55 h-105 w-180 rotate-[-18deg] rounded-[80px] bg-secp-blue" />
-      <div className="absolute -bottom-37.5 -right-40 h-105 w-180 rotate-[-18deg] rounded-[80px] bg-secp-gray/70" />
-      <div className="absolute -bottom-40 -right-70 h-105 w-180 rotate-[-18deg] rounded-[80px] bg-secp-green/80" /> */}
-            <Image
-                src={imgcanto}
-                alt="canto"
-                width={130}
-                height={100}
-                priority
-                className="h-auto w-80 sm:w-105 md:w-130"
-
-            />
-        </div>
-    );
-}
-
-/* ================= ICONS ================= */
 
 function UserIcon() {
     return (
@@ -215,6 +190,8 @@ function UserIcon() {
         </svg>
     );
 }
+
+
 
 function LockIcon() {
     return (
