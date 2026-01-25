@@ -12,3 +12,153 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String?  @unique
+  emailVerified DateTime?
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  accounts  Account[]
+  sessions  Session[]
+   Authenticator Authenticator[]
+
+  // vínculo com domínio SECP
+  profile   UserProfile?
+
+  
+}
+
+model UserProfile {
+  id        String @id @default(cuid())
+  userId    String @unique
+  user      User   @relation(fields: [userId], references: [id])
+
+  // onboarding / localidade
+  isOnboarded Boolean @default(false)
+  sarhUf      String?
+  matricula   String?
+
+  // multiempresa (pode ser 1..n via tabela de memberships, aqui simples)
+  companyId  String?
+  branchId   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id])
+
+    createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([userId, credentialID])
+}
+
+
+model Company {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  branches  Branch[]
+  employees Employee[]
+}
+
+model Branch {
+  id         String   @id @default(cuid())
+  companyId  String
+  code       String
+  name       String
+  timezone   String   // ex: "America/Manaus"
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  company    Company  @relation(fields: [companyId], references: [id])
+  clocks     Clock[]
+  employees  Employee[]
+
+  @@unique([companyId, code])
+}
+
+model Employee {
+  id          String   @id @default(cuid())
+  companyId   String
+  branchId    String
+  email       String   @unique
+  name        String
+  matricula   String?  // matrícula no SARH/SER
+  sarhUf      String?  // ex: "AM", "RR" (define o Oracle)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  company     Company  @relation(fields: [companyId], references: [id])
+  branch      Branch   @relation(fields: [branchId], references: [id])
+}
+
+model Clock {
+  id         String   @id @default(cuid())
+  branchId   String
+  serial     String
+  model      String
+  ip         String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  branch     Branch   @relation(fields: [branchId], references: [id])
+
+  @@unique([branchId, serial])
+}
