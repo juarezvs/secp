@@ -5,7 +5,7 @@ import Google from "next-auth/providers/google";
 import MicrosoftEntraID from "next-auth/providers/microsoft-entra-id";
 import Apple from "next-auth/providers/apple";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import prisma from "@/app/_kernel/db/prisma/client";
+import { prisma } from "@/app/_kernel/db/prisma/client";
 
 async function validateCorporateLogin(email: string, password: string) {
   // 1) Validar domínio
