@@ -162,3 +162,121 @@ model Clock {
 
   @@unique([branchId, serial])
 }
+
+enum ClockEventSource {
+  CLOCK     // veio do relógio REP/AFD
+  SECP      // batida feita no SECP (web/mobile)
+}
+
+enum ManualAdjustmentType {
+  ADD       // adicionar marcação
+  UPDATE    // alterar marcação existente
+  REMOVE    // remover marcação
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELED
+}
+
+enum OvertimeEntryType {
+  CREDIT    // crédito no banco de horas
+  DEBIT     // débito/compensação
+  ADJUST    // ajustes administrativos
+}
+
+
+//Para auditoria e rastreabilidade. O cálculo e normalização sempre usam occurredAtUtc
+model ClockEventRaw {
+  id              String          @id @default(cuid())
+
+  companyId        String
+  branchId         String
+  employeeId       String
+  clockId          String?
+
+  source           ClockEventSource
+  sourceRef        String?         // ex.: NSR do AFD, ou requestId da app
+  idempotencyKey   String          @unique
+
+  occurredAtUtc    DateTime
+  occurredAtLocal  DateTime
+  timezone         String          // ex.: "America/Manaus"
+
+  payload          Json?           // guarda detalhes do AFD/REP
+
+  createdAt        DateTime        @default(now())
+
+  @@index([employeeId, occurredAtUtc])
+  @@index([companyId, branchId, occurredAtUtc])
+}
+
+model ManualAdjustment {
+  id              String                @id @default(cuid())
+
+  companyId        String
+  branchId         String
+  employeeId       String
+
+  // data de referência do ajuste (dia local)
+  workDateLocal    DateTime              // usar 00:00 local do dia, como âncora
+
+  type            ManualAdjustmentType
+  reason          String
+
+  // altera uma marcação existente (UPDATE/REMOVE) ou cria uma nova (ADD)
+  targetEventId   String?                // ClockEventRaw.id (quando UPDATE/REMOVE)
+  newOccurredAtUtc   DateTime?
+  newOccurredAtLocal DateTime?
+  newTimezone        String?
+
+  status          ApprovalStatus         @default(PENDING)
+
+  requestedByUserId String
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+
+  approvals        Approval[]
+
+  @@index([employeeId, workDateLocal])
+  @@index([status])
+}
+
+model Approval {
+  id               String         @id @default(cuid())
+  adjustmentId     String
+  adjustment       ManualAdjustment @relation(fields: [adjustmentId], references: [id])
+
+  status           ApprovalStatus // APPROVED/REJECTED
+  decisionReason   String?
+  decidedByUserId  String
+  decidedAt        DateTime       @default(now())
+
+  @@index([adjustmentId])
+}
+
+model OvertimeBankEntry {
+  id            String            @id @default(cuid())
+
+  companyId      String
+  branchId       String
+  employeeId     String
+
+  // data base local (competência/controle)
+  workDateLocal  DateTime
+  minutes        Int              // + crédito, - débito
+  type           OvertimeEntryType
+  reason         String
+
+  // referência ao cálculo/ajuste/decisão
+  referenceType  String?
+  referenceId    String?
+
+  createdAt      DateTime         @default(now())
+
+  @@index([employeeId, workDateLocal])
+}
+
+
