@@ -13,30 +13,10 @@ datasource db {
   provider = "postgresql"
 }
 
-
-model User {
-  id        String   @id @default(cuid())
-  name      String?
-  email     String?  @unique
-  emailVerified DateTime?
-  image     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  accounts  Account[]
-  sessions  Session[]
-   Authenticator Authenticator[]
-
-  // vínculo com domínio SECP
-  profile   UserProfile?
-
-  
-}
-
 model UserProfile {
-  id        String @id @default(cuid())
-  userId    String @unique
-  user      User   @relation(fields: [userId], references: [id])
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
 
   // onboarding / localidade
   isOnboarded Boolean @default(false)
@@ -44,30 +24,30 @@ model UserProfile {
   matricula   String?
 
   // multiempresa (pode ser 1..n via tabela de memberships, aqui simples)
-  companyId  String?
-  branchId   String?
+  companyId String?
+  branchId  String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?
-  access_token       String?
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id])
 
-    createdAt DateTime @default(now())
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([provider, providerAccountId])
@@ -91,6 +71,7 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
 model Authenticator {
   credentialID         String  @unique
   userId               String
@@ -100,183 +81,409 @@ model Authenticator {
   credentialDeviceType String
   credentialBackedUp   Boolean
   transports           String?
- 
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@id([userId, credentialID])
 }
 
+//AQUI COMEÇA A MODELAGEM PARA ATENDAR A PORTARIA SJAM-DIREF nº 135/2025
 
-model Company {
-  id        String   @id @default(cuid())
-  code      String   @unique
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  branches  Branch[]
-  employees Employee[]
+enum Role {
+  SERVER
+  MANAGER
+  NUTEC
+  SECAP
+  DIREF
+  AUDITOR
+  ADMIN
 }
 
-model Branch {
-  id         String   @id @default(cuid())
-  companyId  String
-  code       String
-  name       String
-  timezone   String   // ex: "America/Manaus"
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+enum RegimeTrabalho {
+  PRESENCIAL
+  TELETRABALHO
+  HIBRIDO
+}
 
-  company    Company  @relation(fields: [companyId], references: [id])
-  clocks     Clock[]
-  employees  Employee[]
+enum JornadaTipo {
+  SETE_HORAS
+  OITO_HORAS
+  ESPECIAL
+  DIFERENCIADO
+}
 
-  @@unique([companyId, code])
+enum PunchKind {
+  IN
+  OUT
+  BREAK_OUT
+  BREAK_IN
+}
+
+enum PunchSource {
+  BIOMETRIC_DEVICE
+  ALTERNATIVE_METHOD
+  MANUAL_EXCEPTION // uso controlado, p.ex. falha técnica
+}
+
+enum AttendanceStatus {
+  OK
+  INCONSISTENTE
+  PENDENTE_REGULARIZACAO
+  HOMOLOGADO
+  FECHADO
+}
+
+enum LedgerEntryType {
+  CREDIT // horas-crédito
+  DEBIT // horas-débito
+  COMPENSATION // baixa por compensação
+  EXCESS_SAT // excedente sábado (com fator)
+  EXCESS_SUN_HOL // excedente domingo/feriado (com fator)
+  NIGHT_EXCESS // excedente noturna (após 19h)
+  UNAUTHORIZED // horas não autorizadas
+  ABOVE_LIMIT // horas acima do limite permitido
+  ADJUSTMENT // ajuste administrativo (auditável)
+}
+
+enum AuthorizationType {
+  WORK_EXTRA_CREDIT // autorização para gerar horas-crédito
+  COMPENSATE_DEBIT // autorização para compensar débito
+  FRUIR_CREDIT // autorização para fruir saldo positivo
+  EXTERNAL_ACTIVITY // validar atividade externa
+  TRAVEL // validar viagem
+  TRAINING // validar capacitação
+  DISPENSA_PONTO // dispensa ponto (OJAF ou local sem meio eletrônico)
+  RATIFY_ABOVE_LIMIT // referendo DIREF (art.10 §8º)
+}
+
+enum AuthorizationStatus {
+  DRAFT
+  SUBMITTED
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+model Tenant {
+  id                    String                 @id @default(cuid())
+  name                  String
+  createdAt             DateTime               @default(now())
+  units                 Unit[]
+  users                 User[]
+  employees             Employee[]
+  workSchedules         WorkSchedule[]
+  scheduleAssignments   ScheduleAssignment[]
+  biometricDevices      BiometricDevice[]
+  punchEvents           PunchEvent[]
+  externalActivities    ExternalActivity[]
+  travels               Travel[]
+  trainings             Training[]
+  attendanceDays        AttendanceDay[]
+  attendanceMonths      AttendanceMonth[]
+  bankHourLedgerEntries BankHourLedgerEntry[]
+  authorizationRequests AuthorizationRequest[]
+  delegations           Delegation[]
+  holidays              Holiday[]
+  auditLogs             AuditLog[]
+}
+
+model Unit {
+  id               String            @id @default(cuid())
+  tenantId         String
+  name             String
+  code             String?
+  parentId         String?
+  managerId        String? // User responsável (chefia)
+  tenant           Tenant            @relation(fields: [tenantId], references: [id])
+  parent           Unit?             @relation("UnitTree", fields: [parentId], references: [id])
+  children         Unit[]            @relation("UnitTree")
+  manager          User?             @relation(fields: [managerId], references: [id])
+  employees        Employee[]
+  biometricDevices BiometricDevice[]
+  delegations      Delegation[]
+}
+
+model User {
+  id            String    @id @default(cuid())
+  tenantId      String
+  email         String    @unique
+  name          String
+  emailVerified DateTime?
+  roles         Role[]
+  isActive      Boolean   @default(true)
+  tenant        Tenant    @relation(fields: [tenantId], references: [id])
+  employee      Employee?
+  image         String?
+
+  accounts      Account[]
+  sessions      Session[]
+  Authenticator Authenticator[]
+
+  // vínculo com domínio SECP
+  profile   UserProfile?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  units     Unit[]
+
+  delegationGiven    Delegation[] @relation("FromUser")
+  delegationReceived Delegation[] @relation("ToUser")
+
+  auditLogs AuditLog[]
+
+  delegations Delegation[]
 }
 
 model Employee {
-  id          String   @id @default(cuid())
-  companyId   String
-  branchId    String
-  email       String   @unique
-  name        String
-  matricula   String?  // matrícula no SARH/SER
-  sarhUf      String?  // ex: "AM", "RR" (define o Oracle)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                    String                 @id @default(cuid())
+  tenantId              String
+  userId                String?                @unique
+  unitId                String
+  matricula             String
+  regime                RegimeTrabalho         @default(PRESENCIAL)
+  jornadaTipo           JornadaTipo
+  isComissionado        Boolean                @default(false)
+  isOficialJustica      Boolean                @default(false)
+  isDispensaPonto       Boolean                @default(false)
+  tenant                Tenant                 @relation(fields: [tenantId], references: [id])
+  user                  User?                  @relation(fields: [userId], references: [id])
+  unit                  Unit                   @relation(fields: [unitId], references: [id])
+  schedules             ScheduleAssignment[]
+  punches               PunchEvent[]
+  attendanceDays        AttendanceDay[]
+  bankLedgers           BankHourLedgerEntry[]
+  externalActivities    ExternalActivity[]
+  travels               Travel[]
+  trainings             Training[]
+  attendanceMonths      AttendanceMonth[]
+  authorizationRequests AuthorizationRequest[]
 
-  company     Company  @relation(fields: [companyId], references: [id])
-  branch      Branch   @relation(fields: [branchId], references: [id])
+  @@unique([tenantId, matricula])
 }
 
-model Clock {
-  id         String   @id @default(cuid())
-  branchId   String
-  serial     String
-  model      String
-  ip         String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  branch     Branch   @relation(fields: [branchId], references: [id])
-
-  @@unique([branchId, serial])
+model WorkSchedule {
+  id              String               @id @default(cuid())
+  tenantId        String
+  name            String
+  jornadaTipo     JornadaTipo
+  minutesPerDay   Int // 7h=420, 8h=480 (base)
+  breakMinMinutes Int? // 60 (para 8h)
+  breakMaxMinutes Int? // 180 (para 8h)
+  flexInMinutes   Int // ex: 120 (art.4 §3º)
+  flexOutMinutes  Int // ex: 60 (art.4 §3º)
+  allowBefore6    Boolean              @default(false)
+  allowAfter19    Boolean              @default(false)
+  tenant          Tenant               @relation(fields: [tenantId], references: [id])
+  assignments     ScheduleAssignment[]
 }
 
-enum ClockEventSource {
-  CLOCK     // veio do relógio REP/AFD
-  SECP      // batida feita no SECP (web/mobile)
+model ScheduleAssignment {
+  id         String       @id @default(cuid())
+  tenantId   String
+  employeeId String
+  scheduleId String
+  validFrom  DateTime
+  validTo    DateTime?
+  tenant     Tenant       @relation(fields: [tenantId], references: [id])
+  employee   Employee     @relation(fields: [employeeId], references: [id])
+  schedule   WorkSchedule @relation(fields: [scheduleId], references: [id])
+
+  @@index([tenantId, employeeId, validFrom])
 }
 
-enum ManualAdjustmentType {
-  ADD       // adicionar marcação
-  UPDATE    // alterar marcação existente
-  REMOVE    // remover marcação
+model BiometricDevice {
+  id       String       @id @default(cuid())
+  tenantId String
+  unitId   String
+  name     String
+  serial   String?      @unique
+  isActive Boolean      @default(true)
+  tenant   Tenant       @relation(fields: [tenantId], references: [id])
+  unit     Unit         @relation(fields: [unitId], references: [id])
+  punches  PunchEvent[]
 }
 
-enum ApprovalStatus {
-  PENDING
-  APPROVED
-  REJECTED
-  CANCELED
+model PunchEvent {
+  id            String           @id @default(cuid())
+  tenantId      String
+  employeeId    String
+  occurredAt    DateTime // timestamp oficial (tz)
+  kind          PunchKind
+  source        PunchSource
+  deviceId      String?
+  rawPayload    Json?
+  integrityHash String?
+  createdAt     DateTime         @default(now())
+  tenant        Tenant           @relation(fields: [tenantId], references: [id])
+  employee      Employee         @relation(fields: [employeeId], references: [id])
+  device        BiometricDevice? @relation(fields: [deviceId], references: [id])
+
+  @@index([tenantId, employeeId, occurredAt])
 }
 
-enum OvertimeEntryType {
-  CREDIT    // crédito no banco de horas
-  DEBIT     // débito/compensação
-  ADJUST    // ajustes administrativos
-}
-
-
-//Para auditoria e rastreabilidade. O cálculo e normalização sempre usam occurredAtUtc
-model ClockEventRaw {
-  id              String          @id @default(cuid())
-
-  companyId        String
-  branchId         String
-  employeeId       String
-  clockId          String?
-
-  source           ClockEventSource
-  sourceRef        String?         // ex.: NSR do AFD, ou requestId da app
-  idempotencyKey   String          @unique
-
-  occurredAtUtc    DateTime
-  occurredAtLocal  DateTime
-  timezone         String          // ex.: "America/Manaus"
-
-  payload          Json?           // guarda detalhes do AFD/REP
-
-  createdAt        DateTime        @default(now())
-
-  @@index([employeeId, occurredAtUtc])
-  @@index([companyId, branchId, occurredAtUtc])
-}
-
-model ManualAdjustment {
+// Eventos "de efetivo exercício" e validações
+model ExternalActivity {
   id              String                @id @default(cuid())
+  tenantId        String
+  employeeId      String
+  startsAt        DateTime
+  endsAt          DateTime
+  description     String
+  proofDocUrl     String?
+  authorizationId String?               @unique
+  tenant          Tenant                @relation(fields: [tenantId], references: [id])
+  employee        Employee              @relation(fields: [employeeId], references: [id])
+  authorization   AuthorizationRequest? @relation(fields: [authorizationId], references: [id])
+}
 
-  companyId        String
-  branchId         String
+model Travel {
+  id              String                @id @default(cuid())
+  tenantId        String
+  employeeId      String
+  startsAt        DateTime
+  endsAt          DateTime
+  destination     String
+  authorizationId String?               @unique
+  tenant          Tenant                @relation(fields: [tenantId], references: [id])
+  employee        Employee              @relation(fields: [employeeId], references: [id])
+  authorization   AuthorizationRequest? @relation(fields: [authorizationId], references: [id])
+}
+
+model Training {
+  id              String                @id @default(cuid())
+  tenantId        String
+  employeeId      String
+  date            DateTime
+  hours           Int // carga horária do dia
+  isInternal      Boolean // dentro da SJAM?
+  proofDocUrl     String?
+  authorizationId String?               @unique
+  tenant          Tenant                @relation(fields: [tenantId], references: [id])
+  employee        Employee              @relation(fields: [employeeId], references: [id])
+  authorization   AuthorizationRequest? @relation(fields: [authorizationId], references: [id])
+}
+
+model AttendanceDay {
+  id              String           @id @default(cuid())
+  tenantId        String
+  employeeId      String
+  date            DateTime // use "date" normalizada (00:00)
+  scheduledMin    Int
+  workedMin       Int
+  breakMin        Int
+  debitMin        Int
+  creditMin       Int
+  unauthorizedMin Int
+  aboveLimitMin   Int
+  excessSatMin    Int
+  excessSunHolMin Int
+  nightExcessMin  Int
+  status          AttendanceStatus @default(OK)
+  flags           String[] // ex: ["MISSING_OUT", "BREAK_TOO_SHORT"]
+  tenant          Tenant           @relation(fields: [tenantId], references: [id])
+  employee        Employee         @relation(fields: [employeeId], references: [id])
+
+  @@unique([tenantId, employeeId, date])
+}
+
+model AttendanceMonth {
+  id            String           @id @default(cuid())
+  tenantId      String
+  employeeId    String
+  monthRef      String // "YYYY-MM"
+  scheduledMin  Int
+  workedMin     Int
+  debitMin      Int
+  creditMin     Int
+  saldoMin      Int // credit - debit (sem excedentes fatoradas, se você separar)
+  status        AttendanceStatus @default(OK)
+  homologatedAt DateTime?
+  homologatedBy String?
+  tenant        Tenant           @relation(fields: [tenantId], references: [id])
+  employee      Employee         @relation(fields: [employeeId], references: [id])
+
+  @@unique([tenantId, employeeId, monthRef])
+}
+
+model BankHourLedgerEntry {
+  id         String          @id @default(cuid())
+  tenantId   String
+  employeeId String
+  monthRef   String // competência origem
+  type       LedgerEntryType
+  minutes    Int // sempre em minutos, sinal conforme type
+  factor     Float? // 1.5 / 2.0 quando aplicável
+  sourceRef  Json? // referência (p.ex. AttendanceDay id, Authorization id)
+  createdAt  DateTime        @default(now())
+  tenant     Tenant          @relation(fields: [tenantId], references: [id])
+  employee   Employee        @relation(fields: [employeeId], references: [id])
+
+  @@index([tenantId, employeeId, monthRef])
+}
+
+model AuthorizationRequest {
+  id               String              @id @default(cuid())
+  tenantId         String
   employeeId       String
+  type             AuthorizationType
+  status           AuthorizationStatus @default(DRAFT)
+  requestedAt      DateTime            @default(now())
+  startsAt         DateTime?
+  endsAt           DateTime?
+  minutes          Int?
+  reason           String
+  decidedAt        DateTime?
+  decidedBy        String?
+  decisionNote     String?
+  tenant           Tenant              @relation(fields: [tenantId], references: [id])
+  employee         Employee            @relation(fields: [employeeId], references: [id])
+  externalActivity ExternalActivity?
+  travel           Travel?
+  training         Training?
 
-  // data de referência do ajuste (dia local)
-  workDateLocal    DateTime              // usar 00:00 local do dia, como âncora
-
-  type            ManualAdjustmentType
-  reason          String
-
-  // altera uma marcação existente (UPDATE/REMOVE) ou cria uma nova (ADD)
-  targetEventId   String?                // ClockEventRaw.id (quando UPDATE/REMOVE)
-  newOccurredAtUtc   DateTime?
-  newOccurredAtLocal DateTime?
-  newTimezone        String?
-
-  status          ApprovalStatus         @default(PENDING)
-
-  requestedByUserId String
-  createdAt        DateTime              @default(now())
-  updatedAt        DateTime              @updatedAt
-
-  approvals        Approval[]
-
-  @@index([employeeId, workDateLocal])
-  @@index([status])
+  @@index([tenantId, employeeId, type, status])
 }
 
-model Approval {
-  id               String         @id @default(cuid())
-  adjustmentId     String
-  adjustment       ManualAdjustment @relation(fields: [adjustmentId], references: [id])
+model Delegation {
+  id         String    @id @default(cuid())
+  tenantId   String
+  unitId     String
+  fromUserId String
+  toUserId   String
+  validFrom  DateTime
+  validTo    DateTime?
+  note       String?
+  tenant     Tenant    @relation(fields: [tenantId], references: [id])
+  unit       Unit      @relation(fields: [unitId], references: [id])
+  fromUser   User      @relation("FromUser", fields: [fromUserId], references: [id])
+  toUser     User      @relation("ToUser", fields: [toUserId], references: [id])
+  user       User?     @relation(fields: [userId], references: [id])
+  userId     String?
 
-  status           ApprovalStatus // APPROVED/REJECTED
-  decisionReason   String?
-  decidedByUserId  String
-  decidedAt        DateTime       @default(now())
-
-  @@index([adjustmentId])
+  @@index([tenantId, unitId, validFrom])
 }
 
-model OvertimeBankEntry {
-  id            String            @id @default(cuid())
+model Holiday {
+  id         String   @id @default(cuid())
+  tenantId   String
+  date       DateTime
+  name       String
+  isNational Boolean  @default(false)
+  tenant     Tenant   @relation(fields: [tenantId], references: [id])
 
-  companyId      String
-  branchId       String
-  employeeId     String
-
-  // data base local (competência/controle)
-  workDateLocal  DateTime
-  minutes        Int              // + crédito, - débito
-  type           OvertimeEntryType
-  reason         String
-
-  // referência ao cálculo/ajuste/decisão
-  referenceType  String?
-  referenceId    String?
-
-  createdAt      DateTime         @default(now())
-
-  @@index([employeeId, workDateLocal])
+  @@unique([tenantId, date])
 }
 
+model AuditLog {
+  id          String   @id @default(cuid())
+  tenantId    String
+  actorUserId String?
+  action      String
+  entity      String
+  entityId    String
+  data        Json?
+  createdAt   DateTime @default(now())
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  actor       User?    @relation(fields: [actorUserId], references: [id])
 
+  @@index([tenantId, createdAt])
+}
