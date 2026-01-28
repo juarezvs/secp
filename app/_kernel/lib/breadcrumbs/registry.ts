@@ -4,10 +4,14 @@ import type { BreadcrumbRoute } from "./types";
 export const BREADCRUMB_ROUTES: BreadcrumbRoute[] = [
   { pattern: "/dashboard", label: "Painel" },
 
-  // Ponto
-  { pattern: "/timecard", label: "Meu ponto" },
-  { pattern: "/timecard/report", label: "Espelho de ponto" },
-  { pattern: "/timecard/record", label: "Marcações" },
+  // servidor
+  { pattern: "/dashboard/employee", label: "Servidor" },
+  { pattern: "/dashboard/employee/timecard", label: "Frequência" },
+  { pattern: "/dashboard/employee/timecard/report", label: "Espelho de ponto" },
+  {
+    pattern: "/dashboard/employee/timecard/record",
+    label: "Meu ponto",
+  },
 
   // Gestão
   { pattern: "/gestao", label: "Gestão" },
@@ -19,47 +23,60 @@ export const BREADCRUMB_ROUTES: BreadcrumbRoute[] = [
   { pattern: "/gestao/relatorios/exportar", label: "Exportar" },
 
   // Admin
-  { pattern: "/admin", label: "Administração" },
+  { pattern: "/dashboard/admin", label: "Administração" },
 
-  { pattern: "/admin/funcionarios", label: "Funcionários" },
-  { pattern: "/admin/funcionarios/new", label: "Novo Funcionário" },
+  { pattern: "/dashboard/admin/employee", label: "Servidores" },
+  { pattern: "/dashboard/admin/employee/new", label: "Novo Servidor" },
+  { pattern: "/dashboard/admin/employee/import", label: "Importar do SARH" },
   {
-    pattern: "/admin/funcionarios/[id]",
-    label: ({ params }) => `Funcionário ${params.id}`, // ou "Detalhes do Funcionário"
+    pattern: "/dashboard/admin/employee/[id]",
+    label: ({ params }) => `Servidor ${params.id}`, // ou "Detalhes do Funcionário"
   },
-  { pattern: "/admin/funcionarios/importar", label: "Importar do SARH" },
 
-  { pattern: "/admin/clocks", label: "Relógios" },
-  { pattern: "/admin/clocks/new", label: "Novo Relógio" },
-  { pattern: "/admin/clocks/maintenance", label: "Manutenção" },
+  { pattern: "/dashboard/admin/clocks", label: "Relógios" },
+  { pattern: "/dashboard/admin/clocks/new", label: "Novo Relógio" },
+  { pattern: "/dashboard/admin/clocks/maintenance", label: "Manutenção" },
 
-  { pattern: "/admin/afd", label: "AFD / Importações" },
-  { pattern: "/admin/afd/importar", label: "Importar AFD" },
-  { pattern: "/admin/afd/processar", label: "Processar AFD" },
-  { pattern: "/admin/afd/historico", label: "Histórico de Importações" },
+  { pattern: "/dashboard/admin/afd", label: "AFD / Importações" },
+  { pattern: "/dashboard/admin/afd/importar", label: "Importar AFD" },
+  { pattern: "/dashboard/admin/afd/processar", label: "Processar AFD" },
+  {
+    pattern: "/dashboard/admin/afd/historico",
+    label: "Histórico de Importações",
+  },
 
-  { pattern: "/admin/escalas", label: "Escalas & Jornadas" },
-  { pattern: "/admin/escalas/jornadas", label: "Jornadas" },
-  { pattern: "/admin/escalas/escalas", label: "Escalas" },
-  { pattern: "/admin/escalas/regras", label: "Regras" },
+  { pattern: "/dashboard/admin/escalas", label: "Escalas & Jornadas" },
+  { pattern: "/dashboard/admin/escalas/jornadas", label: "Jornadas" },
+  { pattern: "/dashboard/admin/escalas/escalas", label: "Escalas" },
+  { pattern: "/dashboard/admin/escalas/regras", label: "Regras" },
 
-  { pattern: "/admin/parametros", label: "Parâmetros" },
-  { pattern: "/admin/parametros/feriados", label: "Feriados" },
-  { pattern: "/admin/parametros/tolerancias", label: "Tolerâncias" },
-  { pattern: "/admin/parametros/fechamento", label: "Fechamento" },
+  { pattern: "/dashboard/admin/parametros", label: "Parâmetros" },
+  { pattern: "/dashboard/admin/parametros/feriados", label: "Feriados" },
+  { pattern: "/dashboard/admin/parametros/tolerancias", label: "Tolerâncias" },
+  { pattern: "/dashboard/admin/parametros/fechamento", label: "Fechamento" },
 
-  { pattern: "/admin/auditoria", label: "Auditoria" },
-  { pattern: "/admin/auditoria/ponto", label: "Auditoria de Ponto" },
-  { pattern: "/admin/auditoria/admin", label: "Auditoria Administrativa" },
+  { pattern: "/dashboard/admin/auditoria", label: "Auditoria" },
+  { pattern: "/dashboard/admin/auditoria/ponto", label: "Auditoria de Ponto" },
+  {
+    pattern: "/dashboard/admin/auditoria/admin",
+    label: "Auditoria Administrativa",
+  },
 
   // Master
-  { pattern: "/admin/permissoes", label: "Permissões" },
-  { pattern: "/admin/permissoes/perfis", label: "Perfis" },
-  { pattern: "/admin/permissoes/usuarios", label: "Usuários" },
-  { pattern: "/admin/permissoes/auditoria", label: "Auditoria de Acesso" },
+  { pattern: "/dashboard/admin/permissoes", label: "Permissões" },
+  { pattern: "/dashboard/admin/permissoes/perfis", label: "Perfis" },
+  { pattern: "/dashboard/admin/permissoes/usuarios", label: "Usuários" },
+  {
+    pattern: "/dashboard/admin/permissoes/auditoria",
+    label: "Auditoria de Acesso",
+  },
 
-  { pattern: "/admin/tenant", label: "Empresa / Unidade" },
-  { pattern: "/admin/tenant/switch", label: "Trocar Unidade" },
-  { pattern: "/admin/tenant/empresas", label: "Empresas" },
-  { pattern: "/admin/tenant/unidades", label: "Unidades" },
+  { pattern: "/dashboard/admin/tenant", label: "Unidades" },
+  { pattern: "/dashboard/admin/tenant/switch", label: "Trocar Unidade" },
+  { pattern: "/dashboard/admin/tenant/new", label: "Nova Unidade" },
+  {
+    pattern: "/dashboard/admin/tenant/[id]",
+    label: ({ params }) => `Unidade ${params.id}`,
+  },
+  { pattern: "/dashboard/admin/tenant/unidades", label: "Unidades" },
 ];

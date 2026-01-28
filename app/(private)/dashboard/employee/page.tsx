@@ -2,9 +2,7 @@
 export default function DashboardPage() {
   return (
     <div className="space-y-3">
-      <div className="text-sm text-gray-600">
-        Conteúdo do espelho de ponto aqui.
-      </div>
+      <div className="text-sm">Conteúdo do dashboard aqui.</div>
     </div>
   );
 }

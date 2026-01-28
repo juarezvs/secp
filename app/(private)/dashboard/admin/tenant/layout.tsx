@@ -2,7 +2,7 @@
 import type { ReactNode } from "react";
 import { PrivateShell } from "@/app/ui/components/private/PrivateShell";
 import { AsideNav } from "@/app/ui/components/private/AsideNav";
-import { RELOGIOS_ASIDE } from "@/app/_kernel/lib/nav/asides";
+import { TENANT_ASIDE } from "@/app/_kernel/lib/nav/asides";
 import type { Role } from "@/app/_kernel/lib/rbac/types";
 
 export default async function RelogiosLayout({
@@ -13,8 +13,8 @@ export default async function RelogiosLayout({
   const role: Role = "ADMIN"; // pegue da sessão
   return (
     <PrivateShell
-      title="Relógios"
-      aside={<AsideNav config={RELOGIOS_ASIDE} role={role} />}
+      title="Unidades Administrativas"
+      aside={<AsideNav config={TENANT_ASIDE} role={role} />}
     >
       {children}
     </PrivateShell>

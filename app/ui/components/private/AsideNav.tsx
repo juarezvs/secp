@@ -23,7 +23,7 @@ function Group({
 }) {
   return (
     <div className="mt-2">
-      <div className="px-2 pb-1 text-xs font-semibold uppercase tracking-wide text-gray-500">
+      <div className="px-2 pb-1 text-xs font-semibold uppercase tracking-wide ">
         {label}
       </div>
       <div className="flex flex-col gap-1">{children}</div>
@@ -45,7 +45,8 @@ export function AsideNav({
     <aside className="w-full md:w-64 shrink-0">
       <div className="rounded-xl border bg-white p-3">
         {filtered.title && (
-          <div className="px-2 pb-2 text-sm font-semibold text-gray-700">
+          <div className="px-2 pb-2 text-base font-semibold uppercase">
+            {/* Titulo do Menu */}
             {filtered.title}
           </div>
         )}
@@ -63,9 +64,7 @@ export function AsideNav({
                         href={c.href ?? "#"}
                         className={[
                           "flex items-center gap-2 rounded-lg px-2 py-2 text-sm",
-                          active
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-700 hover:bg-gray-100",
+                          active ? "border shadow-md " : " hover:bg-gray-100",
                         ].join(" ")}
                       >
                         {c.icon ? (
@@ -85,11 +84,8 @@ export function AsideNav({
                 key={item.href ?? item.label}
                 href={item.href ?? "#"}
                 className={[
-                  "flex items-center gap-2 rounded-lg px-2 py-2 text-sm",
-                  active
-                    ? "bg-gray-900 text-white"
-                    : // ? "bg-gray-900 text-white"
-                      "text-gray-700 hover:bg-gray-100",
+                  "flex items-center gap-2 rounded-lg px-2 py-2 text-sm ",
+                  active ? "border shadow-md " : " hover:bg-gray-100",
                 ].join(" ")}
               >
                 {item.icon ? (

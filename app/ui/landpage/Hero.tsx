@@ -1,5 +1,4 @@
 import { CheckIcon } from "@heroicons/react/24/solid";
-import { CardSecp } from "../components/CardSecp";
 
 export function Hero() {
   return (
@@ -98,8 +97,6 @@ export function Hero() {
             </div>
           </div>
         </div>
-
-        <CardSecp />
 
         <div className="relative">
           <div className="absolute -inset-4 -z-10 blur-2xl [background:radial-gradient(20rem_12rem_at_70%_30%,rgba(0,122,51,0.18),transparent_60%)]" />

@@ -1,5 +1,6 @@
 // src/lib/nav/asides.ts
 import type { AsideConfig } from "./types";
+import { ClockIcon, DocumentTextIcon } from "@heroicons/react/24/outline";
 
 export const DASHBOARD_ASIDE: AsideConfig = {
   title: "Dashboard",
@@ -9,35 +10,6 @@ export const DASHBOARD_ASIDE: AsideConfig = {
       href: "/dashboard",
       exact: true,
       requireAny: ["DASHBOARD_VIEW"],
-    },
-
-    {
-      label: "Meu Ponto",
-      children: [
-        {
-          label: "Espelho de ponto",
-          href: "/timecard/report",
-          requireAny: ["PONTO_ESPELHO_VIEW"],
-        },
-        {
-          label: "Marcações",
-          href: "/timecard/record",
-          requireAny: ["PONTO_REGISTROS_VIEW"],
-        },
-        {
-          label: "Ocorrências",
-          href: "/timecard/ocorrencias",
-          requireAny: ["PONTO_OCORRENCIAS_VIEW"],
-        },
-        {
-          label: "Solicitações",
-          href: "/ponto/solicitacoes",
-          requireAny: [
-            "PONTO_SOLICITACOES_CREATE",
-            "PONTO_SOLICITACOES_APPROVE",
-          ],
-        },
-      ],
     },
 
     {
@@ -69,16 +41,21 @@ export const DASHBOARD_ASIDE: AsideConfig = {
     {
       label: "Administração",
       requireAny: [
-        "FUNCIONARIO_VIEW",
+        "EMPLOYEE_VIEW",
         "RELOGIO_VIEW",
         "PARAMETROS_EDIT",
         "AUDITORIA_VIEW",
       ],
       children: [
         {
-          label: "Funcionários",
-          href: "/admin/funcionarios",
-          requireAny: ["FUNCIONARIO_VIEW"],
+          label: "Servidores",
+          href: "/dashboard/admin/employee",
+          requireAny: ["EMPLOYEE_VIEW"],
+        },
+        {
+          label: "Unidade",
+          href: "/admin/tenant",
+          requireAny: ["TENANT_VIEW"],
         },
         {
           label: "Relógios",
@@ -110,17 +87,35 @@ export const DASHBOARD_ASIDE: AsideConfig = {
   ],
 };
 
-export const PONTO_ASIDE: AsideConfig = {
-  title: "Painel",
+export const ADMIN_EMPLOYEE_ASIDE: AsideConfig = {
+  title: "Servidores",
+
   items: [
     {
-      label: "Marcações",
-      href: "/timecard/record",
+      label: "Listar",
+      href: "/dashboard/admin/employee",
+      require: ["EMPLOYEE_VIEW"],
+    },
+    {
+      label: "Importar do SARH",
+      href: "/dashboard/admin/employee/import",
+      require: ["EMPLOYEE_IMPORT_SARH"],
+    },
+  ],
+};
+export const EMPLOYEE_ASIDE: AsideConfig = {
+  title: "Frequência",
+  items: [
+    {
+      label: "Meu ponto",
+      icon: <ClockIcon className="h-5 w-5" />,
+      href: "/dashboard/employee/timecard/record",
       requireAny: ["PONTO_REGISTROS_VIEW"],
     },
     {
       label: "Espelho de ponto",
-      href: "/timecard/report",
+      icon: <DocumentTextIcon className="h-5 w-5" />,
+      href: "/dashboard/employee/timecard/report",
       requireAny: ["PONTO_ESPELHO_VIEW"],
     },
 
@@ -197,30 +192,21 @@ export const GESTAO_ASIDE: AsideConfig = {
   ],
 };
 
-export const FUNCIONARIOS_ASIDE: AsideConfig = {
-  title: "Funcionários",
+export const EMPRESA_ASIDE: AsideConfig = {
+  title: "Unidades",
   items: [
     {
       label: "Listar",
-      href: "/admin/funcionarios",
+      href: "/admin/tenant",
       exact: true,
-      requireAny: ["FUNCIONARIO_VIEW"],
+      requireAny: ["TENANT_VIEW"],
     },
     {
       label: "Novo",
-      href: "/admin/funcionarios/new",
-      requireAny: ["FUNCIONARIO_CREATE"],
+      href: "/admin/tenant/new",
+      requireAny: ["TENANT_CREATE"],
     },
-    {
-      label: "Editar",
-      href: "/admin/funcionarios/[id]",
-      requireAny: ["FUNCIONARIO_EDIT"],
-    }, // rota dinâmica (não clicar normalmente)
-    {
-      label: "Importar do SARH",
-      href: "/admin/funcionarios/importar",
-      requireAny: ["FUNCIONARIO_IMPORT_SARH"],
-    },
+    // rota dinâmica (não clicar normalmente)
   ],
 };
 
@@ -375,17 +361,17 @@ export const TENANT_ASIDE: AsideConfig = {
     {
       label: "Trocar unidade",
       href: "/admin/tenant/switch",
-      requireAny: ["TENANT_SWITCH"],
+      requireAny: ["TENANT_VIEW"],
     },
     {
       label: "Empresas",
       href: "/admin/tenant/empresas",
-      requireAny: ["TENANT_SWITCH"],
+      requireAny: ["TENANT_VIEW"],
     },
     {
       label: "Unidades",
-      href: "/admin/tenant/unidades",
-      requireAny: ["TENANT_SWITCH"],
+      href: "/admin/tenant",
+      requireAny: ["TENANT_VIEW"],
     },
   ],
 };
