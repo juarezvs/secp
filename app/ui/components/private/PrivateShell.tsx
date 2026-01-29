@@ -5,6 +5,7 @@ import { PageTitle } from "./PageTitle";
 
 export function PrivateShell(props: {
   title: string;
+  icon?: ReactNode;
   aside: ReactNode;
   children: ReactNode;
 }) {
@@ -14,7 +15,7 @@ export function PrivateShell(props: {
       <main className="mx-auto w-full max-w-7xl px-4 py-4 md:px-6">
         <div className="space-y-3">
           <Breadcrumbs />
-          <PageTitle title={props.title} />
+          <PageTitle title={props.title} icon={props.icon} />
           <div className="flex flex-col gap-4 md:flex-row">
             {props.aside}
 

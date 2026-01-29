@@ -64,7 +64,9 @@ export function AsideNav({
                         href={c.href ?? "#"}
                         className={[
                           "flex items-center gap-2 rounded-lg px-2 py-2 text-sm",
-                          active ? "border shadow-md " : " hover:bg-gray-100",
+                          active
+                            ? "border border-amber-300 shadow-md "
+                            : " hover:bg-gray-100",
                         ].join(" ")}
                       >
                         {c.icon ? (
@@ -85,7 +87,7 @@ export function AsideNav({
                 href={item.href ?? "#"}
                 className={[
                   "flex items-center gap-2 rounded-lg px-2 py-2 text-sm ",
-                  active ? "border shadow-md " : " hover:bg-gray-100",
+                  active ? "border shadow-md " : "border-0 hover:bg-gray-100",
                 ].join(" ")}
               >
                 {item.icon ? (

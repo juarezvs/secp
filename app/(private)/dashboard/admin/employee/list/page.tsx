@@ -5,8 +5,9 @@ export default function DashboardPage() {
   return (
     <div className="space-y-3">
       <div className="text-sm font-semibold text-gray-600">
-        Cadastro de servidores
+        Consultar servidores
       </div>
+      <Search placeholder="Localizar servidor..." />
     </div>
   );
 }

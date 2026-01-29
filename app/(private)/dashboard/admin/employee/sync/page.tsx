@@ -2,7 +2,7 @@
 export default function Page() {
   return (
     <div className="space-y-3">
-      <div className="text-sm text-gray-600">Importar servidor do SARH</div>
+      <div className="text-sm text-gray-600">Importar Servidor do SARH</div>
     </div>
   );
 }

@@ -27,7 +27,15 @@ export const BREADCRUMB_ROUTES: BreadcrumbRoute[] = [
 
   { pattern: "/dashboard/admin/employee", label: "Servidores" },
   { pattern: "/dashboard/admin/employee/new", label: "Novo Servidor" },
-  { pattern: "/dashboard/admin/employee/import", label: "Importar do SARH" },
+  {
+    pattern: "/dashboard/admin/employee/import",
+    label: "Importar servidor do SARH",
+  },
+  { pattern: "/dashboard/admin/employee/list", label: "Consultar" },
+  {
+    pattern: "/dashboard/admin/employee/sync",
+    label: "Sincronizar dados do SARH",
+  },
   {
     pattern: "/dashboard/admin/employee/[id]",
     label: ({ params }) => `Servidor ${params.id}`, // ou "Detalhes do Funcionário"

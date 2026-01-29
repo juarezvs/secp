@@ -1,6 +1,13 @@
-// src/lib/nav/asides.ts
 import type { AsideConfig } from "./types";
-import { ClockIcon, DocumentTextIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowPathIcon,
+  BuildingOfficeIcon,
+  CircleStackIcon,
+  ClockIcon,
+  DocumentTextIcon,
+  UsersIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
 
 export const DASHBOARD_ASIDE: AsideConfig = {
   title: "Dashboard",
@@ -50,36 +57,39 @@ export const DASHBOARD_ASIDE: AsideConfig = {
         {
           label: "Servidores",
           href: "/dashboard/admin/employee",
+          icon: <UsersIcon className="w-5 h-5" />,
           requireAny: ["EMPLOYEE_VIEW"],
         },
         {
           label: "Unidade",
-          href: "/admin/tenant",
+          href: "/dashboard/admin/tenant",
+          icon: <BuildingOfficeIcon className="w-5 h-5" />,
           requireAny: ["TENANT_VIEW"],
         },
         {
           label: "Relógios",
-          href: "/admin/relogios",
+          href: "/dashboard/admin/relogios",
+          icon: <ClockIcon className="w-5 h-5" />,
           requireAny: ["RELOGIO_VIEW"],
         },
         {
           label: "Escalas & Jornadas",
-          href: "/admin/escalas",
+          href: "/dashboard/admin/escalas",
           requireAny: ["ESCALAS_VIEW"],
         },
         {
           label: "AFD / Importações",
-          href: "/admin/afd",
+          href: "/dashboard/admin/afd",
           requireAny: ["AFD_IMPORT", "AFD_PROCESS"],
         },
         {
           label: "Parâmetros",
-          href: "/admin/parametros",
+          href: "/dashboard/admin/parametros",
           requireAny: ["PARAMETROS_EDIT"],
         },
         {
           label: "Auditoria",
-          href: "/admin/auditoria",
+          href: "/dashboard/admin/auditoria",
           requireAny: ["AUDITORIA_VIEW"],
         },
       ],
@@ -92,14 +102,22 @@ export const ADMIN_EMPLOYEE_ASIDE: AsideConfig = {
 
   items: [
     {
-      label: "Listar",
-      href: "/dashboard/admin/employee",
+      label: "Consultar",
+      href: "/dashboard/admin/employee/list",
+      icon: <MagnifyingGlassIcon className="w-5 h-5" />,
       require: ["EMPLOYEE_VIEW"],
     },
     {
-      label: "Importar do SARH",
+      label: "Importar servidor do SARH",
       href: "/dashboard/admin/employee/import",
+      icon: <CircleStackIcon className="w-5 h-5" />,
       require: ["EMPLOYEE_IMPORT_SARH"],
+    },
+    {
+      label: "Sincronizar dados do SARH",
+      href: "/dashboard/admin/employee/sync",
+      icon: <ArrowPathIcon className="w-5 h-5" />,
+      require: ["EMPLOYEE_SYNC_SARH"],
     },
   ],
 };

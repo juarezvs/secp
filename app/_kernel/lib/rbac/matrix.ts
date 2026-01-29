@@ -32,6 +32,7 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     "EMPLOYEE_CREATE",
     "EMPLOYEE_EDIT",
     "EMPLOYEE_IMPORT_SARH",
+    "EMPLOYEE_SYNC_SARH",
     "RELOGIO_VIEW",
     "RELOGIO_CREATE",
     "RELOGIO_EDIT",
