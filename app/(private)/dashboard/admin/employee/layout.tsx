@@ -14,8 +14,8 @@ export default async function RelogiosLayout({
   const role: Role = "ADMIN"; // pegue da sessão
   return (
     <PrivateShell
-      title="Cadastro de servidores"
-      icon={<UsersIcon className="w-6 h-6" />}
+      title="Servidores"
+      icon={UsersIcon}
       aside={<AsideNav config={ADMIN_EMPLOYEE_ASIDE} role={role} />}
     >
       {children}

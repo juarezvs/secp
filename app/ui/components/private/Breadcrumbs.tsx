@@ -20,9 +20,9 @@ export function Breadcrumbs() {
   });
 
   return (
-    <div className="text-sm text-gray-600">
+    <div className="text-sm text-gray-700">
       <nav className="flex flex-wrap items-center gap-2">
-        <Link href="/dashboard" className="hover:underline">
+        <Link href="/dashboard" className=" hover:underline">
           Início
         </Link>
 

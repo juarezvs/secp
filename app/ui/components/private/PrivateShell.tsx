@@ -1,28 +1,34 @@
-import type { ReactNode } from "react";
+import type { ElementType, ReactNode } from "react";
 import { Header } from "./Header";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { PageTitle } from "./PageTitle";
 
-export function PrivateShell(props: {
+type PrivateShellProps = {
   title: string;
-  icon?: ReactNode;
+  icon?: ElementType;
+  description?: string;
   aside: ReactNode;
   children: ReactNode;
-}) {
+};
+
+export function PrivateShell({
+  title,
+  icon,
+  aside,
+  children,
+}: PrivateShellProps) {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <Header />
       <main className="mx-auto w-full max-w-7xl px-4 py-4 md:px-6">
         <div className="space-y-3">
           <Breadcrumbs />
-          <PageTitle title={props.title} icon={props.icon} />
+          <PageTitle title={title} icon={icon} />
           <div className="flex flex-col gap-4 md:flex-row">
-            {props.aside}
+            {aside}
 
             <section className="min-w-0 flex-1">
-              <div className="rounded-xl border bg-white p-4">
-                {props.children}
-              </div>
+              <div className="rounded-xl border bg-white p-4">{children}</div>
             </section>
           </div>
         </div>

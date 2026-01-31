@@ -5,6 +5,7 @@ export type NavItem = {
   href?: string;
   icon?: React.ReactNode;
   labelBreadCrumb?: string;
+  description?: string;
 
   //RBA: se não declarar, item é público (dentro do privado)
   allowRoles?: Role[];

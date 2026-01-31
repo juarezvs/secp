@@ -7,14 +7,14 @@ import type { AsideConfig, NavItem } from "@/app/_kernel/lib/nav/types";
 import type { Role } from "@/app/_kernel/lib/rbac/types";
 import { filterAside } from "@/app/_kernel/lib/nav/filter";
 
-function isActive(pathname: string, item: NavItem) {
+export function isActive(pathname: string, item: NavItem) {
   if (!item.href) return false;
   return item.exact
     ? pathname === item.href
     : pathname === item.href || pathname.startsWith(item.href + "/");
 }
 
-function Group({
+export function Group({
   label,
   children,
 }: {

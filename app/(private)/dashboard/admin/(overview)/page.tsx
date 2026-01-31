@@ -1,10 +1,14 @@
+import { DASHBOARD_ASIDE } from "@/app/_kernel/lib/nav/asides";
+import { Role } from "@/app/_kernel/lib/rbac/types";
+import { CardPage } from "@/app/ui/components/private/CardPage";
+import { SectionTitle } from "@/app/ui/components/private/SectionTitle";
+
 export default function Page() {
+  const role: Role = "ADMIN";
   return (
-    <div className="flex items-center justify-between rounded-xl bg-linear-to-r from-[#002F6C] to-[#007A33] px-4 py-3 text-white">
-      <div className="flex items-center gap-2">
-        <span className="inline-flex h-2 w-2 rounded-full bg-emerald-300" />
-        <span className="text-sm/none font-medium">Administração</span>
-      </div>
-    </div>
+    <section>
+      <SectionTitle title="Administração" />
+      <CardPage config={DASHBOARD_ASIDE} role={role} />
+    </section>
   );
 }

@@ -3,6 +3,7 @@ import { CheckIcon } from "@heroicons/react/24/solid";
 export function Hero() {
   return (
     <section className="relative overflow-hidden">
+      {/* EFEITO RADIAL NO HERO */}
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60rem_60rem_at_20%_-10%,#cfe7ff_0,transparent_40%),radial-gradient(40rem_40rem_at_90%_10%,#c8f3dd_0,transparent_40%)]" />
 
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-16 md:grid-cols-2 md:py-24">

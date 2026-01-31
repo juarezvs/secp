@@ -3,6 +3,7 @@ export type Role = "SERVIDOR" | "GESTOR" | "ADMIN" | "MASTER";
 
 export type Permission =
   | "DASHBOARD_VIEW"
+  | "DASHBOARD_MASTER"
   | "PONTO_ESPELHO_VIEW"
   | "PONTO_REGISTROS_VIEW"
   | "PONTO_OCORRENCIAS_VIEW"

@@ -1,3 +1,4 @@
+// "use client";
 import type { AsideConfig } from "./types";
 import {
   ArrowPathIcon,
@@ -7,14 +8,18 @@ import {
   DocumentTextIcon,
   UsersIcon,
   MagnifyingGlassIcon,
+  UserIcon,
+  SparklesIcon,
+  UserCircleIcon,
+  UserPlusIcon,
 } from "@heroicons/react/24/outline";
 
 export const DASHBOARD_ASIDE: AsideConfig = {
-  title: "Dashboard",
   items: [
     {
       label: "Visão geral",
-      href: "/dashboard",
+      href: "/dashboard/admin",
+      labelBreadCrumb: "banana",
       exact: true,
       requireAny: ["DASHBOARD_VIEW"],
     },
@@ -57,19 +62,19 @@ export const DASHBOARD_ASIDE: AsideConfig = {
         {
           label: "Servidores",
           href: "/dashboard/admin/employee",
-          icon: <UsersIcon className="w-5 h-5" />,
+
           requireAny: ["EMPLOYEE_VIEW"],
         },
         {
           label: "Unidade",
           href: "/dashboard/admin/tenant",
-          icon: <BuildingOfficeIcon className="w-5 h-5" />,
+
           requireAny: ["TENANT_VIEW"],
         },
         {
           label: "Relógios",
           href: "/dashboard/admin/relogios",
-          icon: <ClockIcon className="w-5 h-5" />,
+
           requireAny: ["RELOGIO_VIEW"],
         },
         {
@@ -97,6 +102,42 @@ export const DASHBOARD_ASIDE: AsideConfig = {
   ],
 };
 
+export const MASTER_ASIDE: AsideConfig = {
+  title: "Servidores",
+
+  items: [
+    {
+      label: "Servidor",
+      description: "Painel do servidor",
+      href: "/dashboard/admin/employee",
+      icon: <UserIcon className="w-6" />,
+      require: ["EMPLOYEE_IMPORT_SARH"],
+    },
+
+    {
+      label: "Gestor",
+      description: "Painel do gestor",
+      href: "/dashboard/admin/gestor",
+      icon: <UserCircleIcon className="w-6" />,
+      require: ["EMPLOYEE_SYNC_SARH"],
+    },
+    {
+      label: "Administrador",
+      description: "Painel do administrador",
+      href: "/dashboard/admin",
+      icon: <UserPlusIcon className="w-6" />,
+      require: ["EMPLOYEE_VIEW"],
+    },
+    {
+      label: "Master",
+      description: "Painel do master",
+      href: "/dashboard/admin/master",
+      icon: <SparklesIcon className="w-6" />,
+      require: ["EMPLOYEE_SYNC_SARH"],
+    },
+  ],
+};
+
 export const ADMIN_EMPLOYEE_ASIDE: AsideConfig = {
   title: "Servidores",
 
@@ -104,35 +145,37 @@ export const ADMIN_EMPLOYEE_ASIDE: AsideConfig = {
     {
       label: "Consultar",
       href: "/dashboard/admin/employee/list",
-      icon: <MagnifyingGlassIcon className="w-5 h-5" />,
+      icon: <MagnifyingGlassIcon className="w-5" />,
       require: ["EMPLOYEE_VIEW"],
     },
     {
       label: "Importar servidor do SARH",
       href: "/dashboard/admin/employee/import",
-      icon: <CircleStackIcon className="w-5 h-5" />,
+      icon: <CircleStackIcon className="w-5" />,
       require: ["EMPLOYEE_IMPORT_SARH"],
     },
     {
       label: "Sincronizar dados do SARH",
+      description: "Permite sincronizar os dados dos servidores com o SARH.",
       href: "/dashboard/admin/employee/sync",
-      icon: <ArrowPathIcon className="w-5 h-5" />,
+      icon: <ArrowPathIcon className="w-5" />,
       require: ["EMPLOYEE_SYNC_SARH"],
     },
   ],
 };
+
 export const EMPLOYEE_ASIDE: AsideConfig = {
   title: "Frequência",
   items: [
     {
       label: "Meu ponto",
-      icon: <ClockIcon className="h-5 w-5" />,
+      icon: <ClockIcon />,
       href: "/dashboard/employee/timecard/record",
       requireAny: ["PONTO_REGISTROS_VIEW"],
     },
     {
       label: "Espelho de ponto",
-      icon: <DocumentTextIcon className="h-5 w-5" />,
+      icon: <DocumentTextIcon />,
       href: "/dashboard/employee/timecard/report",
       requireAny: ["PONTO_ESPELHO_VIEW"],
     },

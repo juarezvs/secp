@@ -8,7 +8,8 @@ import { TopAnnouncementBar } from "./ui/landpage/TopAnnouncementBar";
 
 export default function SECPHome() {
   return (
-    <div className="min-h-screen bg-white text-zinc-900">
+    <div className="min-h-screen text-zinc-900">
+      {/* <div className="min-h-screen bg-white text-zinc-900"> JUAREZ */}
       {/* Top announcement bar */}
       <TopAnnouncementBar />
       {/* Header */}

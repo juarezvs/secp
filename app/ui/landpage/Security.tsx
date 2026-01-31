@@ -4,7 +4,8 @@ export const Security = () => {
   return (
     <section
       id="seguranca"
-      className="border-y border-zinc-200 bg-linear-to-b from-white to-zinc-50 py-12"
+      // className="border-y border-zinc-200 bg-linear-to-b from-white to-zinc-50 py-12"
+      className="border-t border-zinc-200 bg-zinc-50/50 py-16"
     >
       <div className="mx-auto max-w-7xl px-4">
         <div className="rounded-2xl border border-zinc-200 bg-white p-8">
