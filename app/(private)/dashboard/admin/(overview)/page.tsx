@@ -7,7 +7,10 @@ export default function Page() {
   const role: Role = "ADMIN";
   return (
     <section>
-      <SectionTitle title="Administração" />
+      <SectionTitle
+        title="Administração"
+        descripton="Estes são seus acessos como Administrador"
+      />
       <CardPage config={DASHBOARD_ASIDE} role={role} />
     </section>
   );

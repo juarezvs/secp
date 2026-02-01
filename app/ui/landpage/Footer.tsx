@@ -6,10 +6,7 @@ export const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 py-10 grid gap-8 md:grid-cols-4">
         {/* Sistema */}
         <div>
-          <p className="mb-3">
-            <Secp />
-          </p>
-
+          <Secp />
           <p className="text-sm leading-relaxed">
             Sistema Eletrônico de Controle de Ponto desenvolvido para gestão
             moderna e transparente da jornada de trabalho.

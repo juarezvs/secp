@@ -1,9 +1,10 @@
 import imgLogoSECP from "../../../public/brand/secp-logo.png";
+
 import Image from "next/image";
 
-export function Secp({ className = "h-8 w-auto" }: { className?: string }) {
+export const Secp = () => {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
+    <div className="flex items-center gap-2">
       <div className="flex justify-center">
         <Image
           src={imgLogoSECP}
@@ -16,4 +17,4 @@ export function Secp({ className = "h-8 w-auto" }: { className?: string }) {
       </div>
     </div>
   );
-}
+};

@@ -17,14 +17,6 @@ import {
 export const DASHBOARD_ASIDE: AsideConfig = {
   items: [
     {
-      label: "Visão geral",
-      href: "/dashboard/admin",
-      labelBreadCrumb: "banana",
-      exact: true,
-      requireAny: ["DASHBOARD_VIEW"],
-    },
-
-    {
       label: "Gestão",
       requireAny: [
         "EQUIPE_VIEW",
@@ -111,7 +103,12 @@ export const MASTER_ASIDE: AsideConfig = {
       description: "Painel do servidor",
       href: "/dashboard/admin/employee",
       icon: <UserIcon className="w-6" />,
-      require: ["EMPLOYEE_IMPORT_SARH"],
+
+      requireAny: [
+        "EQUIPE_VIEW",
+        "PONTO_SOLICITACOES_APPROVE",
+        "RELATORIOS_VIEW",
+      ],
     },
 
     {
@@ -126,14 +123,22 @@ export const MASTER_ASIDE: AsideConfig = {
       description: "Painel do administrador",
       href: "/dashboard/admin",
       icon: <UserPlusIcon className="w-6" />,
-      require: ["EMPLOYEE_VIEW"],
+      requireAny: [
+        "EQUIPE_VIEW",
+        "PONTO_SOLICITACOES_APPROVE",
+        "RELATORIOS_VIEW",
+      ],
     },
     {
       label: "Master",
       description: "Painel do master",
       href: "/dashboard/admin/master",
       icon: <SparklesIcon className="w-6" />,
-      require: ["EMPLOYEE_SYNC_SARH"],
+      requireAny: [
+        "EQUIPE_VIEW",
+        "PONTO_SOLICITACOES_APPROVE",
+        "RELATORIOS_VIEW",
+      ],
     },
   ],
 };
@@ -145,18 +150,21 @@ export const ADMIN_EMPLOYEE_ASIDE: AsideConfig = {
     {
       label: "Consultar",
       href: "/dashboard/admin/employee/list",
+      description: "Permite consultar informações servidor",
       icon: <MagnifyingGlassIcon className="w-5" />,
       require: ["EMPLOYEE_VIEW"],
     },
     {
-      label: "Importar servidor do SARH",
+      label: "Importar",
       href: "/dashboard/admin/employee/import",
+      description: "Permite importar servidor do SARH.",
       icon: <CircleStackIcon className="w-5" />,
       require: ["EMPLOYEE_IMPORT_SARH"],
     },
     {
-      label: "Sincronizar dados do SARH",
-      description: "Permite sincronizar os dados dos servidores com o SARH.",
+      label: "Sincronizar",
+      description:
+        "Permite sincronizar os dados dos servidores com os do SARH.",
       href: "/dashboard/admin/employee/sync",
       icon: <ArrowPathIcon className="w-5" />,
       require: ["EMPLOYEE_SYNC_SARH"],

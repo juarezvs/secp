@@ -16,7 +16,7 @@ export function CardSecp({ title, description, icon, href }: CardProps) {
           {icon && <span className="text-base">{icon}</span>}
           <h3 className="text-lg font-semibold  ">{title}</h3>
         </div>
-        <p className="mt-2 text-sm text-zinc-600 line-clamp-2">{description}</p>
+        <p className="mt-2 text-sm text-zinc-600 line-clamp-3">{description}</p>
       </article>
     </Link>
   );

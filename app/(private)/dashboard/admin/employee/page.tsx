@@ -1,34 +1,18 @@
+import { ADMIN_EMPLOYEE_ASIDE } from "@/app/_kernel/lib/nav/asides";
+import { Role } from "@/app/_kernel/lib/rbac/types";
 import { CardSecp } from "@/app/ui/components/CardSecp";
+import { CardPage } from "@/app/ui/components/private/CardPage";
 import { SectionTitle } from "@/app/ui/components/private/SectionTitle";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 // src/app/(private)/dashboard/page.tsx
 export default function DashboardPage() {
+  const role: Role = "ADMIN"; // pegue da sessão
   return (
-    <div className="space-y-3">
+    <section>
       <SectionTitle
-        title="Servidores"
-        descripton="Estas são as funcionalidades que você tem acesso. "
+        title="Administração"
+        descripton="Estes são seus acessos como Administrador"
       />
-      <div className="grid grid-cols-4 gap-4">
-        <CardSecp
-          icon={<MagnifyingGlassIcon className="w-6" />}
-          title="Consultar"
-          href="/dashboard/admin/employee/list"
-          description="Permite consultar dados dos servidores."
-        />
-        <CardSecp
-          icon={<MagnifyingGlassIcon className="w-6" />}
-          title="Importar"
-          href="/dashboard/admin/employee/list"
-          description="Permite importar dados de servidor do SARH."
-        />
-        <CardSecp
-          icon={<MagnifyingGlassIcon className="w-6" />}
-          title="Sincronizar"
-          href="/dashboard/admin/employee/list"
-          description="Permite consultar dados dos servidores"
-        />
-      </div>
-    </div>
+      <CardPage config={ADMIN_EMPLOYEE_ASIDE} role={role} />
+    </section>
   );
 }

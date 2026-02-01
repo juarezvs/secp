@@ -7,9 +7,10 @@ export function SectionTitle(props: {
   return (
     // <div className="flex items-center justify-between rounded-xl bg-linear-to-r from-[#002F6C] to-[#007A33] px-4 py-3 text-white">
     <div className="flex flex-col justify-end border-b pb-0.5">
-      {props.icon ? <span className="text-base">{props.icon}</span> : null}
-
-      <h2 className="text-2xl font-bold tracking-tight text-[#002F6C] md:text-3xl">
+      <h2 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-[#002F6C] md:text-3xl">
+        {props.icon ? (
+          <span className="flex items-center text-base">{props.icon}</span>
+        ) : null}
         {props.title}
       </h2>
       {props.descripton && (

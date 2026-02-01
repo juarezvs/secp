@@ -66,6 +66,9 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     "RELOGIO_VIEW",
     "RELOGIO_CREATE",
     "RELOGIO_EDIT",
+    "TENANT_VIEW",
+    "TENANT_CREATE",
+    "TENANT_EDIT",
     "AFD_IMPORT",
     "AFD_PROCESS",
     "ESCALAS_VIEW",
@@ -74,7 +77,5 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     "EQUIPE_MANAGE",
     "AUDITORIA_VIEW",
     "PARAMETROS_EDIT",
-    "PERMISSOES_MANAGE",
-    "TENANT_SWITCH",
   ],
 };
