@@ -29,7 +29,10 @@ export function Breadcrumbs() {
         {crumbs.map((c) => (
           <span key={c.href} className="flex items-center gap-2">
             <span className="text-gray-400">/</span>
-            <Link href={c.href} className="hover:underline">
+            <Link
+              href={c.href}
+              className="hover:underline hover:text-secp-blue "
+            >
               {c.label}
             </Link>
           </span>

@@ -8,9 +8,9 @@
   --green-cjf: #007a33;
   --gray-cjf: #97999f;
   --radius: 0.625rem;
-  --background: #dbe1ff;
-  /* --background: #dbe1ff; justone */
-  /* --background: #f6f6f6; */
+  --background: #f0f4f9;
+  /* --background: #dbe1ff; */
+
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);

@@ -12,10 +12,39 @@ import {
   SparklesIcon,
   UserCircleIcon,
   UserPlusIcon,
+  Squares2X2Icon,
 } from "@heroicons/react/24/outline";
 
 export const DASHBOARD_ASIDE: AsideConfig = {
   items: [
+    {
+      label: "Servidor",
+      icon: <Squares2X2Icon className="w-6 h-6" />,
+
+      requireAny: [
+        "EQUIPE_VIEW",
+        "PONTO_SOLICITACOES_APPROVE",
+        "RELATORIOS_VIEW",
+      ],
+      children: [
+        {
+          label: "Meu ponto",
+          href: "/dashboard/employee/timecard",
+
+          requireAny: ["EQUIPE_VIEW"],
+        },
+        {
+          label: "Espelho de ponto",
+          href: "/gestao/solicitacoes",
+          requireAny: ["PONTO_SOLICITACOES_APPROVE"],
+        },
+        {
+          label: "Banco de horas",
+          href: "/gestao/relatorios",
+          requireAny: ["RELATORIOS_VIEW"],
+        },
+      ],
+    },
     {
       label: "Gestão",
       requireAny: [
@@ -54,7 +83,8 @@ export const DASHBOARD_ASIDE: AsideConfig = {
         {
           label: "Servidores",
           href: "/dashboard/admin/employee",
-
+          description:
+            "Permite gerenciar os dados do servidores. Sincronizar servidores do SARH.",
           requireAny: ["EMPLOYEE_VIEW"],
         },
         {
@@ -66,6 +96,7 @@ export const DASHBOARD_ASIDE: AsideConfig = {
         {
           label: "Relógios",
           href: "/dashboard/admin/relogios",
+          description: "Gerencia todos os relógios de ponto da unidade.",
 
           requireAny: ["RELOGIO_VIEW"],
         },
