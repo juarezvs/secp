@@ -1,5 +1,5 @@
 import { SectionTitle } from "@/app/ui/components/private/SectionTitle";
-import { ArrowPathIcon } from "@heroicons/react/24/outline";
+import { RefreshCcw } from "lucide-react";
 
 // src/app/(private)/dashboard/page.tsx
 export default function Page() {
@@ -8,7 +8,7 @@ export default function Page() {
       <SectionTitle
         title="Sincronizar"
         descripton="Permite sincronizar os dados dos servidores com os do SARH."
-        icon={<ArrowPathIcon className="w-8" />}
+        icon={<RefreshCcw className="w-8" />}
       />
     </div>
   );

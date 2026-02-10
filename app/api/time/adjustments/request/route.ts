@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireOnboarded } from "@/app/_kernel/auth/guard";
-import { RequestAdjustmentUseCase } from "@/app/application/time/RequestAdjustment.usecase";
+import { RequestAdjustmentUseCase } from "@/app/_core/application/time/RequestAdjustment.usecase";
 
 export async function POST(req: Request) {
   const session = await requireOnboarded();

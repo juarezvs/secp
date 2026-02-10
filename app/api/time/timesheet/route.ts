@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireOnboarded } from "@/app/_kernel/auth/guard";
-import { GenerateTimesheetUseCase } from "@/app/application/time/GenerateTimesheet.usecase";
+import { GenerateTimesheetUseCase } from "@/app/_core/application/time/GenerateTimesheet.usecase";
 
 export async function GET(req: Request) {
   await requireOnboarded();

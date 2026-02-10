@@ -1,18 +1,48 @@
 // src/app/(public)/login/page.tsx
 "use client";
 
+import { LockIcon, UserIcon } from "lucide-react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
-import { redirect, useSearchParams } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/";
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    const res = await signIn("credentials", {
+      username,
+      password,
+      redirect: false,
+      callbackUrl,
+    });
+
+    setLoading(false);
+
+    if (!res) {
+      setError("Falha ao autenticar");
+      return;
+    }
+
+    if (res.error) {
+      setError("Matrícula ou senha inválidas.");
+      return;
+    }
+
+    router.push(res.url ?? callbackUrl);
   }
 
   return (
@@ -86,19 +116,25 @@ export default function LoginPage() {
               Entre com suas credenciais institucionais.
             </p>
 
-            <form className="mt-6 space-y-4">
+            <form className="mt-6 space-y-4" onSubmit={onSubmit}>
               <Field
+                name="username"
                 label="Matrícula"
                 placeholder="Digite sua matrícula"
                 icon={<UserIcon />}
                 autoComplete="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
               <Field
+                name="password"
                 label="Senha"
                 placeholder="Digite sua senha"
                 icon={<LockIcon />}
                 type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 right={
                   <button
                     type="button"
@@ -169,11 +205,14 @@ export default function LoginPage() {
 
 function Field(props: {
   label: string;
+  name: string;
   placeholder: string;
   icon: React.ReactNode;
   type?: string;
   autoComplete?: string;
   right?: React.ReactNode;
+  value?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }) {
   return (
     <label className="block">
@@ -188,71 +227,17 @@ function Field(props: {
         <div className="text-secp-gray">{props.icon}</div>
 
         <input
+          name={props.name}
           type={props.type ?? "text"}
           placeholder={props.placeholder}
           autoComplete={props.autoComplete}
+          value={props.value}
+          onChange={props.onChange}
           className="w-full bg-transparent text-[15px] text-secp-blue placeholder:text-secp-gray/80 outline-none"
         />
 
         {props.right ? <div className="shrink-0">{props.right}</div> : null}
       </div>
     </label>
-  );
-}
-
-function UserIcon() {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="M20 21a8 8 0 0 0-16 0"
-        stroke="#97999F"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M12 13a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
-        stroke="#97999F"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function LockIcon() {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="M7 11V8a5 5 0 0 1 10 0v3"
-        stroke="#97999F"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M6 11h12v10H6V11Z"
-        stroke="#97999F"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12 15v3"
-        stroke="#002F6C"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
   );
 }

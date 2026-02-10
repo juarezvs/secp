@@ -21,5 +21,6 @@ export type NavItem = {
 
 export type AsideConfig = {
   title?: string;
+  icon?: React.ReactNode;
   items: NavItem[];
 };

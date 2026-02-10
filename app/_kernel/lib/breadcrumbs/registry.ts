@@ -79,9 +79,15 @@ export const BREADCRUMB_ROUTES: BreadcrumbRoute[] = [
     label: "Auditoria de Acesso",
   },
 
-  { pattern: "/dashboard/admin/tenant", label: "Unidades" },
+  { pattern: "/dashboard/admin/tenant", label: "Órgãos da Justiça" },
+  { pattern: "/dashboard/admin/tenant/unit", label: "Subseção Judicária" },
   { pattern: "/dashboard/admin/tenant/switch", label: "Trocar Unidade" },
   { pattern: "/dashboard/admin/tenant/new", label: "Nova Unidade" },
+  { pattern: "/dashboard/admin/tenant/list", label: "Seção Judiciária" },
+  {
+    pattern: "/dashboard/admin/tenant/import",
+    label: "Importar do SARH",
+  },
   {
     pattern: "/dashboard/admin/tenant/[id]",
     label: ({ params }) => `Unidade ${params.id}`,

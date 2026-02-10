@@ -1,0 +1,43 @@
+{
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "support.type.primitive.tsx",
+        "settings": {
+          "foreground": "#52A8FF"
+        }
+      },
+      {
+        "scope": "keyword.control.export.tsx",
+        "settings": {
+          "foreground": "#764cea"
+        }
+      },
+      {
+        "scope": "storage.type.function.tsx",
+        "settings": {
+          "foreground": "#764cea"
+        }
+      },
+      {
+        "scope": "entity.name.function.tsx",
+        "settings": {
+          "foreground": "#AF70DC"
+        }
+      },
+      {
+        "scope": "variable.other.property.tsx",
+        "settings": {
+          "foreground": "#CCD2D7"
+        }
+      },
+      {
+        "scope": "variable.other.constant.object.tsx",
+        "settings": {
+          "foreground": "#38df0e"
+        }
+      }
+    ]
+  }
+}
+

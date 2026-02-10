@@ -1,9 +1,16 @@
+import { SectionTitle } from "@/app/_ui/components/private/section-title";
+import { CalendarClock } from "lucide-react";
+
 // src/app/(private)/dashboard/page.tsx
 export default function DashboardPage() {
   return (
-    <div className="space-y-3">
-      <div className="text-sm text-gray-600">
-        Conteúdo das marcações de ponto aqui.
+    <div className="w-full">
+      <div className="flex w-full items-center justify-between">
+        <SectionTitle
+          title="Meu ponto"
+          icon={<CalendarClock />}
+          descripton="Acompanhe seus registros de horários."
+        />
       </div>
     </div>
   );

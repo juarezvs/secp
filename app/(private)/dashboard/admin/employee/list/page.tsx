@@ -1,5 +1,5 @@
-import Search from "@/app/ui/components/private/Search";
-import { SectionTitle } from "@/app/ui/components/private/SectionTitle";
+import Search from "@/app/_ui/components/shared/search";
+import { SectionTitle } from "@/app/_ui/components/private/section-title";
 
 // src/app/(private)/dashboard/page.tsx
 export default function DashboardPage() {

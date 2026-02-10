@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  output   = "../app/_kernel/db/prisma/generated/prisma"
 }
 
 datasource db {
@@ -22,6 +22,7 @@ model UserProfile {
   isOnboarded Boolean @default(false)
   sarhUf      String?
   matricula   String?
+  cpf         String?
 
   // multiempresa (pode ser 1..n via tabela de memberships, aqui simples)
   companyId String?
@@ -88,6 +89,13 @@ model Authenticator {
 }
 
 //AQUI COMEÇA A MODELAGEM PARA ATENDAR A PORTARIA SJAM-DIREF nº 135/2025
+enum SessionEndReason {
+  LOGOUT
+  CLIENT_CLOSE
+  TIMEOUT
+  EXPIRED
+  ADMIN_REVOKE
+}
 
 enum Role {
   SERVER
@@ -164,9 +172,32 @@ enum AuthorizationStatus {
   CANCELLED
 }
 
+model AuditSession {
+  id         String            @id @default(cuid())
+  userId     String
+  tenantId   String? // se você usa multiempresa/unidade
+  loginAt    DateTime          @default(now())
+  lastSeenAt DateTime          @default(now())
+  endedAt    DateTime?
+  endReason  SessionEndReason?
+
+  ip        String?
+  userAgent String?
+
+  // Útil para correlacionar com o JWT atual (jti/nonce) se quiser
+  jwtId String? @unique
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, lastSeenAt])
+  @@index([endedAt])
+}
+
 model Tenant {
   id                    String                 @id @default(cuid())
   name                  String
+  nickname              String                 @unique
+  active                Boolean                @default(true)
   createdAt             DateTime               @default(now())
   units                 Unit[]
   users                 User[]
@@ -205,15 +236,19 @@ model Unit {
 
 model User {
   id            String    @id @default(cuid())
+  matricula     String    @unique
   tenantId      String
   email         String    @unique
   name          String
+  cpf           String    @unique
   emailVerified DateTime?
   roles         Role[]
   isActive      Boolean   @default(true)
   tenant        Tenant    @relation(fields: [tenantId], references: [id])
   employee      Employee?
   image         String?
+
+  auditSession AuditSession[]
 
   accounts      Account[]
   sessions      Session[]

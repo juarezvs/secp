@@ -1,25 +1,34 @@
 // "use client";
 import type { AsideConfig } from "./types";
-import {
-  ArrowPathIcon,
-  BuildingOfficeIcon,
-  CircleStackIcon,
-  ClockIcon,
-  DocumentTextIcon,
-  UsersIcon,
-  MagnifyingGlassIcon,
-  UserIcon,
-  SparklesIcon,
-  UserCircleIcon,
-  UserPlusIcon,
-  Squares2X2Icon,
-} from "@heroicons/react/24/outline";
 
+import {
+  Building,
+  Building2,
+  CalendarClock,
+  Clock,
+  CornerLeftDown,
+  CornerUpLeft,
+  Database,
+  DatabaseBackupIcon,
+  FileClock,
+  Landmark,
+  LandmarkIcon,
+  RefreshCcw,
+  Search,
+  SquareIcon,
+  User2,
+  UserCog,
+  UserLock,
+  UserPlus2,
+  UserStarIcon,
+} from "lucide-react";
 export const DASHBOARD_ASIDE: AsideConfig = {
+  title: "Administrador",
+  icon: <UserStarIcon className="w-6 h-6" />,
   items: [
     {
       label: "Servidor",
-      icon: <Squares2X2Icon className="w-6 h-6" />,
+      icon: <User2 className="w-6 h-6" />,
 
       requireAny: [
         "EQUIPE_VIEW",
@@ -88,16 +97,18 @@ export const DASHBOARD_ASIDE: AsideConfig = {
           requireAny: ["EMPLOYEE_VIEW"],
         },
         {
-          label: "Unidade",
+          label: "Órgãos da Justiça",
+          description:
+            "Permite cadastrar/consultar Unidades Adminstrativas da Justiça Federal",
           href: "/dashboard/admin/tenant",
-
+          icon: <LandmarkIcon className="w-6" />,
           requireAny: ["TENANT_VIEW"],
         },
         {
           label: "Relógios",
           href: "/dashboard/admin/relogios",
           description: "Gerencia todos os relógios de ponto da unidade.",
-
+          icon: <Clock className="w-6" />,
           requireAny: ["RELOGIO_VIEW"],
         },
         {
@@ -133,7 +144,7 @@ export const MASTER_ASIDE: AsideConfig = {
       label: "Servidor",
       description: "Painel do servidor",
       href: "/dashboard/admin/employee",
-      icon: <UserIcon className="w-6" />,
+      icon: <User2 className="w-6" />,
 
       requireAny: [
         "EQUIPE_VIEW",
@@ -146,14 +157,14 @@ export const MASTER_ASIDE: AsideConfig = {
       label: "Gestor",
       description: "Painel do gestor",
       href: "/dashboard/admin/gestor",
-      icon: <UserCircleIcon className="w-6" />,
+      icon: <UserPlus2 className="w-6" />,
       require: ["EMPLOYEE_SYNC_SARH"],
     },
     {
       label: "Administrador",
       description: "Painel do administrador",
       href: "/dashboard/admin",
-      icon: <UserPlusIcon className="w-6" />,
+      icon: <UserLock className="w-6" />,
       requireAny: [
         "EQUIPE_VIEW",
         "PONTO_SOLICITACOES_APPROVE",
@@ -164,7 +175,7 @@ export const MASTER_ASIDE: AsideConfig = {
       label: "Master",
       description: "Painel do master",
       href: "/dashboard/admin/master",
-      icon: <SparklesIcon className="w-6" />,
+      icon: <UserCog className="w-6" />,
       requireAny: [
         "EQUIPE_VIEW",
         "PONTO_SOLICITACOES_APPROVE",
@@ -182,14 +193,14 @@ export const ADMIN_EMPLOYEE_ASIDE: AsideConfig = {
       label: "Consultar",
       href: "/dashboard/admin/employee/list",
       description: "Permite consultar informações servidor",
-      icon: <MagnifyingGlassIcon className="w-5" />,
+      icon: <Search className="w-5" />,
       require: ["EMPLOYEE_VIEW"],
     },
     {
       label: "Importar",
       href: "/dashboard/admin/employee/import",
       description: "Permite importar servidor do SARH.",
-      icon: <CircleStackIcon className="w-5" />,
+      icon: <Database className="w-5" />,
       require: ["EMPLOYEE_IMPORT_SARH"],
     },
     {
@@ -197,28 +208,54 @@ export const ADMIN_EMPLOYEE_ASIDE: AsideConfig = {
       description:
         "Permite sincronizar os dados dos servidores com os do SARH.",
       href: "/dashboard/admin/employee/sync",
-      icon: <ArrowPathIcon className="w-5" />,
+      icon: <RefreshCcw className="w-5" />,
       require: ["EMPLOYEE_SYNC_SARH"],
     },
   ],
 };
 
+/*
+    "DASHBOARD_VIEW",
+
+
+    "PONTO_OCORRENCIAS_VIEW",
+    "PONTO_SOLICITACOES_CREATE",
+*/
+
 export const EMPLOYEE_ASIDE: AsideConfig = {
-  title: "Frequência",
+  title: "Servidor",
+  icon: <User2 className="w-6 h-6" />,
   items: [
     {
       label: "Meu ponto",
-      icon: <ClockIcon />,
+      icon: <CalendarClock className="w-6 h-6" />,
+      description: "Veja suas marcações do dia",
       href: "/dashboard/employee/timecard/record",
       requireAny: ["PONTO_REGISTROS_VIEW"],
+      // requireAny: ["PONTO_REGISTROS_VIEW"],
     },
     {
       label: "Espelho de ponto",
-      icon: <DocumentTextIcon />,
+      icon: <FileClock className="w-6 h-6" />,
+      description: "Veja suas marcações do dia",
       href: "/dashboard/employee/timecard/report",
       requireAny: ["PONTO_ESPELHO_VIEW"],
     },
+    // {
+    //   label: "Ocorrências",
+    //   icon: <BellAlertIcon  className="w-6 h-6" />,
+    //   description:"Veja suas marcações do dia",
+    //   href: "/dashboard/employee/timecard/report",
+    //   requireAny: ["PONTO_OCORRENCIAS_VIEW"],
+    // },
 
+    // {
+    //   label: "Solicitações",
+    //   description:"Veja suas marcações do dia",
+    //   icon: <DocumentDuplicateIcon  className="w-6 h-6" />,
+    //   href: "/dashboard/employee/timecard/report",
+    //   requireAny: ["PONTO_SOLICITACOES_CREATE"],
+    // },
     // {
     //   label: "Ocorrências",
     //   href: "/timecard/ocorrencias",
@@ -456,21 +493,28 @@ export const PERMISSOES_ASIDE: AsideConfig = {
 };
 
 export const TENANT_ASIDE: AsideConfig = {
-  title: "Empresa / Unidade",
+  title: "Órgãos da Justiça",
+  icon: <Landmark className="w-6" />,
   items: [
     {
-      label: "Trocar unidade",
-      href: "/admin/tenant/switch",
+      label: "Seção Judiciária",
+      description: "Permite gerenciar dados da Seção Judiciária",
+      icon: <Building2 className="w-5" />,
+      href: "/dashboard/admin/tenant/list",
       requireAny: ["TENANT_VIEW"],
     },
     {
-      label: "Empresas",
-      href: "/admin/tenant/empresas",
+      label: "Subseção Judiciária",
+      description: "Permite gerenciar dados da Subseção Judiciária",
+      icon: <Building className="w-5" />,
+      href: "/dashboard/admin/tenant/unit",
       requireAny: ["TENANT_VIEW"],
     },
     {
-      label: "Unidades",
-      href: "/admin/tenant",
+      label: "Importar do SARH",
+      description: "Permite importar Seção e Subseção do SARH",
+      icon: <DatabaseBackupIcon className="w-5" />,
+      href: "/dashboard/admin/tenant/import",
       requireAny: ["TENANT_VIEW"],
     },
   ],

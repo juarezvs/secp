@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { GradientBorder } from "@/app/ui/components/GradientBorder";
-import { LogoSECP } from "@/app/ui/landpage/LogoSECP";
+import { GradientBorder } from "@/app/_ui/components/shared/gradient-border";
+import { LogoSECP } from "@/app/(landinpage)/_components/LogoSECP";
 
 export function Header() {
   return (

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireOnboarded } from "@/app/_kernel/auth/guard";
-import { SyncClockEventsUseCase } from "@/app/application/time/SyncClockEvents.usecase";
+import { SyncClockEventsUseCase } from "@/app/_core/application/time/SyncClockEvents.usecase";
 
 export async function POST(req: Request) {
   const session = await requireOnboarded();

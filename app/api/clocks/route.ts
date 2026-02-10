@@ -1,5 +1,5 @@
-import { CreateClockUseCase } from "@/app/application/clocks/create-clock.usecase";
-import { ClockRepoPrisma } from "@/app/infra/prisma/clocks/clock.repo.prisma";
+import { CreateClockUseCase } from "@/app/_core/application/clocks/create-clock.usecase";
+import { ClockRepoPrisma } from "@/app/_core/infrastructure/prisma/clocks/clock.repo.prisma";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {

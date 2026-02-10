@@ -1,11 +1,12 @@
 // src/app/(private)/dashboard/layout.tsx
 import type { ReactNode } from "react";
-import { PrivateShell } from "@/app/ui/components/private/PrivateShell";
-import { AsideNav } from "@/app/ui/components/private/AsideNav";
+import { PrivateShell } from "@/app/_ui/components/private/private-shell";
+import { AsideNav } from "@/app/_ui/components/private/aside-nav";
 import type { Role } from "@/app/_kernel/lib/rbac/types";
 // import { auth } from "@/auth"; // exemplo
 
 import { EMPLOYEE_ASIDE } from "@/app/_kernel/lib/nav/asides";
+import { PageTitle } from "@/app/_ui/components/private/page-title";
 
 export default async function DashboardLayout({
   children,
@@ -14,11 +15,11 @@ export default async function DashboardLayout({
 }) {
   // const session = await auth();
   // const role = (session?.user?.role as Role) ?? "SERVIDOR";
-  const role: Role = "ADMIN"; // placeholder
+  const role: Role = "SERVIDOR"; // placeholder
 
   return (
     <PrivateShell
-      title="Dashboard"
+      pagetitle={<PageTitle config={EMPLOYEE_ASIDE} role={role} />}
       aside={<AsideNav config={EMPLOYEE_ASIDE} role={role} />}
     >
       {children}

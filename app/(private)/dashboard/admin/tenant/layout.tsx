@@ -1,9 +1,10 @@
 // src/app/(private)/admin/relogios/layout.tsx
 import type { ReactNode } from "react";
-import { PrivateShell } from "@/app/ui/components/private/PrivateShell";
-import { AsideNav } from "@/app/ui/components/private/AsideNav";
+import { PrivateShell } from "@/app/_ui/components/private/private-shell";
+import { AsideNav } from "@/app/_ui/components/private/aside-nav";
 import { TENANT_ASIDE } from "@/app/_kernel/lib/nav/asides";
 import type { Role } from "@/app/_kernel/lib/rbac/types";
+import { PageTitle } from "@/app/_ui/components/private/page-title";
 
 export default async function RelogiosLayout({
   children,
@@ -13,7 +14,7 @@ export default async function RelogiosLayout({
   const role: Role = "ADMIN"; // pegue da sessão
   return (
     <PrivateShell
-      title="Unidades Administrativas"
+      pagetitle={<PageTitle config={TENANT_ASIDE} role={role} />}
       aside={<AsideNav config={TENANT_ASIDE} role={role} />}
     >
       {children}

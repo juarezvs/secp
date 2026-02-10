@@ -1,5 +1,5 @@
-import { CreateBranchUseCase } from "@/app/application/org/create-branch.usecase";
-import { BranchRepoPrisma } from "@/app/infra/prisma/org/branch.repo.prisma";
+import { CreateBranchUseCase } from "@/app/_core/application/org/create-branch.usecase";
+import { BranchRepoPrisma } from "@/app/_core/infrastructure/prisma/org/branch.repo.prisma";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {

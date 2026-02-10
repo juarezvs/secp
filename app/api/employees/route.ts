@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { EmployeeRepoPrisma } from "@/app/infra/prisma/people/employee.repo.prisma";
-import { CreateEmployeeUseCase } from "@/app/application/people/create-employee.usecase";
+import { EmployeeRepoPrisma } from "@/app/_core/infrastructure/prisma/people/employee.repo.prisma";
+import { CreateEmployeeUseCase } from "@/app/_core/application/people/create-employee.usecase";
 import { requireOnboarded } from "@/app/_kernel/auth/guard";
 import { error } from "console";
 

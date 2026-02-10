@@ -1,5 +1,5 @@
-import { CreateCompanyUseCase } from "@/app/application/org/create-company.usecase";
-import { CompanyRepoPrisma } from "@/app/infra/prisma/org/company.repo.prisma";
+import { CreateCompanyUseCase } from "@/app/_core/application/org/create-company.usecase";
+import { CompanyRepoPrisma } from "@/app/_core/infrastructure/prisma/org/company.repo.prisma";
 import { NextResponse } from "next/server";
 
 export async function GET() {
