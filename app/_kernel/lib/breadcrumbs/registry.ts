@@ -45,9 +45,9 @@ export const BREADCRUMB_ROUTES: BreadcrumbRoute[] = [
   { pattern: "/dashboard/admin/clocks/new", label: "Novo Relógio" },
   { pattern: "/dashboard/admin/clocks/maintenance", label: "Manutenção" },
 
-  { pattern: "/dashboard/admin/afd", label: "AFD / Importações" },
-  { pattern: "/dashboard/admin/afd/importar", label: "Importar AFD" },
-  { pattern: "/dashboard/admin/afd/processar", label: "Processar AFD" },
+  { pattern: "/dashboard/admin/afd", label: "Arquivo de fonte dados " },
+  { pattern: "/dashboard/admin/afd/import", label: "Importação de AFD" },
+  { pattern: "/dashboard/admin/afd/list", label: "Últimas importações realizadas" },
   {
     pattern: "/dashboard/admin/afd/historico",
     label: "Histórico de Importações",

@@ -10,13 +10,68 @@ import {
   TableRow,
 } from "@/app/ui/components/shadcn/table";
 
-import { Button } from "@/app/_ui/components/shadcn/button";
 import { TenantDTO } from "../../lib/definition";
-import { DatabaseBackupIcon, MoreHorizontalIcon } from "lucide-react";
-import { createTenantAction } from "../../import/actions";
+import { createTenantAction } from "../../actions";
+import Image from "next/image";
+import { toast } from "sonner";
+
+type CityRow = {
+  uf: string;
+  nome: string;
+};
+
+export const FlagCell = ({ uf, nome }: CityRow) => {
+  const code = (uf || "").trim().toLowerCase();
+  const alowed = new Set([
+    "sjac",
+    "sjal",
+    "sjap",
+    "sjam",
+    "sjba",
+    "sjce",
+    "sjdf",
+    "sjes",
+    "sjgo",
+    "sjma",
+    "sjmt",
+    "sjms",
+    "sjmg",
+    "sjpa",
+    "sjpb",
+    "sjpr",
+    "sjpe",
+    "sjpi",
+    "sjrj",
+    "sjrn",
+    "sjrs",
+    "sjro",
+    "sjrr",
+    "sjsc",
+    "sjsp",
+    "sjse",
+    "sjto",
+  ]);
+  if (!alowed.has(code)) {
+    console.warn(`Código de estado inválido: ${code}`);
+  }
+  const flagUrl = alowed.has(code)
+    ? `/flag/cities/svg/${code}-circle.svg`
+    : "/flag/cities/svg/default.svg";
+  console.log("FLAG URL:", flagUrl);
+  return (
+    <div className="flex items-center ">
+      <Image
+        src={flagUrl}
+        alt={`Bandeira de ${nome} (${code.toUpperCase()})`}
+        width={24}
+        height={16}
+      />
+    </div>
+  );
+};
 
 const TenantTable = ({ data }: { data: TenantDTO[] }) => {
-  const [selectedRows, setSelectedRows] = React.useState<Set<number>>(
+  const [selectedRows, setSelectedRows] = React.useState<Set<string>>(
     new Set(),
   );
 
@@ -34,10 +89,16 @@ const TenantTable = ({ data }: { data: TenantDTO[] }) => {
     const selectedData = data.filter((row) => selectedRows.has(row.id));
 
     selectedData.forEach((row) => {
-      createTenantAction({
-        name: row.descricao,
-        nickname: row.sigla,
-      });
+      try {
+        createTenantAction({
+          name: row.descricao,
+          nickname: row.sigla,
+          externalSarhId: row.id,
+        });
+      } catch (error) {
+        toast.error(`Erro ao importar o tenant: ${row.descricao}`);
+        console.error(`Erro ao importar o tenant: ${row.descricao}`, error);
+      }
     });
   };
 
@@ -63,9 +124,8 @@ const TenantTable = ({ data }: { data: TenantDTO[] }) => {
       <Table>
         <TableHeader>
           <TableRow className="bg-secp-blue  hover:bg-secp-blue ">
-            <TableHead className="text-white uppercase font-semibold">
-              Sigla
-            </TableHead>
+            <TableHead className="text-white uppercase font-semibold"></TableHead>
+
             <TableHead className="text-white uppercase font-semibold">
               Nome
             </TableHead>
@@ -83,8 +143,12 @@ const TenantTable = ({ data }: { data: TenantDTO[] }) => {
               key={row.id}
               data-state={selectedRows.has(row.id) ? "selected" : undefined}
             >
-              <TableCell className="font-medium">{row.sigla}</TableCell>
-              <TableCell>{row.descricao}</TableCell>
+              <TableCell className="font-medium">
+                <FlagCell uf={row.sigla} nome={row.descricao} />
+              </TableCell>
+              <TableCell>
+                {row.sigla} - {row.descricao}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

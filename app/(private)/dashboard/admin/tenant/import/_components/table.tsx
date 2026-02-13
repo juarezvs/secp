@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import { toast } from "sonner";
 
 import { Checkbox } from "@/app/ui/components/shadcn/checkbox";
 import {
@@ -23,10 +24,11 @@ import {
 import { Button } from "@/app/_ui/components/shadcn/button";
 import { TenantDTO } from "../../lib/definition";
 import { DatabaseBackupIcon, MoreHorizontalIcon } from "lucide-react";
-import { createTenantAction } from "../actions";
+import { createTenantAction, resultTenant } from "../../actions";
+import { es } from "zod/v4/locales";
 
-const TenantTable = ({ data }: { data: TenantDTO[] }) => {
-  const [selectedRows, setSelectedRows] = React.useState<Set<number>>(
+const TenantSarhTable = ({ data }: { data: TenantDTO[] }) => {
+  const [selectedRows, setSelectedRows] = React.useState<Set<string>>(
     new Set(),
   );
 
@@ -40,18 +42,25 @@ const TenantTable = ({ data }: { data: TenantDTO[] }) => {
     }
   };
 
-  const handleImportSelected = () => {
+  const handleImportSelected = async () => {
     const selectedData = data.filter((row) => selectedRows.has(row.id));
 
-    selectedData.forEach((row) => {
-      createTenantAction({
+    selectedData.forEach(async (row) => {
+      const res: resultTenant = await createTenantAction({
         name: row.descricao,
         nickname: row.sigla,
+        externalSarhId: row.id,
       });
+
+      if (res.success) {
+        toast.success(`${row.descricao} importada com sucesso!`);
+      } else {
+        toast.warning(`${res.error}`);
+      }
     });
   };
 
-  const handleSelectRow = (id: number, checked: boolean) => {
+  const handleSelectRow = (id: string, checked: boolean) => {
     setSelectedRows((prev) => {
       const next = new Set(prev);
       if (checked) next.add(id);
@@ -82,18 +91,7 @@ const TenantTable = ({ data }: { data: TenantDTO[] }) => {
         <DatabaseBackupIcon />
         Importar selecionados
       </Button>
-      <Button
-        variant="outline"
-        // 1. O atributo HTML disabled recebe a lógica (true/false)
-        disabled={!selectedRows.size}
-        // 2. Classes Tailwind normais + classes para quando estiver desabilitado (disabled:)
-        className="cursor-pointer bg-secp-button-active text-white px-4 py-2 mb-2 rounded-xl hover:bg-secp-button-hover hover:text-white
-                 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-80"
-        onClick={handleImportSelected}
-      >
-        <DatabaseBackupIcon />
-        Importar selecionados
-      </Button>
+
       <Table>
         <TableHeader>
           <TableRow className="bg-secp-blue  hover:bg-secp-blue ">
@@ -155,6 +153,7 @@ const TenantTable = ({ data }: { data: TenantDTO[] }) => {
                         await createTenantAction({
                           name: row.descricao,
                           nickname: row.sigla,
+                          externalSarhId: row.id,
                         });
                       }}
                     >
@@ -176,4 +175,4 @@ const TenantTable = ({ data }: { data: TenantDTO[] }) => {
   );
 };
 
-export default TenantTable;
+export default TenantSarhTable;

@@ -407,7 +407,9 @@ export const ModelName = {
   AuthorizationRequest: 'AuthorizationRequest',
   Delegation: 'Delegation',
   Holiday: 'Holiday',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  AfdImport: 'AfdImport',
+  AfdFile: 'AfdFile'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -423,7 +425,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "userProfile" | "account" | "session" | "verificationToken" | "authenticator" | "auditSession" | "tenant" | "unit" | "user" | "employee" | "workSchedule" | "scheduleAssignment" | "biometricDevice" | "punchEvent" | "externalActivity" | "travel" | "training" | "attendanceDay" | "attendanceMonth" | "bankHourLedgerEntry" | "authorizationRequest" | "delegation" | "holiday" | "auditLog"
+    modelProps: "userProfile" | "account" | "session" | "verificationToken" | "authenticator" | "auditSession" | "tenant" | "unit" | "user" | "employee" | "workSchedule" | "scheduleAssignment" | "biometricDevice" | "punchEvent" | "externalActivity" | "travel" | "training" | "attendanceDay" | "attendanceMonth" | "bankHourLedgerEntry" | "authorizationRequest" | "delegation" | "holiday" | "auditLog" | "afdImport" | "afdFile"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2203,6 +2205,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AfdImport: {
+      payload: Prisma.$AfdImportPayload<ExtArgs>
+      fields: Prisma.AfdImportFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AfdImportFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdImportPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AfdImportFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdImportPayload>
+        }
+        findFirst: {
+          args: Prisma.AfdImportFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdImportPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AfdImportFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdImportPayload>
+        }
+        findMany: {
+          args: Prisma.AfdImportFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdImportPayload>[]
+        }
+        create: {
+          args: Prisma.AfdImportCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdImportPayload>
+        }
+        createMany: {
+          args: Prisma.AfdImportCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AfdImportCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdImportPayload>[]
+        }
+        delete: {
+          args: Prisma.AfdImportDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdImportPayload>
+        }
+        update: {
+          args: Prisma.AfdImportUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdImportPayload>
+        }
+        deleteMany: {
+          args: Prisma.AfdImportDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AfdImportUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AfdImportUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdImportPayload>[]
+        }
+        upsert: {
+          args: Prisma.AfdImportUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdImportPayload>
+        }
+        aggregate: {
+          args: Prisma.AfdImportAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAfdImport>
+        }
+        groupBy: {
+          args: Prisma.AfdImportGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AfdImportGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AfdImportCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AfdImportCountAggregateOutputType> | number
+        }
+      }
+    }
+    AfdFile: {
+      payload: Prisma.$AfdFilePayload<ExtArgs>
+      fields: Prisma.AfdFileFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AfdFileFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdFilePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AfdFileFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdFilePayload>
+        }
+        findFirst: {
+          args: Prisma.AfdFileFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdFilePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AfdFileFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdFilePayload>
+        }
+        findMany: {
+          args: Prisma.AfdFileFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdFilePayload>[]
+        }
+        create: {
+          args: Prisma.AfdFileCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdFilePayload>
+        }
+        createMany: {
+          args: Prisma.AfdFileCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AfdFileCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdFilePayload>[]
+        }
+        delete: {
+          args: Prisma.AfdFileDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdFilePayload>
+        }
+        update: {
+          args: Prisma.AfdFileUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdFilePayload>
+        }
+        deleteMany: {
+          args: Prisma.AfdFileDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AfdFileUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AfdFileUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdFilePayload>[]
+        }
+        upsert: {
+          args: Prisma.AfdFileUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AfdFilePayload>
+        }
+        aggregate: {
+          args: Prisma.AfdFileAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAfdFile>
+        }
+        groupBy: {
+          args: Prisma.AfdFileGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AfdFileGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AfdFileCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AfdFileCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2331,6 +2481,7 @@ export type AuditSessionScalarFieldEnum = (typeof AuditSessionScalarFieldEnum)[k
 
 export const TenantScalarFieldEnum = {
   id: 'id',
+  externalSarhId: 'externalSarhId',
   name: 'name',
   nickname: 'nickname',
   active: 'active',
@@ -2342,6 +2493,7 @@ export type TenantScalarFieldEnum = (typeof TenantScalarFieldEnum)[keyof typeof 
 
 export const UnitScalarFieldEnum = {
   id: 'id',
+  externalSarhId: 'externalSarhId',
   tenantId: 'tenantId',
   name: 'name',
   code: 'code',
@@ -2596,6 +2748,36 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const AfdImportScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  source: 'source'
+} as const
+
+export type AfdImportScalarFieldEnum = (typeof AfdImportScalarFieldEnum)[keyof typeof AfdImportScalarFieldEnum]
+
+
+export const AfdFileScalarFieldEnum = {
+  id: 'id',
+  importId: 'importId',
+  originalName: 'originalName',
+  storedName: 'storedName',
+  filePath: 'filePath',
+  sha256: 'sha256',
+  sizeBytes: 'sizeBytes',
+  mimeType: 'mimeType',
+  rawText: 'rawText',
+  parsedJson: 'parsedJson',
+  status: 'status',
+  errorMessage: 'errorMessage',
+  createdAt: 'createdAt',
+  processedAt: 'processedAt'
+} as const
+
+export type AfdFileScalarFieldEnum = (typeof AfdFileScalarFieldEnum)[keyof typeof AfdFileScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2861,6 +3043,20 @@ export type EnumAuthorizationStatusFieldRefInput<$PrismaModel> = FieldRefInputTy
 export type ListEnumAuthorizationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthorizationStatus[]'>
     
 
+
+/**
+ * Reference to a field of type 'AfdFileStatus'
+ */
+export type EnumAfdFileStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AfdFileStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AfdFileStatus[]'
+ */
+export type ListEnumAfdFileStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AfdFileStatus[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -2980,6 +3176,8 @@ export type GlobalOmitConfig = {
   delegation?: Prisma.DelegationOmit
   holiday?: Prisma.HolidayOmit
   auditLog?: Prisma.AuditLogOmit
+  afdImport?: Prisma.AfdImportOmit
+  afdFile?: Prisma.AfdFileOmit
 }
 
 /* Types for Logging */

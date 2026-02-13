@@ -433,6 +433,23 @@ export type EnumAuthorizationStatusWithAggregatesFilter<$PrismaModel = never> = 
   _max?: Prisma.NestedEnumAuthorizationStatusFilter<$PrismaModel>
 }
 
+export type EnumAfdFileStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AfdFileStatus | Prisma.EnumAfdFileStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AfdFileStatus[] | Prisma.ListEnumAfdFileStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AfdFileStatus[] | Prisma.ListEnumAfdFileStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAfdFileStatusFilter<$PrismaModel> | $Enums.AfdFileStatus
+}
+
+export type EnumAfdFileStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AfdFileStatus | Prisma.EnumAfdFileStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AfdFileStatus[] | Prisma.ListEnumAfdFileStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AfdFileStatus[] | Prisma.ListEnumAfdFileStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAfdFileStatusWithAggregatesFilter<$PrismaModel> | $Enums.AfdFileStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAfdFileStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAfdFileStatusFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -825,6 +842,23 @@ export type NestedEnumAuthorizationStatusWithAggregatesFilter<$PrismaModel = nev
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumAuthorizationStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumAuthorizationStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumAfdFileStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AfdFileStatus | Prisma.EnumAfdFileStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AfdFileStatus[] | Prisma.ListEnumAfdFileStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AfdFileStatus[] | Prisma.ListEnumAfdFileStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAfdFileStatusFilter<$PrismaModel> | $Enums.AfdFileStatus
+}
+
+export type NestedEnumAfdFileStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AfdFileStatus | Prisma.EnumAfdFileStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AfdFileStatus[] | Prisma.ListEnumAfdFileStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AfdFileStatus[] | Prisma.ListEnumAfdFileStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAfdFileStatusWithAggregatesFilter<$PrismaModel> | $Enums.AfdFileStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAfdFileStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAfdFileStatusFilter<$PrismaModel>
 }
 
 

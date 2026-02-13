@@ -4,15 +4,6 @@ import { SearchIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 
-export function Paginacao({ totalPages }: { totalPages: number }) {
-  const pathname = usePathname();
-  const currentPage = Number(useSearchParams().get("page")) || 1;
-  return (
-    <div className="flex items-center justify-center">
-      <p className="text-sm text-gray-500">Página 1 de {totalPages}</p>
-    </div>
-  );
-}
 
 const Search = ({ placeholder }: { placeholder: string }) => {
   const searchParams = useSearchParams();
@@ -46,7 +37,7 @@ const Search = ({ placeholder }: { placeholder: string }) => {
         onChange={(e) => {
           handleSearch(e.target.value);
         }}
-        defaultValue={searchParams.get('query')?.toString()}
+        defaultValue={searchParams.get("query")?.toString()}
       />
       <SearchIcon className="absolute left-3 top-1/2 h-4.5 w-4.5 -translate-y-1/2  text-gray-500 peer-focus:text-secp-green" />
     </div>

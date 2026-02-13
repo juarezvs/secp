@@ -26,6 +26,7 @@ export type AggregateTenant = {
 
 export type TenantMinAggregateOutputType = {
   id: string | null
+  externalSarhId: string | null
   name: string | null
   nickname: string | null
   active: boolean | null
@@ -34,6 +35,7 @@ export type TenantMinAggregateOutputType = {
 
 export type TenantMaxAggregateOutputType = {
   id: string | null
+  externalSarhId: string | null
   name: string | null
   nickname: string | null
   active: boolean | null
@@ -42,6 +44,7 @@ export type TenantMaxAggregateOutputType = {
 
 export type TenantCountAggregateOutputType = {
   id: number
+  externalSarhId: number
   name: number
   nickname: number
   active: number
@@ -52,6 +55,7 @@ export type TenantCountAggregateOutputType = {
 
 export type TenantMinAggregateInputType = {
   id?: true
+  externalSarhId?: true
   name?: true
   nickname?: true
   active?: true
@@ -60,6 +64,7 @@ export type TenantMinAggregateInputType = {
 
 export type TenantMaxAggregateInputType = {
   id?: true
+  externalSarhId?: true
   name?: true
   nickname?: true
   active?: true
@@ -68,6 +73,7 @@ export type TenantMaxAggregateInputType = {
 
 export type TenantCountAggregateInputType = {
   id?: true
+  externalSarhId?: true
   name?: true
   nickname?: true
   active?: true
@@ -149,6 +155,7 @@ export type TenantGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type TenantGroupByOutputType = {
   id: string
+  externalSarhId: string
   name: string
   nickname: string
   active: boolean
@@ -178,6 +185,7 @@ export type TenantWhereInput = {
   OR?: Prisma.TenantWhereInput[]
   NOT?: Prisma.TenantWhereInput | Prisma.TenantWhereInput[]
   id?: Prisma.StringFilter<"Tenant"> | string
+  externalSarhId?: Prisma.StringFilter<"Tenant"> | string
   name?: Prisma.StringFilter<"Tenant"> | string
   nickname?: Prisma.StringFilter<"Tenant"> | string
   active?: Prisma.BoolFilter<"Tenant"> | boolean
@@ -203,6 +211,7 @@ export type TenantWhereInput = {
 
 export type TenantOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  externalSarhId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   nickname?: Prisma.SortOrder
   active?: Prisma.SortOrder
@@ -228,6 +237,7 @@ export type TenantOrderByWithRelationInput = {
 
 export type TenantWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  externalSarhId?: string
   nickname?: string
   AND?: Prisma.TenantWhereInput | Prisma.TenantWhereInput[]
   OR?: Prisma.TenantWhereInput[]
@@ -252,10 +262,11 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   delegations?: Prisma.DelegationListRelationFilter
   holidays?: Prisma.HolidayListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
-}, "id" | "nickname">
+}, "id" | "externalSarhId" | "nickname">
 
 export type TenantOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  externalSarhId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   nickname?: Prisma.SortOrder
   active?: Prisma.SortOrder
@@ -270,6 +281,7 @@ export type TenantScalarWhereWithAggregatesInput = {
   OR?: Prisma.TenantScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TenantScalarWhereWithAggregatesInput | Prisma.TenantScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
+  externalSarhId?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
   name?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
   nickname?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
   active?: Prisma.BoolWithAggregatesFilter<"Tenant"> | boolean
@@ -278,6 +290,7 @@ export type TenantScalarWhereWithAggregatesInput = {
 
 export type TenantCreateInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -303,6 +316,7 @@ export type TenantCreateInput = {
 
 export type TenantUncheckedCreateInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -328,6 +342,7 @@ export type TenantUncheckedCreateInput = {
 
 export type TenantUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -353,6 +368,7 @@ export type TenantUpdateInput = {
 
 export type TenantUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -378,6 +394,7 @@ export type TenantUncheckedUpdateInput = {
 
 export type TenantCreateManyInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -386,6 +403,7 @@ export type TenantCreateManyInput = {
 
 export type TenantUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -394,6 +412,7 @@ export type TenantUpdateManyMutationInput = {
 
 export type TenantUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -402,6 +421,7 @@ export type TenantUncheckedUpdateManyInput = {
 
 export type TenantCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  externalSarhId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   nickname?: Prisma.SortOrder
   active?: Prisma.SortOrder
@@ -410,6 +430,7 @@ export type TenantCountOrderByAggregateInput = {
 
 export type TenantMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  externalSarhId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   nickname?: Prisma.SortOrder
   active?: Prisma.SortOrder
@@ -418,6 +439,7 @@ export type TenantMaxOrderByAggregateInput = {
 
 export type TenantMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  externalSarhId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   nickname?: Prisma.SortOrder
   active?: Prisma.SortOrder
@@ -669,6 +691,7 @@ export type TenantUpdateOneRequiredWithoutAuditLogsNestedInput = {
 
 export type TenantCreateWithoutUnitsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -693,6 +716,7 @@ export type TenantCreateWithoutUnitsInput = {
 
 export type TenantUncheckedCreateWithoutUnitsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -733,6 +757,7 @@ export type TenantUpdateToOneWithWhereWithoutUnitsInput = {
 
 export type TenantUpdateWithoutUnitsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -757,6 +782,7 @@ export type TenantUpdateWithoutUnitsInput = {
 
 export type TenantUncheckedUpdateWithoutUnitsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -781,6 +807,7 @@ export type TenantUncheckedUpdateWithoutUnitsInput = {
 
 export type TenantCreateWithoutUsersInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -805,6 +832,7 @@ export type TenantCreateWithoutUsersInput = {
 
 export type TenantUncheckedCreateWithoutUsersInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -845,6 +873,7 @@ export type TenantUpdateToOneWithWhereWithoutUsersInput = {
 
 export type TenantUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -869,6 +898,7 @@ export type TenantUpdateWithoutUsersInput = {
 
 export type TenantUncheckedUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -893,6 +923,7 @@ export type TenantUncheckedUpdateWithoutUsersInput = {
 
 export type TenantCreateWithoutEmployeesInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -917,6 +948,7 @@ export type TenantCreateWithoutEmployeesInput = {
 
 export type TenantUncheckedCreateWithoutEmployeesInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -957,6 +989,7 @@ export type TenantUpdateToOneWithWhereWithoutEmployeesInput = {
 
 export type TenantUpdateWithoutEmployeesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -981,6 +1014,7 @@ export type TenantUpdateWithoutEmployeesInput = {
 
 export type TenantUncheckedUpdateWithoutEmployeesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1005,6 +1039,7 @@ export type TenantUncheckedUpdateWithoutEmployeesInput = {
 
 export type TenantCreateWithoutWorkSchedulesInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1029,6 +1064,7 @@ export type TenantCreateWithoutWorkSchedulesInput = {
 
 export type TenantUncheckedCreateWithoutWorkSchedulesInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1069,6 +1105,7 @@ export type TenantUpdateToOneWithWhereWithoutWorkSchedulesInput = {
 
 export type TenantUpdateWithoutWorkSchedulesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1093,6 +1130,7 @@ export type TenantUpdateWithoutWorkSchedulesInput = {
 
 export type TenantUncheckedUpdateWithoutWorkSchedulesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1117,6 +1155,7 @@ export type TenantUncheckedUpdateWithoutWorkSchedulesInput = {
 
 export type TenantCreateWithoutScheduleAssignmentsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1141,6 +1180,7 @@ export type TenantCreateWithoutScheduleAssignmentsInput = {
 
 export type TenantUncheckedCreateWithoutScheduleAssignmentsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1181,6 +1221,7 @@ export type TenantUpdateToOneWithWhereWithoutScheduleAssignmentsInput = {
 
 export type TenantUpdateWithoutScheduleAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1205,6 +1246,7 @@ export type TenantUpdateWithoutScheduleAssignmentsInput = {
 
 export type TenantUncheckedUpdateWithoutScheduleAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1229,6 +1271,7 @@ export type TenantUncheckedUpdateWithoutScheduleAssignmentsInput = {
 
 export type TenantCreateWithoutBiometricDevicesInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1253,6 +1296,7 @@ export type TenantCreateWithoutBiometricDevicesInput = {
 
 export type TenantUncheckedCreateWithoutBiometricDevicesInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1293,6 +1337,7 @@ export type TenantUpdateToOneWithWhereWithoutBiometricDevicesInput = {
 
 export type TenantUpdateWithoutBiometricDevicesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1317,6 +1362,7 @@ export type TenantUpdateWithoutBiometricDevicesInput = {
 
 export type TenantUncheckedUpdateWithoutBiometricDevicesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1341,6 +1387,7 @@ export type TenantUncheckedUpdateWithoutBiometricDevicesInput = {
 
 export type TenantCreateWithoutPunchEventsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1365,6 +1412,7 @@ export type TenantCreateWithoutPunchEventsInput = {
 
 export type TenantUncheckedCreateWithoutPunchEventsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1405,6 +1453,7 @@ export type TenantUpdateToOneWithWhereWithoutPunchEventsInput = {
 
 export type TenantUpdateWithoutPunchEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1429,6 +1478,7 @@ export type TenantUpdateWithoutPunchEventsInput = {
 
 export type TenantUncheckedUpdateWithoutPunchEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1453,6 +1503,7 @@ export type TenantUncheckedUpdateWithoutPunchEventsInput = {
 
 export type TenantCreateWithoutExternalActivitiesInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1477,6 +1528,7 @@ export type TenantCreateWithoutExternalActivitiesInput = {
 
 export type TenantUncheckedCreateWithoutExternalActivitiesInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1517,6 +1569,7 @@ export type TenantUpdateToOneWithWhereWithoutExternalActivitiesInput = {
 
 export type TenantUpdateWithoutExternalActivitiesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1541,6 +1594,7 @@ export type TenantUpdateWithoutExternalActivitiesInput = {
 
 export type TenantUncheckedUpdateWithoutExternalActivitiesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1565,6 +1619,7 @@ export type TenantUncheckedUpdateWithoutExternalActivitiesInput = {
 
 export type TenantCreateWithoutTravelsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1589,6 +1644,7 @@ export type TenantCreateWithoutTravelsInput = {
 
 export type TenantUncheckedCreateWithoutTravelsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1629,6 +1685,7 @@ export type TenantUpdateToOneWithWhereWithoutTravelsInput = {
 
 export type TenantUpdateWithoutTravelsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1653,6 +1710,7 @@ export type TenantUpdateWithoutTravelsInput = {
 
 export type TenantUncheckedUpdateWithoutTravelsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1677,6 +1735,7 @@ export type TenantUncheckedUpdateWithoutTravelsInput = {
 
 export type TenantCreateWithoutTrainingsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1701,6 +1760,7 @@ export type TenantCreateWithoutTrainingsInput = {
 
 export type TenantUncheckedCreateWithoutTrainingsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1741,6 +1801,7 @@ export type TenantUpdateToOneWithWhereWithoutTrainingsInput = {
 
 export type TenantUpdateWithoutTrainingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1765,6 +1826,7 @@ export type TenantUpdateWithoutTrainingsInput = {
 
 export type TenantUncheckedUpdateWithoutTrainingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1789,6 +1851,7 @@ export type TenantUncheckedUpdateWithoutTrainingsInput = {
 
 export type TenantCreateWithoutAttendanceDaysInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1813,6 +1876,7 @@ export type TenantCreateWithoutAttendanceDaysInput = {
 
 export type TenantUncheckedCreateWithoutAttendanceDaysInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1853,6 +1917,7 @@ export type TenantUpdateToOneWithWhereWithoutAttendanceDaysInput = {
 
 export type TenantUpdateWithoutAttendanceDaysInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1877,6 +1942,7 @@ export type TenantUpdateWithoutAttendanceDaysInput = {
 
 export type TenantUncheckedUpdateWithoutAttendanceDaysInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1901,6 +1967,7 @@ export type TenantUncheckedUpdateWithoutAttendanceDaysInput = {
 
 export type TenantCreateWithoutAttendanceMonthsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1925,6 +1992,7 @@ export type TenantCreateWithoutAttendanceMonthsInput = {
 
 export type TenantUncheckedCreateWithoutAttendanceMonthsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -1965,6 +2033,7 @@ export type TenantUpdateToOneWithWhereWithoutAttendanceMonthsInput = {
 
 export type TenantUpdateWithoutAttendanceMonthsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1989,6 +2058,7 @@ export type TenantUpdateWithoutAttendanceMonthsInput = {
 
 export type TenantUncheckedUpdateWithoutAttendanceMonthsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2013,6 +2083,7 @@ export type TenantUncheckedUpdateWithoutAttendanceMonthsInput = {
 
 export type TenantCreateWithoutBankHourLedgerEntriesInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -2037,6 +2108,7 @@ export type TenantCreateWithoutBankHourLedgerEntriesInput = {
 
 export type TenantUncheckedCreateWithoutBankHourLedgerEntriesInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -2077,6 +2149,7 @@ export type TenantUpdateToOneWithWhereWithoutBankHourLedgerEntriesInput = {
 
 export type TenantUpdateWithoutBankHourLedgerEntriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2101,6 +2174,7 @@ export type TenantUpdateWithoutBankHourLedgerEntriesInput = {
 
 export type TenantUncheckedUpdateWithoutBankHourLedgerEntriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2125,6 +2199,7 @@ export type TenantUncheckedUpdateWithoutBankHourLedgerEntriesInput = {
 
 export type TenantCreateWithoutAuthorizationRequestsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -2149,6 +2224,7 @@ export type TenantCreateWithoutAuthorizationRequestsInput = {
 
 export type TenantUncheckedCreateWithoutAuthorizationRequestsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -2189,6 +2265,7 @@ export type TenantUpdateToOneWithWhereWithoutAuthorizationRequestsInput = {
 
 export type TenantUpdateWithoutAuthorizationRequestsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2213,6 +2290,7 @@ export type TenantUpdateWithoutAuthorizationRequestsInput = {
 
 export type TenantUncheckedUpdateWithoutAuthorizationRequestsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2237,6 +2315,7 @@ export type TenantUncheckedUpdateWithoutAuthorizationRequestsInput = {
 
 export type TenantCreateWithoutDelegationsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -2261,6 +2340,7 @@ export type TenantCreateWithoutDelegationsInput = {
 
 export type TenantUncheckedCreateWithoutDelegationsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -2301,6 +2381,7 @@ export type TenantUpdateToOneWithWhereWithoutDelegationsInput = {
 
 export type TenantUpdateWithoutDelegationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2325,6 +2406,7 @@ export type TenantUpdateWithoutDelegationsInput = {
 
 export type TenantUncheckedUpdateWithoutDelegationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2349,6 +2431,7 @@ export type TenantUncheckedUpdateWithoutDelegationsInput = {
 
 export type TenantCreateWithoutHolidaysInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -2373,6 +2456,7 @@ export type TenantCreateWithoutHolidaysInput = {
 
 export type TenantUncheckedCreateWithoutHolidaysInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -2413,6 +2497,7 @@ export type TenantUpdateToOneWithWhereWithoutHolidaysInput = {
 
 export type TenantUpdateWithoutHolidaysInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2437,6 +2522,7 @@ export type TenantUpdateWithoutHolidaysInput = {
 
 export type TenantUncheckedUpdateWithoutHolidaysInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2461,6 +2547,7 @@ export type TenantUncheckedUpdateWithoutHolidaysInput = {
 
 export type TenantCreateWithoutAuditLogsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -2485,6 +2572,7 @@ export type TenantCreateWithoutAuditLogsInput = {
 
 export type TenantUncheckedCreateWithoutAuditLogsInput = {
   id?: string
+  externalSarhId: string
   name: string
   nickname: string
   active?: boolean
@@ -2525,6 +2613,7 @@ export type TenantUpdateToOneWithWhereWithoutAuditLogsInput = {
 
 export type TenantUpdateWithoutAuditLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2549,6 +2638,7 @@ export type TenantUpdateWithoutAuditLogsInput = {
 
 export type TenantUncheckedUpdateWithoutAuditLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2748,6 +2838,7 @@ export type TenantCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Type
 
 export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  externalSarhId?: boolean
   name?: boolean
   nickname?: boolean
   active?: boolean
@@ -2774,6 +2865,7 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 
 export type TenantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  externalSarhId?: boolean
   name?: boolean
   nickname?: boolean
   active?: boolean
@@ -2782,6 +2874,7 @@ export type TenantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 
 export type TenantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  externalSarhId?: boolean
   name?: boolean
   nickname?: boolean
   active?: boolean
@@ -2790,13 +2883,14 @@ export type TenantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 
 export type TenantSelectScalar = {
   id?: boolean
+  externalSarhId?: boolean
   name?: boolean
   nickname?: boolean
   active?: boolean
   createdAt?: boolean
 }
 
-export type TenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "nickname" | "active" | "createdAt", ExtArgs["result"]["tenant"]>
+export type TenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "externalSarhId" | "name" | "nickname" | "active" | "createdAt", ExtArgs["result"]["tenant"]>
 export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   units?: boolean | Prisma.Tenant$unitsArgs<ExtArgs>
   users?: boolean | Prisma.Tenant$usersArgs<ExtArgs>
@@ -2843,6 +2937,7 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    externalSarhId: string
     name: string
     nickname: string
     active: boolean
@@ -3288,6 +3383,7 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
  */
 export interface TenantFieldRefs {
   readonly id: Prisma.FieldRef<"Tenant", 'String'>
+  readonly externalSarhId: Prisma.FieldRef<"Tenant", 'String'>
   readonly name: Prisma.FieldRef<"Tenant", 'String'>
   readonly nickname: Prisma.FieldRef<"Tenant", 'String'>
   readonly active: Prisma.FieldRef<"Tenant", 'Boolean'>

@@ -26,6 +26,7 @@ export type AggregateUnit = {
 
 export type UnitMinAggregateOutputType = {
   id: string | null
+  externalSarhId: string | null
   tenantId: string | null
   name: string | null
   code: string | null
@@ -35,6 +36,7 @@ export type UnitMinAggregateOutputType = {
 
 export type UnitMaxAggregateOutputType = {
   id: string | null
+  externalSarhId: string | null
   tenantId: string | null
   name: string | null
   code: string | null
@@ -44,6 +46,7 @@ export type UnitMaxAggregateOutputType = {
 
 export type UnitCountAggregateOutputType = {
   id: number
+  externalSarhId: number
   tenantId: number
   name: number
   code: number
@@ -55,6 +58,7 @@ export type UnitCountAggregateOutputType = {
 
 export type UnitMinAggregateInputType = {
   id?: true
+  externalSarhId?: true
   tenantId?: true
   name?: true
   code?: true
@@ -64,6 +68,7 @@ export type UnitMinAggregateInputType = {
 
 export type UnitMaxAggregateInputType = {
   id?: true
+  externalSarhId?: true
   tenantId?: true
   name?: true
   code?: true
@@ -73,6 +78,7 @@ export type UnitMaxAggregateInputType = {
 
 export type UnitCountAggregateInputType = {
   id?: true
+  externalSarhId?: true
   tenantId?: true
   name?: true
   code?: true
@@ -155,6 +161,7 @@ export type UnitGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type UnitGroupByOutputType = {
   id: string
+  externalSarhId: string
   tenantId: string
   name: string
   code: string | null
@@ -185,6 +192,7 @@ export type UnitWhereInput = {
   OR?: Prisma.UnitWhereInput[]
   NOT?: Prisma.UnitWhereInput | Prisma.UnitWhereInput[]
   id?: Prisma.StringFilter<"Unit"> | string
+  externalSarhId?: Prisma.StringFilter<"Unit"> | string
   tenantId?: Prisma.StringFilter<"Unit"> | string
   name?: Prisma.StringFilter<"Unit"> | string
   code?: Prisma.StringNullableFilter<"Unit"> | string | null
@@ -201,6 +209,7 @@ export type UnitWhereInput = {
 
 export type UnitOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  externalSarhId?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   code?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -217,6 +226,7 @@ export type UnitOrderByWithRelationInput = {
 
 export type UnitWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  externalSarhId?: string
   AND?: Prisma.UnitWhereInput | Prisma.UnitWhereInput[]
   OR?: Prisma.UnitWhereInput[]
   NOT?: Prisma.UnitWhereInput | Prisma.UnitWhereInput[]
@@ -232,10 +242,11 @@ export type UnitWhereUniqueInput = Prisma.AtLeast<{
   employees?: Prisma.EmployeeListRelationFilter
   biometricDevices?: Prisma.BiometricDeviceListRelationFilter
   delegations?: Prisma.DelegationListRelationFilter
-}, "id">
+}, "id" | "externalSarhId">
 
 export type UnitOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  externalSarhId?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   code?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -251,6 +262,7 @@ export type UnitScalarWhereWithAggregatesInput = {
   OR?: Prisma.UnitScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UnitScalarWhereWithAggregatesInput | Prisma.UnitScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Unit"> | string
+  externalSarhId?: Prisma.StringWithAggregatesFilter<"Unit"> | string
   tenantId?: Prisma.StringWithAggregatesFilter<"Unit"> | string
   name?: Prisma.StringWithAggregatesFilter<"Unit"> | string
   code?: Prisma.StringNullableWithAggregatesFilter<"Unit"> | string | null
@@ -260,6 +272,7 @@ export type UnitScalarWhereWithAggregatesInput = {
 
 export type UnitCreateInput = {
   id?: string
+  externalSarhId: string
   name: string
   code?: string | null
   tenant: Prisma.TenantCreateNestedOneWithoutUnitsInput
@@ -273,6 +286,7 @@ export type UnitCreateInput = {
 
 export type UnitUncheckedCreateInput = {
   id?: string
+  externalSarhId: string
   tenantId: string
   name: string
   code?: string | null
@@ -286,6 +300,7 @@ export type UnitUncheckedCreateInput = {
 
 export type UnitUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutUnitsNestedInput
@@ -299,6 +314,7 @@ export type UnitUpdateInput = {
 
 export type UnitUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -312,6 +328,7 @@ export type UnitUncheckedUpdateInput = {
 
 export type UnitCreateManyInput = {
   id?: string
+  externalSarhId: string
   tenantId: string
   name: string
   code?: string | null
@@ -321,12 +338,14 @@ export type UnitCreateManyInput = {
 
 export type UnitUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UnitUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -351,6 +370,7 @@ export type UnitNullableScalarRelationFilter = {
 
 export type UnitCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  externalSarhId?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   code?: Prisma.SortOrder
@@ -360,6 +380,7 @@ export type UnitCountOrderByAggregateInput = {
 
 export type UnitMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  externalSarhId?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   code?: Prisma.SortOrder
@@ -369,6 +390,7 @@ export type UnitMaxOrderByAggregateInput = {
 
 export type UnitMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  externalSarhId?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   code?: Prisma.SortOrder
@@ -567,6 +589,7 @@ export type UnitUpdateOneRequiredWithoutDelegationsNestedInput = {
 
 export type UnitCreateWithoutTenantInput = {
   id?: string
+  externalSarhId: string
   name: string
   code?: string | null
   parent?: Prisma.UnitCreateNestedOneWithoutChildrenInput
@@ -579,6 +602,7 @@ export type UnitCreateWithoutTenantInput = {
 
 export type UnitUncheckedCreateWithoutTenantInput = {
   id?: string
+  externalSarhId: string
   name: string
   code?: string | null
   parentId?: string | null
@@ -620,6 +644,7 @@ export type UnitScalarWhereInput = {
   OR?: Prisma.UnitScalarWhereInput[]
   NOT?: Prisma.UnitScalarWhereInput | Prisma.UnitScalarWhereInput[]
   id?: Prisma.StringFilter<"Unit"> | string
+  externalSarhId?: Prisma.StringFilter<"Unit"> | string
   tenantId?: Prisma.StringFilter<"Unit"> | string
   name?: Prisma.StringFilter<"Unit"> | string
   code?: Prisma.StringNullableFilter<"Unit"> | string | null
@@ -629,6 +654,7 @@ export type UnitScalarWhereInput = {
 
 export type UnitCreateWithoutChildrenInput = {
   id?: string
+  externalSarhId: string
   name: string
   code?: string | null
   tenant: Prisma.TenantCreateNestedOneWithoutUnitsInput
@@ -641,6 +667,7 @@ export type UnitCreateWithoutChildrenInput = {
 
 export type UnitUncheckedCreateWithoutChildrenInput = {
   id?: string
+  externalSarhId: string
   tenantId: string
   name: string
   code?: string | null
@@ -658,6 +685,7 @@ export type UnitCreateOrConnectWithoutChildrenInput = {
 
 export type UnitCreateWithoutParentInput = {
   id?: string
+  externalSarhId: string
   name: string
   code?: string | null
   tenant: Prisma.TenantCreateNestedOneWithoutUnitsInput
@@ -670,6 +698,7 @@ export type UnitCreateWithoutParentInput = {
 
 export type UnitUncheckedCreateWithoutParentInput = {
   id?: string
+  externalSarhId: string
   tenantId: string
   name: string
   code?: string | null
@@ -703,6 +732,7 @@ export type UnitUpdateToOneWithWhereWithoutChildrenInput = {
 
 export type UnitUpdateWithoutChildrenInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutUnitsNestedInput
@@ -715,6 +745,7 @@ export type UnitUpdateWithoutChildrenInput = {
 
 export type UnitUncheckedUpdateWithoutChildrenInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -743,6 +774,7 @@ export type UnitUpdateManyWithWhereWithoutParentInput = {
 
 export type UnitCreateWithoutManagerInput = {
   id?: string
+  externalSarhId: string
   name: string
   code?: string | null
   tenant: Prisma.TenantCreateNestedOneWithoutUnitsInput
@@ -755,6 +787,7 @@ export type UnitCreateWithoutManagerInput = {
 
 export type UnitUncheckedCreateWithoutManagerInput = {
   id?: string
+  externalSarhId: string
   tenantId: string
   name: string
   code?: string | null
@@ -793,6 +826,7 @@ export type UnitUpdateManyWithWhereWithoutManagerInput = {
 
 export type UnitCreateWithoutEmployeesInput = {
   id?: string
+  externalSarhId: string
   name: string
   code?: string | null
   tenant: Prisma.TenantCreateNestedOneWithoutUnitsInput
@@ -805,6 +839,7 @@ export type UnitCreateWithoutEmployeesInput = {
 
 export type UnitUncheckedCreateWithoutEmployeesInput = {
   id?: string
+  externalSarhId: string
   tenantId: string
   name: string
   code?: string | null
@@ -833,6 +868,7 @@ export type UnitUpdateToOneWithWhereWithoutEmployeesInput = {
 
 export type UnitUpdateWithoutEmployeesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutUnitsNestedInput
@@ -845,6 +881,7 @@ export type UnitUpdateWithoutEmployeesInput = {
 
 export type UnitUncheckedUpdateWithoutEmployeesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -857,6 +894,7 @@ export type UnitUncheckedUpdateWithoutEmployeesInput = {
 
 export type UnitCreateWithoutBiometricDevicesInput = {
   id?: string
+  externalSarhId: string
   name: string
   code?: string | null
   tenant: Prisma.TenantCreateNestedOneWithoutUnitsInput
@@ -869,6 +907,7 @@ export type UnitCreateWithoutBiometricDevicesInput = {
 
 export type UnitUncheckedCreateWithoutBiometricDevicesInput = {
   id?: string
+  externalSarhId: string
   tenantId: string
   name: string
   code?: string | null
@@ -897,6 +936,7 @@ export type UnitUpdateToOneWithWhereWithoutBiometricDevicesInput = {
 
 export type UnitUpdateWithoutBiometricDevicesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutUnitsNestedInput
@@ -909,6 +949,7 @@ export type UnitUpdateWithoutBiometricDevicesInput = {
 
 export type UnitUncheckedUpdateWithoutBiometricDevicesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -921,6 +962,7 @@ export type UnitUncheckedUpdateWithoutBiometricDevicesInput = {
 
 export type UnitCreateWithoutDelegationsInput = {
   id?: string
+  externalSarhId: string
   name: string
   code?: string | null
   tenant: Prisma.TenantCreateNestedOneWithoutUnitsInput
@@ -933,6 +975,7 @@ export type UnitCreateWithoutDelegationsInput = {
 
 export type UnitUncheckedCreateWithoutDelegationsInput = {
   id?: string
+  externalSarhId: string
   tenantId: string
   name: string
   code?: string | null
@@ -961,6 +1004,7 @@ export type UnitUpdateToOneWithWhereWithoutDelegationsInput = {
 
 export type UnitUpdateWithoutDelegationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutUnitsNestedInput
@@ -973,6 +1017,7 @@ export type UnitUpdateWithoutDelegationsInput = {
 
 export type UnitUncheckedUpdateWithoutDelegationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -985,6 +1030,7 @@ export type UnitUncheckedUpdateWithoutDelegationsInput = {
 
 export type UnitCreateManyTenantInput = {
   id?: string
+  externalSarhId: string
   name: string
   code?: string | null
   parentId?: string | null
@@ -993,6 +1039,7 @@ export type UnitCreateManyTenantInput = {
 
 export type UnitUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent?: Prisma.UnitUpdateOneWithoutChildrenNestedInput
@@ -1005,6 +1052,7 @@ export type UnitUpdateWithoutTenantInput = {
 
 export type UnitUncheckedUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1017,6 +1065,7 @@ export type UnitUncheckedUpdateWithoutTenantInput = {
 
 export type UnitUncheckedUpdateManyWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1025,6 +1074,7 @@ export type UnitUncheckedUpdateManyWithoutTenantInput = {
 
 export type UnitCreateManyParentInput = {
   id?: string
+  externalSarhId: string
   tenantId: string
   name: string
   code?: string | null
@@ -1033,6 +1083,7 @@ export type UnitCreateManyParentInput = {
 
 export type UnitUpdateWithoutParentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutUnitsNestedInput
@@ -1045,6 +1096,7 @@ export type UnitUpdateWithoutParentInput = {
 
 export type UnitUncheckedUpdateWithoutParentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1057,6 +1109,7 @@ export type UnitUncheckedUpdateWithoutParentInput = {
 
 export type UnitUncheckedUpdateManyWithoutParentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1065,6 +1118,7 @@ export type UnitUncheckedUpdateManyWithoutParentInput = {
 
 export type UnitCreateManyManagerInput = {
   id?: string
+  externalSarhId: string
   tenantId: string
   name: string
   code?: string | null
@@ -1073,6 +1127,7 @@ export type UnitCreateManyManagerInput = {
 
 export type UnitUpdateWithoutManagerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutUnitsNestedInput
@@ -1085,6 +1140,7 @@ export type UnitUpdateWithoutManagerInput = {
 
 export type UnitUncheckedUpdateWithoutManagerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1097,6 +1153,7 @@ export type UnitUncheckedUpdateWithoutManagerInput = {
 
 export type UnitUncheckedUpdateManyWithoutManagerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalSarhId?: Prisma.StringFieldUpdateOperationsInput | string
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1163,6 +1220,7 @@ export type UnitCountOutputTypeCountDelegationsArgs<ExtArgs extends runtime.Type
 
 export type UnitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  externalSarhId?: boolean
   tenantId?: boolean
   name?: boolean
   code?: boolean
@@ -1180,6 +1238,7 @@ export type UnitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 
 export type UnitSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  externalSarhId?: boolean
   tenantId?: boolean
   name?: boolean
   code?: boolean
@@ -1192,6 +1251,7 @@ export type UnitSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 
 export type UnitSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  externalSarhId?: boolean
   tenantId?: boolean
   name?: boolean
   code?: boolean
@@ -1204,6 +1264,7 @@ export type UnitSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 
 export type UnitSelectScalar = {
   id?: boolean
+  externalSarhId?: boolean
   tenantId?: boolean
   name?: boolean
   code?: boolean
@@ -1211,7 +1272,7 @@ export type UnitSelectScalar = {
   managerId?: boolean
 }
 
-export type UnitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "name" | "code" | "parentId" | "managerId", ExtArgs["result"]["unit"]>
+export type UnitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "externalSarhId" | "tenantId" | "name" | "code" | "parentId" | "managerId", ExtArgs["result"]["unit"]>
 export type UnitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   parent?: boolean | Prisma.Unit$parentArgs<ExtArgs>
@@ -1246,6 +1307,7 @@ export type $UnitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    externalSarhId: string
     tenantId: string
     name: string
     code: string | null
@@ -1682,6 +1744,7 @@ export interface Prisma__UnitClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface UnitFieldRefs {
   readonly id: Prisma.FieldRef<"Unit", 'String'>
+  readonly externalSarhId: Prisma.FieldRef<"Unit", 'String'>
   readonly tenantId: Prisma.FieldRef<"Unit", 'String'>
   readonly name: Prisma.FieldRef<"Unit", 'String'>
   readonly code: Prisma.FieldRef<"Unit", 'String'>

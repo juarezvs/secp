@@ -11,6 +11,7 @@ export const TenantRepoPrisma: TenantRepository = {
         name: data.name,
         nickname: data.nickname,
         active: data.active,
+        externalSarhId: data.externalSarhId,
       },
     });
 
@@ -19,6 +20,7 @@ export const TenantRepoPrisma: TenantRepository = {
       name: row.name,
       nickname: row.nickname,
       active: row.active,
+      externalSarhId: row.externalSarhId,
     };
   },
 
@@ -38,6 +40,27 @@ export const TenantRepoPrisma: TenantRepository = {
       name: row.name,
       nickname: row.nickname,
       active: row.active,
+      externalSarhId: row.externalSarhId,
+    };
+  },
+
+  async findByExternalSarhId(externalSarhId: string) {
+    const row = await prisma.tenant.findUnique({
+      where: {
+        externalSarhId: externalSarhId,
+      },
+    });
+
+    if (!row) {
+      return null;
+    }
+
+    return {
+      id: row.id,
+      name: row.name,
+      nickname: row.nickname,
+      active: row.active,
+      externalSarhId: row.externalSarhId,
     };
   },
 

@@ -74,7 +74,9 @@ export const ModelName = {
   AuthorizationRequest: 'AuthorizationRequest',
   Delegation: 'Delegation',
   Holiday: 'Holiday',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  AfdImport: 'AfdImport',
+  AfdFile: 'AfdFile'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -182,6 +184,7 @@ export type AuditSessionScalarFieldEnum = (typeof AuditSessionScalarFieldEnum)[k
 
 export const TenantScalarFieldEnum = {
   id: 'id',
+  externalSarhId: 'externalSarhId',
   name: 'name',
   nickname: 'nickname',
   active: 'active',
@@ -193,6 +196,7 @@ export type TenantScalarFieldEnum = (typeof TenantScalarFieldEnum)[keyof typeof 
 
 export const UnitScalarFieldEnum = {
   id: 'id',
+  externalSarhId: 'externalSarhId',
   tenantId: 'tenantId',
   name: 'name',
   code: 'code',
@@ -447,6 +451,36 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const AfdImportScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  source: 'source'
+} as const
+
+export type AfdImportScalarFieldEnum = (typeof AfdImportScalarFieldEnum)[keyof typeof AfdImportScalarFieldEnum]
+
+
+export const AfdFileScalarFieldEnum = {
+  id: 'id',
+  importId: 'importId',
+  originalName: 'originalName',
+  storedName: 'storedName',
+  filePath: 'filePath',
+  sha256: 'sha256',
+  sizeBytes: 'sizeBytes',
+  mimeType: 'mimeType',
+  rawText: 'rawText',
+  parsedJson: 'parsedJson',
+  status: 'status',
+  errorMessage: 'errorMessage',
+  createdAt: 'createdAt',
+  processedAt: 'processedAt'
+} as const
+
+export type AfdFileScalarFieldEnum = (typeof AfdFileScalarFieldEnum)[keyof typeof AfdFileScalarFieldEnum]
 
 
 export const SortOrder = {

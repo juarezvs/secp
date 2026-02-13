@@ -195,6 +195,7 @@ model AuditSession {
 
 model Tenant {
   id                    String                 @id @default(cuid())
+  externalSarhId        String                 @unique
   name                  String
   nickname              String                 @unique
   active                Boolean                @default(true)
@@ -220,6 +221,7 @@ model Tenant {
 
 model Unit {
   id               String            @id @default(cuid())
+  externalSarhId   String            @unique
   tenantId         String
   name             String
   code             String?
@@ -521,4 +523,49 @@ model AuditLog {
   actor       User?    @relation(fields: [actorUserId], references: [id])
 
   @@index([tenantId, createdAt])
+}
+
+//modelos para tratar arquivos afd
+model AfdImport {
+  id        String   @id @default(cuid())
+  tenantId  String
+  createdAt DateTime @default(now())
+
+  // metadados do batch (opcional)
+  source String? // ex.: "upload-manual", "rep-henry"
+
+  files AfdFile[]
+}
+
+model AfdFile {
+  id       String    @id @default(cuid())
+  importId String
+  import   AfdImport @relation(fields: [importId], references: [id], onDelete: Cascade)
+
+  originalName String
+  storedName   String
+  filePath     String
+  sha256       String
+  sizeBytes    Int
+  mimeType     String?
+
+  // Raw opcional (pode ficar null pra não duplicar disco)
+  rawText String? @db.Text
+
+  // JSON estruturado do AFD
+  parsedJson Json?
+
+  // status de processamento
+  status       AfdFileStatus @default(PENDING)
+  errorMessage String?       @db.Text
+
+  createdAt   DateTime  @default(now())
+  processedAt DateTime?
+}
+
+enum AfdFileStatus {
+  PENDING
+  PROCESSING
+  DONE
+  ERROR
 }

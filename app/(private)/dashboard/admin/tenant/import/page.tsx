@@ -1,8 +1,10 @@
 import { SectionTitle } from "@/app/_ui/components/private/section-title";
 import Search from "@/app/_ui/components/shared/search";
-import { fetchFilteredSahrTenant } from "../lib/tenant.action";
+import { fetchFilteredSarhTenant } from "../lib/tenant.action";
 import Pagination from "@/app/_ui/components/shared/pagination";
 import TenantSarhTable from "./_components/table";
+import { TenantDTO } from "../lib/definition";
+
 export default async function DashboardPage(props: {
   searchParams?: { query?: string; page?: string };
 }) {
@@ -11,10 +13,10 @@ export default async function DashboardPage(props: {
   const query = searchParams?.query ?? "";
   const currentPage = Number(searchParams?.page) || 1;
 
-  console.log("Execução Inicial", { query, currentPage });
+  const response = await fetchFilteredSarhTenant(query, currentPage);
 
-  const response = await fetchFilteredSahrTenant(query, currentPage);
-  const totalpages = response?.totalPage ?? 1;
+  const totalpages = response?.totalPages || 1;
+  const data: TenantDTO[] = response?.data || [];
   return (
     <section>
       <SectionTitle
@@ -25,10 +27,12 @@ export default async function DashboardPage(props: {
         <Search placeholder="Informe a seção judiciária ..." />
       </div>
 
-      <TenantSarhTable data={response?.data || []} />
+      <TenantSarhTable data={data} />
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalpages} />
       </div>
     </section>
   );
 }
+//
+//

@@ -120,3 +120,13 @@ export const AuthorizationStatus = {
 } as const
 
 export type AuthorizationStatus = (typeof AuthorizationStatus)[keyof typeof AuthorizationStatus]
+
+
+export const AfdFileStatus = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  DONE: 'DONE',
+  ERROR: 'ERROR'
+} as const
+
+export type AfdFileStatus = (typeof AfdFileStatus)[keyof typeof AfdFileStatus]

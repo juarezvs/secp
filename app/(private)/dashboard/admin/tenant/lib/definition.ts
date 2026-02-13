@@ -9,5 +9,5 @@ export type ResultSearchTenantProps = {
   data: TenantDTO[] | null;
   count: number;
   currentPage: number;
-  totalPage: number;
+  totalPages: number;
 };

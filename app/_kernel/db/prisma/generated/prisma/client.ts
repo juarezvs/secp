@@ -159,3 +159,13 @@ export type Holiday = Prisma.HolidayModel
  * 
  */
 export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model AfdImport
+ * 
+ */
+export type AfdImport = Prisma.AfdImportModel
+/**
+ * Model AfdFile
+ * 
+ */
+export type AfdFile = Prisma.AfdFileModel

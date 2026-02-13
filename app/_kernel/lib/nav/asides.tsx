@@ -6,8 +6,6 @@ import {
   Building2,
   CalendarClock,
   Clock,
-  CornerLeftDown,
-  CornerUpLeft,
   Database,
   DatabaseBackupIcon,
   FileClock,
@@ -15,7 +13,6 @@ import {
   LandmarkIcon,
   RefreshCcw,
   Search,
-  SquareIcon,
   User2,
   UserCog,
   UserLock,
@@ -106,7 +103,7 @@ export const DASHBOARD_ASIDE: AsideConfig = {
         },
         {
           label: "Relógios",
-          href: "/dashboard/admin/relogios",
+          href: "/dashboard/admin/clocks",
           description: "Gerencia todos os relógios de ponto da unidade.",
           icon: <Clock className="w-6" />,
           requireAny: ["RELOGIO_VIEW"],
@@ -351,41 +348,47 @@ export const RELOGIOS_ASIDE: AsideConfig = {
   title: "Relógios",
   items: [
     {
-      label: "Listar",
-      href: "/admin/clocks",
+      label: "Mostrar relógios",
+      href: "/dashboard/admin/clocks",
       exact: true,
       requireAny: ["RELOGIO_VIEW"],
     },
-    {
-      label: "Novo",
-      href: "/admin/clocks/new",
-      requireAny: ["RELOGIO_CREATE"],
-    },
-    {
-      label: "Manutenção",
-      href: "/admin/clocks/maintenance",
-      requireAny: ["RELOGIO_EDIT"],
-    },
+    // {
+    //   label: "Novo",
+    //   href: "/dashboard/admin/clocks/new",
+    //   requireAny: ["RELOGIO_CREATE"],
+    // },
+    // {
+    //   label: "Manutenção",
+    //   href: "/dashboard/admin/clocks/maintenance",
+    //   requireAny: ["RELOGIO_EDIT"],
+    // },
     {
       label: "AFD",
       requireAny: ["AFD_IMPORT", "AFD_PROCESS"],
       children: [
         {
           label: "Importar AFD",
-          href: "/admin/afd/importar",
+          href: "/dashboard/admin/afd/import",
           requireAny: ["AFD_IMPORT"],
         },
-        {
-          label: "Processar AFD",
-          href: "/admin/afd/processar",
-          requireAny: ["AFD_PROCESS"],
-        },
-        {
-          label: "Histórico",
-          href: "/admin/afd/historico",
-          requireAny: ["AFD_IMPORT", "AFD_PROCESS"],
-        },
       ],
+    },
+  ],
+};
+
+export const AFD_ASIDE: AsideConfig = {
+  title: "Arquivo de Fonte de Dados",
+  items: [
+    {
+      label: "Últimas importações",
+      requireAny: ["AFD_IMPORT", "AFD_PROCESS"],
+      href: "/dashboard/admin/afd/list",
+    },
+    {
+      label: "Importação de AFD",
+      requireAny: ["AFD_IMPORT", "AFD_PROCESS"],
+      href: "/dashboard/admin/afd/import",
     },
   ],
 };

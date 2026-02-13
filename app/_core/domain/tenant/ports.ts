@@ -4,6 +4,7 @@ import { TenantProps } from "./entities";
 export interface TenantRepository {
   create(data: Omit<TenantProps, "id">): Promise<TenantProps>;
   find(id: string): Promise<TenantProps>;
+  findByExternalSarhId(externalSarhId: string): Promise<TenantProps | null>;
   listAll(
     search: string,
     page: number,
@@ -15,4 +16,3 @@ export interface TenantRepository {
     totalPage: number;
   }>;
 }
-

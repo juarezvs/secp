@@ -1,6 +1,6 @@
 import { SectionTitle } from "@/app/_ui/components/private/section-title";
 import Search from "@/app/_ui/components/shared/search";
-import { fetchFilteredTenant } from "../lib/tenant.action"; 
+import { fetchFilteredTenant } from "../lib/tenant.action";
 import Pagination from "@/app/_ui/components/shared/pagination";
 import TenantTable from "./_components/table";
 export default async function DashboardPage(props: {
@@ -12,7 +12,7 @@ export default async function DashboardPage(props: {
   const currentPage = Number(searchParams?.page) || 1;
 
   const response = await fetchFilteredTenant(query, currentPage);
-  const totalpages = response?.totalPage ?? 1;
+  const totalpages = response?.totalPages ?? 1;
   return (
     <section>
       <SectionTitle

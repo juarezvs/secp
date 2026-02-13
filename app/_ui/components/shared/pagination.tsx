@@ -12,6 +12,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
   const currentPage = Number(searchParams.get("page")) || 1;
 
   const allPages = generatePagination(currentPage, totalPages);
+  // console.log({ allPages }, { currentPage, totalPages });
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
@@ -36,6 +37,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
             if (index === allPages.length - 1) position = "last";
             if (allPages.length === 1) position = "single";
             if (page === "...") position = "middle";
+            console.log({ page, position });
 
             return (
               <PaginationNumber

@@ -1,9 +1,9 @@
 import { TenantRepoPrisma } from "@/app/_core/infrastructure/prisma/tenant/tenant.repo.prisma";
-import { ResultSearchTenantProps } from "./definition";
+import { ResultSearchTenantProps, TenantDTO } from "./definition";
 
 const ITEMS_PER_PAGE = 10;
 
-export async function fetchFilteredSahrTenant(
+export async function fetchFilteredSarhTenant(
   query: string,
   currentPage: number,
 ): Promise<ResultSearchTenantProps | null> {
@@ -23,9 +23,27 @@ export async function fetchFilteredSahrTenant(
   if (!res.ok) {
     return null;
   }
-  const data = (await res.json()) as ResultSearchTenantProps;
+  const response = (await res.json()) as ResultSearchTenantProps;
 
-  return data;
+  const tenants = response.data?.map((item) => ({
+    id: String(item.id),
+    idPai: item.idPai,
+    descricao: item.descricao,
+    sigla: item.sigla,
+  }));
+  // console.log("teste", {
+  //   totalPages: response.totalPages,
+  //   count: response.count,
+  //   currentPage: response.currentPage,
+  //   data: tenants ?? null,
+  // });
+
+  return {
+    totalPages: response.totalPages,
+    count: response.count,
+    currentPage: response.currentPage,
+    data: tenants ?? null,
+  };
 }
 
 export async function fetchFilteredTenant(
@@ -44,7 +62,18 @@ export async function fetchFilteredTenant(
   if (!filteredTenant.data) {
     return null;
   }
-  const data = filteredTenant as ResultSearchTenantProps;
 
-  return data;
+  const tenants = filteredTenant.data?.map((item) => ({
+    id: item.id,
+    idPai: null,
+    descricao: item.descricao,
+    sigla: item.sigla,
+  }));
+
+  return {
+    totalPages: filteredTenant.totalPage,
+    count: filteredTenant.count,
+    currentPage: filteredTenant.currentPage,
+    data: tenants ?? null,
+  };
 }
