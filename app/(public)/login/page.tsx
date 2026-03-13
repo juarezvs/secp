@@ -5,14 +5,14 @@ import { fetchFilteredTenant } from "@/app/(private)/dashboard/admin/tenant/lib/
 
 export default async function LoginPage() {
   // Server-side: pode await e pode chamar server action/repo
-  const tenantsSecp = await fetchFilteredTenant("", 1); // page 1 (ou 0 conforme sua função)
+  // const tenantsSecp = await fetchFilteredTenant("", 1); // page 1 (ou 0 conforme sua função)
 
-  // Garanta que venha um array simples para o combobox
-  // Ajuste conforme o retorno real do fetchFilteredTenant:
-  // Ex: se retorna { data: TenantDTO[] }, use tenantsSecp.data
-  const items = Array.isArray(tenantsSecp)
-    ? tenantsSecp
-    : (tenantsSecp?.data ?? tenantsSecp?.data ?? []);
+  // // Garanta que venha um array simples para o combobox
+  // // Ajuste conforme o retorno real do fetchFilteredTenant:
+  // // Ex: se retorna { data: TenantDTO[] }, use tenantsSecp.data
+  // const items = Array.isArray(tenantsSecp)
+  //   ? tenantsSecp
+  //   : (tenantsSecp?.data ?? tenantsSecp?.data ?? []);
 
   // Se seus tenants forem objetos, normalize aqui:
   // const items = (tenants as TenantDTO[]).map(t => ({ value: String(t.id), label: t.descricao }))
@@ -73,7 +73,7 @@ export default async function LoginPage() {
             />
           </div>
 
-          <LoginForm tenants={items} />
+          <LoginForm  />
         </div>
       </section>
     </main>

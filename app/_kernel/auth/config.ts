@@ -70,7 +70,7 @@ export const authConfig: NextAuthConfig = {
           return null;
         }
         const data = (await res.json()) as ApiLoginResponse;
-        console.log(data);
+       // console.log(data);
 
         // buscar dados do servidor logado no sarh
         const resServer = await fetch(
@@ -90,7 +90,7 @@ export const authConfig: NextAuthConfig = {
         //
         //
         const dataServer = (await resServer.json()) as ApiLoginDadaServerLogged;
-        console.log("Dados do servidor: ", dataServer);
+       // console.log("Dados do servidor: ", dataServer);
         // fim buscar dados do servidor logado no sarh
 
         if (!dataServer) return null;
@@ -99,18 +99,16 @@ export const authConfig: NextAuthConfig = {
         // Como usamos PrismaAdapter, se o user ainda não existir, o adapter cria ao autenticar,
         // mas no Credentials pode variar; estratégia segura: upsert aqui.
 
-        const dbUser = await prisma.user.upsert({
+        const dbUser = await prisma.usuario.upsert({
           where: { matricula: user.matricula },
           update: {
-            name: dataServer.nome,
-            email: dataServer.lotacao.lotacao.email ?? "teste@gmail.com",
+            nome: dataServer.nome,
           },
           create: {
             tenantId: "1",
             matricula: dataServer.matricula,
             name: dataServer.nome,
             cpf: dataServer.cpfServidor.dados.cpf.toString(),
-            email: dataServer.lotacao.lotacao.email ?? "teste@gmail.com",
           },
         });
 

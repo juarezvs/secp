@@ -6,43 +6,29 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { UnitLoginType } from "../definitions";
-import { ComboboxUnit } from "./combobox-unit";
 
-export default function LoginForm({ tenants }: { tenants: UnitLoginType[] }) {
+// export default function LoginForm({ tenants }: { tenants: UnitLoginType[] }) {
+export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [tenant, setTenant] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  console.log(tenants);
 
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/";
 
-  const tenantItems: UnitLoginType[] = tenants
-    .sort((a, b) => a.sigla.localeCompare(b.sigla, "pt-BR"))
-    .map((t) => ({
-      value: t.id,
-      label: `${t.sigla} - ${t.descricao}`,
-    }));
-
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
-
-    if (!tenant) {
-      setError("Selecione a unidade (tenant).");
-      return;
-    }
 
     setLoading(true);
 
     const res = await signIn("credentials", {
       username,
       password,
-      tenant,
+
       redirect: false,
       callbackUrl,
     });
@@ -109,12 +95,6 @@ export default function LoginForm({ tenants }: { tenants: UnitLoginType[] }) {
         />
 
         {/* TENANT */}
-        <label className="block">
-          <span className="block text-sm font-medium text-secp-blue">
-            Unidade
-          </span>
-          <ComboboxUnit items={tenantItems} />
-        </label>
 
         <div className="flex items-center justify-between px-3 -mt-2 py-1">
           <span className="text-xs text-secp-gray">
@@ -140,7 +120,7 @@ export default function LoginForm({ tenants }: { tenants: UnitLoginType[] }) {
 
       <div className="w-full my-4 h-0.5 bg-secp-blue" />
 
-      <div className="flex items-center justify-between">
+      {/* <div className="flex items-center justify-between">
         <button
           onClick={() => signIn("google", { callbackUrl })}
           className="text-xs font-medium text-secp-blue hover:underline cursor-pointer"
@@ -161,7 +141,7 @@ export default function LoginForm({ tenants }: { tenants: UnitLoginType[] }) {
         >
           Entrar com Apple
         </button>
-      </div>
+      </div> */}
 
       <p className="mt-4 text-center text-xs text-slate-400">
         © {new Date().getFullYear()} SECP — Sistema Eletrônico de Controle de

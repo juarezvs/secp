@@ -19,15 +19,13 @@ const worker = new Worker(
   async (job) => {
     const { afdFileId, filePath, storeRawText } = job.data;
 
-    await prisma.afdFile.update({
+    await prisma.arquivoAfd.update({
       where: { id: afdFileId },
-      data: { status: "PROCESSING", errorMessage: null },
+      data: { status: "PROCESSANDO", mensagemErro: null },
     });
 
     try {
-      console.log("111111111111111111111111");
       await fs.access(filePath);
-      console.log("2222222222222222222222222");
 
       const parsed = await afdFileToJson(filePath, LAYOUT_BASE);
 
@@ -36,24 +34,24 @@ const worker = new Worker(
         rawText = await fs.readFile(filePath, "latin1");
       }
 
-      await prisma.afdFile.update({
+      await prisma.arquivoAfd.update({
         where: { id: afdFileId },
         data: {
-          status: "DONE",
-          parsedJson: parsed as any,
-          rawText: rawText ?? undefined,
-          processedAt: new Date(),
+          status: "CONCLUIDO",
+          jsonParseado: parsed as any,
+          textoBruto: rawText ?? undefined,
+          processadoEm: new Date(),
         },
       });
 
       return { ok: true, markings: parsed.markings.length };
     } catch (e: any) {
-      await prisma.afdFile.update({
+      await prisma.arquivoAfd.update({
         where: { id: afdFileId },
         data: {
-          status: "ERROR",
-          errorMessage: e?.message ?? "Falha no processamento do AFD",
-          processedAt: new Date(),
+          status: "ERRO",
+          mensagemErro: e?.message ?? "Falha no processamento do AFD",
+          processadoEm: new Date(),
         },
       });
       throw e;

@@ -13,93 +13,21 @@ datasource db {
   provider = "postgresql"
 }
 
-model UserProfile {
-  id     String @id @default(cuid())
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id])
+//////////////////////////////////////////////////////
+// ENUMS
+//////////////////////////////////////////////////////
 
-  // onboarding / localidade
-  isOnboarded Boolean @default(false)
-  sarhUf      String?
-  matricula   String?
-  cpf         String?
-
-  // multiempresa (pode ser 1..n via tabela de memberships, aqui simples)
-  companyId String?
-  branchId  String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
-
-  user User @relation(fields: [userId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([provider, providerAccountId])
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
-}
-
-model Authenticator {
-  credentialID         String  @unique
-  userId               String
-  providerAccountId    String
-  credentialPublicKey  String
-  counter              Int
-  credentialDeviceType String
-  credentialBackedUp   Boolean
-  transports           String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@id([userId, credentialID])
-}
-
-//AQUI COMEÇA A MODELAGEM PARA ATENDAR A PORTARIA SJAM-DIREF nº 135/2025
-enum SessionEndReason {
+enum MotivoEncerramentoSessao {
   LOGOUT
-  CLIENT_CLOSE
+  FECHAMENTO_CLIENTE
   TIMEOUT
-  EXPIRED
-  ADMIN_REVOKE
+  EXPIRADA
+  REVOGADA_ADMIN
 }
 
-enum Role {
-  SERVER
-  MANAGER
+enum PapelSistema {
+  SERVIDOR
+  GESTOR
   NUTEC
   SECAP
   DIREF
@@ -113,27 +41,27 @@ enum RegimeTrabalho {
   HIBRIDO
 }
 
-enum JornadaTipo {
+enum TipoJornada {
   SETE_HORAS
   OITO_HORAS
   ESPECIAL
-  DIFERENCIADO
+  DIFERENCIADA
 }
 
-enum PunchKind {
-  IN
-  OUT
-  BREAK_OUT
-  BREAK_IN
+enum TipoMarcacao {
+  ENTRADA
+  SAIDA
+  SAIDA_INTERVALO
+  RETORNO_INTERVALO
 }
 
-enum PunchSource {
-  BIOMETRIC_DEVICE
-  ALTERNATIVE_METHOD
-  MANUAL_EXCEPTION // uso controlado, p.ex. falha técnica
+enum OrigemMarcacao {
+  DISPOSITIVO_BIOMETRICO
+  METODO_ALTERNATIVO
+  EXCECAO_MANUAL
 }
 
-enum AttendanceStatus {
+enum StatusApuracao {
   OK
   INCONSISTENTE
   PENDENTE_REGULARIZACAO
@@ -141,431 +69,580 @@ enum AttendanceStatus {
   FECHADO
 }
 
-enum LedgerEntryType {
-  CREDIT // horas-crédito
-  DEBIT // horas-débito
-  COMPENSATION // baixa por compensação
-  EXCESS_SAT // excedente sábado (com fator)
-  EXCESS_SUN_HOL // excedente domingo/feriado (com fator)
-  NIGHT_EXCESS // excedente noturna (após 19h)
-  UNAUTHORIZED // horas não autorizadas
-  ABOVE_LIMIT // horas acima do limite permitido
-  ADJUSTMENT // ajuste administrativo (auditável)
+enum TipoLancamentoBancoHoras {
+  CREDITO
+  DEBITO
+  COMPENSACAO
+  EXCEDENTE_SABADO
+  EXCEDENTE_DOMINGO_FERIADO
+  EXCEDENTE_NOTURNO
+  NAO_AUTORIZADO
+  ACIMA_LIMITE
+  AJUSTE
 }
 
-enum AuthorizationType {
-  WORK_EXTRA_CREDIT // autorização para gerar horas-crédito
-  COMPENSATE_DEBIT // autorização para compensar débito
-  FRUIR_CREDIT // autorização para fruir saldo positivo
-  EXTERNAL_ACTIVITY // validar atividade externa
-  TRAVEL // validar viagem
-  TRAINING // validar capacitação
-  DISPENSA_PONTO // dispensa ponto (OJAF ou local sem meio eletrônico)
-  RATIFY_ABOVE_LIMIT // referendo DIREF (art.10 §8º)
+enum TipoAutorizacao {
+  HORA_EXTRA_CREDITO
+  COMPENSAR_DEBITO
+  FRUIR_CREDITO
+  ATIVIDADE_EXTERNA
+  VIAGEM
+  CAPACITACAO
+  DISPENSA_PONTO
+  REFERENDO_ACIMA_LIMITE
 }
 
-enum AuthorizationStatus {
-  DRAFT
-  SUBMITTED
-  APPROVED
-  REJECTED
-  CANCELLED
+enum StatusAutorizacao {
+  RASCUNHO
+  ENVIADA
+  APROVADA
+  REJEITADA
+  CANCELADA
 }
 
-model AuditSession {
-  id         String            @id @default(cuid())
-  userId     String
-  tenantId   String? // se você usa multiempresa/unidade
-  loginAt    DateTime          @default(now())
-  lastSeenAt DateTime          @default(now())
-  endedAt    DateTime?
-  endReason  SessionEndReason?
-
-  ip        String?
-  userAgent String?
-
-  // Útil para correlacionar com o JWT atual (jti/nonce) se quiser
-  jwtId String? @unique
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId, lastSeenAt])
-  @@index([endedAt])
+enum TipoUnidadeOrganizacional {
+  JUSTICA_FEDERAL
+  SECAO_JUDICIARIA
+  SUBSECAO_JUDICIARIA
+  DIRETORIA
+  DEPARTAMENTO
+  SECRETARIA
+  NUCLEO
+  SECAO
+  SETOR
+  SERVICO
+  SUBDEPARTAMENTO
 }
 
-model Tenant {
-  id                    String                 @id @default(cuid())
-  externalSarhId        String                 @unique
-  name                  String
-  nickname              String                 @unique
-  active                Boolean                @default(true)
-  createdAt             DateTime               @default(now())
-  units                 Unit[]
-  users                 User[]
-  employees             Employee[]
-  workSchedules         WorkSchedule[]
-  scheduleAssignments   ScheduleAssignment[]
-  biometricDevices      BiometricDevice[]
-  punchEvents           PunchEvent[]
-  externalActivities    ExternalActivity[]
-  travels               Travel[]
-  trainings             Training[]
-  attendanceDays        AttendanceDay[]
-  attendanceMonths      AttendanceMonth[]
-  bankHourLedgerEntries BankHourLedgerEntry[]
-  authorizationRequests AuthorizationRequest[]
-  delegations           Delegation[]
-  holidays              Holiday[]
-  auditLogs             AuditLog[]
+enum StatusArquivoAfd {
+  PENDENTE
+  PROCESSANDO
+  CONCLUIDO
+  ERRO
 }
 
-model Unit {
-  id               String            @id @default(cuid())
-  externalSarhId   String            @unique
-  tenantId         String
-  name             String
-  code             String?
-  parentId         String?
-  managerId        String? // User responsável (chefia)
-  tenant           Tenant            @relation(fields: [tenantId], references: [id])
-  parent           Unit?             @relation("UnitTree", fields: [parentId], references: [id])
-  children         Unit[]            @relation("UnitTree")
-  manager          User?             @relation(fields: [managerId], references: [id])
-  employees        Employee[]
-  biometricDevices BiometricDevice[]
-  delegations      Delegation[]
+//////////////////////////////////////////////////////
+// ORGANIZAÇÃO
+//////////////////////////////////////////////////////
+
+model Organizacao {
+  id        String   @id @default(cuid()) @map("id")
+  sigla     String   @unique @map("sigla")
+  nome      String   @map("nome")
+  ativa     Boolean  @default(true) @map("ativa")
+  createdAt DateTime @default(now()) @map("criado_em")
+  updatedAt DateTime @updatedAt @map("atualizado_em")
+
+  unidades         UnidadeOrganizacional[]
+  usuarios         Usuario[]
+  servidores       Servidor[]
+  feriados         Feriado[]
+  logsAuditoria    LogAuditoria[]
+  sessoesAuditadas SessaoAuditoria[]
+  importacoesAfd   ImportacaoAfd[]
+
+  @@map("organizacoes")
 }
 
-model User {
-  id            String    @id @default(cuid())
-  matricula     String    @unique
-  tenantId      String
-  email         String    @unique
-  name          String
-  cpf           String    @unique
-  emailVerified DateTime?
-  roles         Role[]
-  isActive      Boolean   @default(true)
-  tenant        Tenant    @relation(fields: [tenantId], references: [id])
-  employee      Employee?
-  image         String?
+model UnidadeOrganizacional {
+  id            String                    @id @default(cuid()) @map("id")
+  organizacaoId String                    @map("organizacao_id")
+  unidadePaiId  String?                   @map("unidade_pai_id")
+  gestorId      String?                   @map("gestor_id")
+  nome          String                    @map("nome")
+  sigla         String                    @unique @map("sigla")
+  tipo          TipoUnidadeOrganizacional @map("tipo")
+  ativa         Boolean                   @default(true) @map("ativa")
+  createdAt     DateTime                  @default(now()) @map("criado_em")
+  updatedAt     DateTime                  @updatedAt @map("atualizado_em")
 
-  auditSession AuditSession[]
+  organizacao Organizacao @relation(fields: [organizacaoId], references: [id], onDelete: Cascade)
 
-  accounts      Account[]
-  sessions      Session[]
-  Authenticator Authenticator[]
+  unidadePai  UnidadeOrganizacional?  @relation("HierarquiaUnidades", fields: [unidadePaiId], references: [id])
+  subunidades UnidadeOrganizacional[] @relation("HierarquiaUnidades")
 
-  // vínculo com domínio SECP
-  profile   UserProfile?
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
-  units     Unit[]
+  gestor Usuario? @relation("GestorUnidade", fields: [gestorId], references: [id])
 
-  delegationGiven    Delegation[] @relation("FromUser")
-  delegationReceived Delegation[] @relation("ToUser")
+  servidores              Servidor[]
+  dispositivosBiometricos DispositivoBiometrico[]
+  delegacoes              Delegacao[]
+  perfisUsuario           PerfilUsuario[]
 
-  auditLogs AuditLog[]
-
-  delegations Delegation[]
+  @@index([organizacaoId, unidadePaiId], map: "idx_unidades_organizacao_pai")
+  @@index([organizacaoId, tipo], map: "idx_unidades_organizacao_tipo")
+  @@map("unidades_organizacionais")
 }
 
-model Employee {
-  id                    String                 @id @default(cuid())
-  tenantId              String
-  userId                String?                @unique
-  unitId                String
-  matricula             String
-  regime                RegimeTrabalho         @default(PRESENCIAL)
-  jornadaTipo           JornadaTipo
-  isComissionado        Boolean                @default(false)
-  isOficialJustica      Boolean                @default(false)
-  isDispensaPonto       Boolean                @default(false)
-  tenant                Tenant                 @relation(fields: [tenantId], references: [id])
-  user                  User?                  @relation(fields: [userId], references: [id])
-  unit                  Unit                   @relation(fields: [unitId], references: [id])
-  schedules             ScheduleAssignment[]
-  punches               PunchEvent[]
-  attendanceDays        AttendanceDay[]
-  bankLedgers           BankHourLedgerEntry[]
-  externalActivities    ExternalActivity[]
-  travels               Travel[]
-  trainings             Training[]
-  attendanceMonths      AttendanceMonth[]
-  authorizationRequests AuthorizationRequest[]
+//////////////////////////////////////////////////////
+// AUTH / USUÁRIOS
+//////////////////////////////////////////////////////
 
-  @@unique([tenantId, matricula])
+model PerfilUsuario {
+  id        String  @id @default(cuid()) @map("id")
+  usuarioId String  @unique @map("usuario_id")
+  usuario   Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  onboardingConcluido Boolean @default(false) @map("onboarding_concluido")
+  matricula           String? @map("matricula")
+  cpf                 String? @map("cpf")
+
+  unidadeOrganizacionalId String?                @map("unidade_organizacional_id")
+  unidadeOrganizacional   UnidadeOrganizacional? @relation(fields: [unidadeOrganizacionalId], references: [id])
+
+  createdAt DateTime @default(now()) @map("criado_em")
+  updatedAt DateTime @updatedAt @map("atualizado_em")
+
+  @@map("perfis_usuarios")
 }
 
-model WorkSchedule {
-  id              String               @id @default(cuid())
-  tenantId        String
-  name            String
-  jornadaTipo     JornadaTipo
-  minutesPerDay   Int // 7h=420, 8h=480 (base)
-  breakMinMinutes Int? // 60 (para 8h)
-  breakMaxMinutes Int? // 180 (para 8h)
-  flexInMinutes   Int // ex: 120 (art.4 §3º)
-  flexOutMinutes  Int // ex: 60 (art.4 §3º)
-  allowBefore6    Boolean              @default(false)
-  allowAfter19    Boolean              @default(false)
-  tenant          Tenant               @relation(fields: [tenantId], references: [id])
-  assignments     ScheduleAssignment[]
+model Usuario {
+  id            String         @id @default(cuid()) @map("id")
+  organizacaoId String         @map("organizacao_id")
+  matricula     String         @unique @map("matricula")
+  email         String?        @unique @map("email")
+  nome          String         @map("nome")
+  cpf           String         @unique @map("cpf")
+  emailVerified DateTime?      @map("email_verificado_em")
+  papeis        PapelSistema[] @map("papeis")
+  ativo         Boolean        @default(true) @map("ativo")
+  imagem        String?        @map("imagem")
+  createdAt     DateTime       @default(now()) @map("criado_em")
+  updatedAt     DateTime       @updatedAt @map("atualizado_em")
+
+  organizacao Organizacao @relation(fields: [organizacaoId], references: [id], onDelete: Cascade)
+
+  servidor Servidor?
+
+  contas           Conta[]
+  sessoes          Sessao[]
+  autenticadores   Autenticador[]
+  sessoesAuditadas SessaoAuditoria[]
+
+  perfil PerfilUsuario?
+
+  unidadesGerenciadas UnidadeOrganizacional[] @relation("GestorUnidade")
+
+  delegacoesCedidas   Delegacao[] @relation("UsuarioDelegante")
+  delegacoesRecebidas Delegacao[] @relation("UsuarioDelegado")
+
+  logsAuditoria LogAuditoria[]
+
+  @@map("usuarios")
 }
 
-model ScheduleAssignment {
-  id         String       @id @default(cuid())
-  tenantId   String
-  employeeId String
-  scheduleId String
-  validFrom  DateTime
-  validTo    DateTime?
-  tenant     Tenant       @relation(fields: [tenantId], references: [id])
-  employee   Employee     @relation(fields: [employeeId], references: [id])
-  schedule   WorkSchedule @relation(fields: [scheduleId], references: [id])
+model Conta {
+  id              String   @id @default(cuid()) @map("id")
+  usuarioId       String   @map("usuario_id")
+  tipo            String   @map("tipo")
+  provedor        String   @map("provedor")
+  contaProvedorId String   @map("conta_provedor_id")
+  refreshToken    String?  @map("refresh_token")
+  accessToken     String?  @map("access_token")
+  expiresAt       Int?     @map("expira_em")
+  tokenType       String?  @map("tipo_token")
+  scope           String?  @map("escopo")
+  idToken         String?  @map("id_token")
+  sessionState    String?  @map("estado_sessao")
+  createdAt       DateTime @default(now()) @map("criado_em")
+  updatedAt       DateTime @updatedAt @map("atualizado_em")
 
-  @@index([tenantId, employeeId, validFrom])
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@unique([provedor, contaProvedorId], map: "uk_contas_provedor_conta")
+  @@map("contas")
 }
 
-model BiometricDevice {
-  id       String       @id @default(cuid())
-  tenantId String
-  unitId   String
-  name     String
-  serial   String?      @unique
-  isActive Boolean      @default(true)
-  tenant   Tenant       @relation(fields: [tenantId], references: [id])
-  unit     Unit         @relation(fields: [unitId], references: [id])
-  punches  PunchEvent[]
+model Sessao {
+  id          String   @id @default(cuid()) @map("id")
+  tokenSessao String   @unique @map("token_sessao")
+  usuarioId   String   @map("usuario_id")
+  expiraEm    DateTime @map("expira_em")
+  createdAt   DateTime @default(now()) @map("criado_em")
+  updatedAt   DateTime @updatedAt @map("atualizado_em")
+
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@map("sessoes")
 }
 
-model PunchEvent {
-  id            String           @id @default(cuid())
-  tenantId      String
-  employeeId    String
-  occurredAt    DateTime // timestamp oficial (tz)
-  kind          PunchKind
-  source        PunchSource
-  deviceId      String?
-  rawPayload    Json?
-  integrityHash String?
-  createdAt     DateTime         @default(now())
-  tenant        Tenant           @relation(fields: [tenantId], references: [id])
-  employee      Employee         @relation(fields: [employeeId], references: [id])
-  device        BiometricDevice? @relation(fields: [deviceId], references: [id])
+model TokenVerificacao {
+  identificador String   @map("identificador")
+  token         String   @unique @map("token")
+  expiraEm      DateTime @map("expira_em")
 
-  @@index([tenantId, employeeId, occurredAt])
+  @@unique([identificador, token], map: "uk_tokens_verificacao_identificador_token")
+  @@map("tokens_verificacao")
 }
 
-// Eventos "de efetivo exercício" e validações
-model ExternalActivity {
-  id              String                @id @default(cuid())
-  tenantId        String
-  employeeId      String
-  startsAt        DateTime
-  endsAt          DateTime
-  description     String
-  proofDocUrl     String?
-  authorizationId String?               @unique
-  tenant          Tenant                @relation(fields: [tenantId], references: [id])
-  employee        Employee              @relation(fields: [employeeId], references: [id])
-  authorization   AuthorizationRequest? @relation(fields: [authorizationId], references: [id])
+model Autenticador {
+  credencialId           String  @unique @map("credencial_id")
+  usuarioId              String  @map("usuario_id")
+  contaProvedorId        String  @map("conta_provedor_id")
+  chavePublicaCredencial String  @map("chave_publica_credencial")
+  contador               Int     @map("contador")
+  tipoDispositivo        String  @map("tipo_dispositivo")
+  backupRealizado        Boolean @map("backup_realizado")
+  transportes            String? @map("transportes")
+
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@id([usuarioId, credencialId])
+  @@map("autenticadores")
 }
 
-model Travel {
-  id              String                @id @default(cuid())
-  tenantId        String
-  employeeId      String
-  startsAt        DateTime
-  endsAt          DateTime
-  destination     String
-  authorizationId String?               @unique
-  tenant          Tenant                @relation(fields: [tenantId], references: [id])
-  employee        Employee              @relation(fields: [employeeId], references: [id])
-  authorization   AuthorizationRequest? @relation(fields: [authorizationId], references: [id])
+model SessaoAuditoria {
+  id                 String                    @id @default(cuid()) @map("id")
+  usuarioId          String                    @map("usuario_id")
+  organizacaoId      String                    @map("organizacao_id")
+  loginEm            DateTime                  @default(now()) @map("login_em")
+  ultimoAcessoEm     DateTime                  @default(now()) @map("ultimo_acesso_em")
+  encerradaEm        DateTime?                 @map("encerrada_em")
+  motivoEncerramento MotivoEncerramentoSessao? @map("motivo_encerramento")
+  ip                 String?                   @map("ip")
+  userAgent          String?                   @map("user_agent")
+  jwtId              String?                   @unique @map("jwt_id")
+
+  usuario     Usuario     @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  organizacao Organizacao @relation(fields: [organizacaoId], references: [id], onDelete: Cascade)
+
+  @@index([usuarioId, ultimoAcessoEm], map: "idx_sessoes_auditoria_usuario_ultimo_acesso")
+  @@index([encerradaEm], map: "idx_sessoes_auditoria_encerrada_em")
+  @@map("sessoes_auditoria")
 }
 
-model Training {
-  id              String                @id @default(cuid())
-  tenantId        String
-  employeeId      String
-  date            DateTime
-  hours           Int // carga horária do dia
-  isInternal      Boolean // dentro da SJAM?
-  proofDocUrl     String?
-  authorizationId String?               @unique
-  tenant          Tenant                @relation(fields: [tenantId], references: [id])
-  employee        Employee              @relation(fields: [employeeId], references: [id])
-  authorization   AuthorizationRequest? @relation(fields: [authorizationId], references: [id])
+//////////////////////////////////////////////////////
+// SERVIDOR / PONTO
+//////////////////////////////////////////////////////
+
+model Servidor {
+  id                      String         @id @default(cuid()) @map("id")
+  organizacaoId           String         @map("organizacao_id")
+  usuarioId               String?        @unique @map("usuario_id")
+  unidadeOrganizacionalId String         @map("unidade_organizacional_id")
+  matricula               String         @unique @map("matricula")
+  regimeTrabalho          RegimeTrabalho @default(PRESENCIAL) @map("regime_trabalho")
+  tipoJornada             TipoJornada    @map("tipo_jornada")
+  comissionado            Boolean        @default(false) @map("comissionado")
+  oficialJustica          Boolean        @default(false) @map("oficial_justica")
+  dispensaPonto           Boolean        @default(false) @map("dispensa_ponto")
+  createdAt               DateTime       @default(now()) @map("criado_em")
+  updatedAt               DateTime       @updatedAt @map("atualizado_em")
+
+  organizacao           Organizacao           @relation(fields: [organizacaoId], references: [id], onDelete: Cascade)
+  usuario               Usuario?              @relation(fields: [usuarioId], references: [id])
+  unidadeOrganizacional UnidadeOrganizacional @relation(fields: [unidadeOrganizacionalId], references: [id])
+
+  atribuicoesJornada      AtribuicaoJornada[]
+  marcacoes               MarcacaoPonto[]
+  apuracoesDiarias        ApuracaoDiaria[]
+  lancamentosBancoHoras   LancamentoBancoHoras[]
+  atividadesExternas      AtividadeExterna[]
+  viagens                 Viagem[]
+  capacitacoes            Capacitacao[]
+  apuracoesMensais        ApuracaoMensal[]
+  solicitacoesAutorizacao SolicitacaoAutorizacao[]
+
+  @@index([organizacaoId, unidadeOrganizacionalId], map: "idx_servidores_organizacao_unidade")
+  @@map("servidores")
 }
 
-model AttendanceDay {
-  id              String           @id @default(cuid())
-  tenantId        String
-  employeeId      String
-  date            DateTime // use "date" normalizada (00:00)
-  scheduledMin    Int
-  workedMin       Int
-  breakMin        Int
-  debitMin        Int
-  creditMin       Int
-  unauthorizedMin Int
-  aboveLimitMin   Int
-  excessSatMin    Int
-  excessSunHolMin Int
-  nightExcessMin  Int
-  status          AttendanceStatus @default(OK)
-  flags           String[] // ex: ["MISSING_OUT", "BREAK_TOO_SHORT"]
-  tenant          Tenant           @relation(fields: [tenantId], references: [id])
-  employee        Employee         @relation(fields: [employeeId], references: [id])
+model JornadaTrabalho {
+  id                  String      @id @default(cuid()) @map("id")
+  nome                String      @map("nome")
+  tipoJornada         TipoJornada @map("tipo_jornada")
+  minutosPorDia       Int         @map("minutos_por_dia")
+  intervaloMinimoMin  Int?        @map("intervalo_minimo_min")
+  intervaloMaximoMin  Int?        @map("intervalo_maximo_min")
+  flexEntradaMin      Int         @map("flex_entrada_min")
+  flexSaidaMin        Int         @map("flex_saida_min")
+  permiteAntesSeis    Boolean     @default(false) @map("permite_antes_seis")
+  permiteAposDezenove Boolean     @default(false) @map("permite_apos_dezenove")
+  createdAt           DateTime    @default(now()) @map("criado_em")
+  updatedAt           DateTime    @updatedAt @map("atualizado_em")
 
-  @@unique([tenantId, employeeId, date])
+  atribuicoes AtribuicaoJornada[]
+
+  @@map("jornadas_trabalho")
 }
 
-model AttendanceMonth {
-  id            String           @id @default(cuid())
-  tenantId      String
-  employeeId    String
-  monthRef      String // "YYYY-MM"
-  scheduledMin  Int
-  workedMin     Int
-  debitMin      Int
-  creditMin     Int
-  saldoMin      Int // credit - debit (sem excedentes fatoradas, se você separar)
-  status        AttendanceStatus @default(OK)
-  homologatedAt DateTime?
-  homologatedBy String?
-  tenant        Tenant           @relation(fields: [tenantId], references: [id])
-  employee      Employee         @relation(fields: [employeeId], references: [id])
+model AtribuicaoJornada {
+  id          String    @id @default(cuid()) @map("id")
+  servidorId  String    @map("servidor_id")
+  jornadaId   String    @map("jornada_id")
+  vigenciaIni DateTime  @map("vigencia_inicio")
+  vigenciaFim DateTime? @map("vigencia_fim")
 
-  @@unique([tenantId, employeeId, monthRef])
+  servidor Servidor        @relation(fields: [servidorId], references: [id], onDelete: Cascade)
+  jornada  JornadaTrabalho @relation(fields: [jornadaId], references: [id], onDelete: Cascade)
+
+  @@index([servidorId, vigenciaIni], map: "idx_atribuicoes_jornada_servidor_vigencia")
+  @@map("atribuicoes_jornada")
 }
 
-model BankHourLedgerEntry {
-  id         String          @id @default(cuid())
-  tenantId   String
-  employeeId String
-  monthRef   String // competência origem
-  type       LedgerEntryType
-  minutes    Int // sempre em minutos, sinal conforme type
-  factor     Float? // 1.5 / 2.0 quando aplicável
-  sourceRef  Json? // referência (p.ex. AttendanceDay id, Authorization id)
-  createdAt  DateTime        @default(now())
-  tenant     Tenant          @relation(fields: [tenantId], references: [id])
-  employee   Employee        @relation(fields: [employeeId], references: [id])
+model DispositivoBiometrico {
+  id                      String   @id @default(cuid()) @map("id")
+  unidadeOrganizacionalId String   @map("unidade_organizacional_id")
+  nome                    String   @map("nome")
+  serial                  String?  @unique @map("serial")
+  ativo                   Boolean  @default(true) @map("ativo")
+  createdAt               DateTime @default(now()) @map("criado_em")
+  updatedAt               DateTime @updatedAt @map("atualizado_em")
 
-  @@index([tenantId, employeeId, monthRef])
+  unidadeOrganizacional UnidadeOrganizacional @relation(fields: [unidadeOrganizacionalId], references: [id], onDelete: Cascade)
+  marcacoes             MarcacaoPonto[]
+
+  @@map("dispositivos_biometricos")
 }
 
-model AuthorizationRequest {
-  id               String              @id @default(cuid())
-  tenantId         String
-  employeeId       String
-  type             AuthorizationType
-  status           AuthorizationStatus @default(DRAFT)
-  requestedAt      DateTime            @default(now())
-  startsAt         DateTime?
-  endsAt           DateTime?
-  minutes          Int?
-  reason           String
-  decidedAt        DateTime?
-  decidedBy        String?
-  decisionNote     String?
-  tenant           Tenant              @relation(fields: [tenantId], references: [id])
-  employee         Employee            @relation(fields: [employeeId], references: [id])
-  externalActivity ExternalActivity?
-  travel           Travel?
-  training         Training?
+model MarcacaoPonto {
+  id              String         @id @default(cuid()) @map("id")
+  servidorId      String         @map("servidor_id")
+  ocorridaEm      DateTime       @map("ocorrida_em")
+  tipoMarcacao    TipoMarcacao   @map("tipo_marcacao")
+  origemMarcacao  OrigemMarcacao @map("origem_marcacao")
+  dispositivoId   String?        @map("dispositivo_id")
+  payloadBruto    Json?          @map("payload_bruto")
+  hashIntegridade String?        @map("hash_integridade")
+  createdAt       DateTime       @default(now()) @map("criado_em")
 
-  @@index([tenantId, employeeId, type, status])
+  servidor    Servidor               @relation(fields: [servidorId], references: [id], onDelete: Cascade)
+  dispositivo DispositivoBiometrico? @relation(fields: [dispositivoId], references: [id])
+
+  @@unique([servidorId, ocorridaEm, origemMarcacao], map: "uq_marcacao_servidor_data_origem")
+  @@index([servidorId, ocorridaEm], map: "idx_marcacoes_servidor_ocorrida")
+  @@map("marcacoes_ponto")
 }
 
-model Delegation {
-  id         String    @id @default(cuid())
-  tenantId   String
-  unitId     String
-  fromUserId String
-  toUserId   String
-  validFrom  DateTime
-  validTo    DateTime?
-  note       String?
-  tenant     Tenant    @relation(fields: [tenantId], references: [id])
-  unit       Unit      @relation(fields: [unitId], references: [id])
-  fromUser   User      @relation("FromUser", fields: [fromUserId], references: [id])
-  toUser     User      @relation("ToUser", fields: [toUserId], references: [id])
-  user       User?     @relation(fields: [userId], references: [id])
-  userId     String?
+//////////////////////////////////////////////////////
+// EVENTOS DE EFETIVO EXERCÍCIO
+//////////////////////////////////////////////////////
 
-  @@index([tenantId, unitId, validFrom])
+model AtividadeExterna {
+  id                       String   @id @default(cuid()) @map("id")
+  servidorId               String   @map("servidor_id")
+  inicioEm                 DateTime @map("inicio_em")
+  fimEm                    DateTime @map("fim_em")
+  descricao                String   @map("descricao")
+  urlDocumentoComprovante  String?  @map("url_documento_comprovante")
+  solicitacaoAutorizacaoId String?  @unique @map("solicitacao_autorizacao_id")
+  createdAt                DateTime @default(now()) @map("criado_em")
+  updatedAt                DateTime @updatedAt @map("atualizado_em")
+
+  servidor               Servidor                @relation(fields: [servidorId], references: [id], onDelete: Cascade)
+  solicitacaoAutorizacao SolicitacaoAutorizacao? @relation(fields: [solicitacaoAutorizacaoId], references: [id])
+
+  @@map("atividades_externas")
 }
 
-model Holiday {
-  id         String   @id @default(cuid())
-  tenantId   String
-  date       DateTime
-  name       String
-  isNational Boolean  @default(false)
-  tenant     Tenant   @relation(fields: [tenantId], references: [id])
+model Viagem {
+  id                       String   @id @default(cuid()) @map("id")
+  servidorId               String   @map("servidor_id")
+  inicioEm                 DateTime @map("inicio_em")
+  fimEm                    DateTime @map("fim_em")
+  destino                  String   @map("destino")
+  solicitacaoAutorizacaoId String?  @unique @map("solicitacao_autorizacao_id")
+  createdAt                DateTime @default(now()) @map("criado_em")
+  updatedAt                DateTime @updatedAt @map("atualizado_em")
 
-  @@unique([tenantId, date])
+  servidor               Servidor                @relation(fields: [servidorId], references: [id], onDelete: Cascade)
+  solicitacaoAutorizacao SolicitacaoAutorizacao? @relation(fields: [solicitacaoAutorizacaoId], references: [id])
+
+  @@map("viagens")
 }
 
-model AuditLog {
-  id          String   @id @default(cuid())
-  tenantId    String
-  actorUserId String?
-  action      String
-  entity      String
-  entityId    String
-  data        Json?
-  createdAt   DateTime @default(now())
-  tenant      Tenant   @relation(fields: [tenantId], references: [id])
-  actor       User?    @relation(fields: [actorUserId], references: [id])
+model Capacitacao {
+  id                       String   @id @default(cuid()) @map("id")
+  servidorId               String   @map("servidor_id")
+  data                     DateTime @map("data")
+  horas                    Int      @map("horas")
+  interna                  Boolean  @map("interna")
+  urlDocumentoComprovante  String?  @map("url_documento_comprovante")
+  solicitacaoAutorizacaoId String?  @unique @map("solicitacao_autorizacao_id")
+  createdAt                DateTime @default(now()) @map("criado_em")
+  updatedAt                DateTime @updatedAt @map("atualizado_em")
 
-  @@index([tenantId, createdAt])
+  servidor               Servidor                @relation(fields: [servidorId], references: [id], onDelete: Cascade)
+  solicitacaoAutorizacao SolicitacaoAutorizacao? @relation(fields: [solicitacaoAutorizacaoId], references: [id])
+
+  @@map("capacitacoes")
 }
 
-//modelos para tratar arquivos afd
-model AfdImport {
-  id        String   @id @default(cuid())
-  tenantId  String
-  createdAt DateTime @default(now())
+//////////////////////////////////////////////////////
+// APURAÇÃO
+//////////////////////////////////////////////////////
 
-  // metadados do batch (opcional)
-  source String? // ex.: "upload-manual", "rep-henry"
+model ApuracaoDiaria {
+  id                             String         @id @default(cuid()) @map("id")
+  servidorId                     String         @map("servidor_id")
+  data                           DateTime       @map("data")
+  minutosPrevistos               Int            @map("minutos_previstos")
+  minutosTrabalhados             Int            @map("minutos_trabalhados")
+  minutosIntervalo               Int            @map("minutos_intervalo")
+  minutosDebito                  Int            @map("minutos_debito")
+  minutosCredito                 Int            @map("minutos_credito")
+  minutosNaoAutorizados          Int            @map("minutos_nao_autorizados")
+  minutosAcimaLimite             Int            @map("minutos_acima_limite")
+  minutosExcedenteSabado         Int            @map("minutos_excedente_sabado")
+  minutosExcedenteDomingoFeriado Int            @map("minutos_excedente_domingo_feriado")
+  minutosExcedenteNoturno        Int            @map("minutos_excedente_noturno")
+  status                         StatusApuracao @default(OK) @map("status")
+  flags                          String[]       @map("flags")
 
-  files AfdFile[]
+  servidor Servidor @relation(fields: [servidorId], references: [id], onDelete: Cascade)
+
+  @@unique([servidorId, data], map: "uk_apuracoes_diarias_servidor_data")
+  @@map("apuracoes_diarias")
 }
 
-model AfdFile {
-  id       String    @id @default(cuid())
-  importId String
-  import   AfdImport @relation(fields: [importId], references: [id], onDelete: Cascade)
+model ApuracaoMensal {
+  id                 String         @id @default(cuid()) @map("id")
+  servidorId         String         @map("servidor_id")
+  referenciaMes      String         @map("referencia_mes")
+  minutosPrevistos   Int            @map("minutos_previstos")
+  minutosTrabalhados Int            @map("minutos_trabalhados")
+  minutosDebito      Int            @map("minutos_debito")
+  minutosCredito     Int            @map("minutos_credito")
+  saldoMinutos       Int            @map("saldo_minutos")
+  status             StatusApuracao @default(OK) @map("status")
+  homologadoEm       DateTime?      @map("homologado_em")
+  homologadoPor      String?        @map("homologado_por")
 
-  originalName String
-  storedName   String
-  filePath     String
-  sha256       String
-  sizeBytes    Int
-  mimeType     String?
+  servidor Servidor @relation(fields: [servidorId], references: [id], onDelete: Cascade)
 
-  // Raw opcional (pode ficar null pra não duplicar disco)
-  rawText String? @db.Text
-
-  // JSON estruturado do AFD
-  parsedJson Json?
-
-  // status de processamento
-  status       AfdFileStatus @default(PENDING)
-  errorMessage String?       @db.Text
-
-  createdAt   DateTime  @default(now())
-  processedAt DateTime?
+  @@unique([servidorId, referenciaMes], map: "uk_apuracoes_mensais_servidor_mes")
+  @@map("apuracoes_mensais")
 }
 
-enum AfdFileStatus {
-  PENDING
-  PROCESSING
-  DONE
-  ERROR
+model LancamentoBancoHoras {
+  id               String                   @id @default(cuid()) @map("id")
+  servidorId       String                   @map("servidor_id")
+  referenciaMes    String                   @map("referencia_mes")
+  tipoLancamento   TipoLancamentoBancoHoras @map("tipo_lancamento")
+  minutos          Int                      @map("minutos")
+  fator            Float?                   @map("fator")
+  referenciaOrigem Json?                    @map("referencia_origem")
+  createdAt        DateTime                 @default(now()) @map("criado_em")
+
+  servidor Servidor @relation(fields: [servidorId], references: [id], onDelete: Cascade)
+
+  @@index([servidorId, referenciaMes], map: "idx_lancamentos_banco_horas_servidor_mes")
+  @@map("lancamentos_banco_horas")
+}
+
+//////////////////////////////////////////////////////
+// AUTORIZAÇÕES
+//////////////////////////////////////////////////////
+
+model SolicitacaoAutorizacao {
+  id                String            @id @default(cuid()) @map("id")
+  servidorId        String            @map("servidor_id")
+  tipoAutorizacao   TipoAutorizacao   @map("tipo_autorizacao")
+  status            StatusAutorizacao @default(RASCUNHO) @map("status")
+  solicitadaEm      DateTime          @default(now()) @map("solicitada_em")
+  inicioEm          DateTime?         @map("inicio_em")
+  fimEm             DateTime?         @map("fim_em")
+  minutos           Int?              @map("minutos")
+  justificativa     String            @map("justificativa")
+  decididaEm        DateTime?         @map("decidida_em")
+  decididaPor       String?           @map("decidida_por")
+  observacaoDecisao String?           @map("observacao_decisao")
+
+  servidor Servidor @relation(fields: [servidorId], references: [id], onDelete: Cascade)
+
+  atividadeExterna AtividadeExterna?
+  viagem           Viagem?
+  capacitacao      Capacitacao?
+
+  @@index([servidorId, tipoAutorizacao, status], map: "idx_solicitacoes_autorizacao_servidor_tipo_status")
+  @@map("solicitacoes_autorizacao")
+}
+
+model Delegacao {
+  id                      String    @id @default(cuid()) @map("id")
+  unidadeOrganizacionalId String    @map("unidade_organizacional_id")
+  usuarioDeleganteId      String    @map("usuario_delegante_id")
+  usuarioDelegadoId       String    @map("usuario_delegado_id")
+  vigenciaInicio          DateTime  @map("vigencia_inicio")
+  vigenciaFim             DateTime? @map("vigencia_fim")
+  observacao              String?   @map("observacao")
+  createdAt               DateTime  @default(now()) @map("criado_em")
+  updatedAt               DateTime  @updatedAt @map("atualizado_em")
+
+  unidadeOrganizacional UnidadeOrganizacional @relation(fields: [unidadeOrganizacionalId], references: [id], onDelete: Cascade)
+  usuarioDelegante      Usuario               @relation("UsuarioDelegante", fields: [usuarioDeleganteId], references: [id], onDelete: Cascade)
+  usuarioDelegado       Usuario               @relation("UsuarioDelegado", fields: [usuarioDelegadoId], references: [id], onDelete: Cascade)
+
+  @@index([unidadeOrganizacionalId, vigenciaInicio], map: "idx_delegacoes_unidade_vigencia")
+  @@map("delegacoes")
+}
+
+//////////////////////////////////////////////////////
+// APOIO / AUDITORIA
+//////////////////////////////////////////////////////
+
+model Feriado {
+  id            String   @id @default(cuid()) @map("id")
+  organizacaoId String   @map("organizacao_id")
+  data          DateTime @map("data")
+  nome          String   @map("nome")
+  nacional      Boolean  @default(false) @map("nacional")
+
+  organizacao Organizacao @relation(fields: [organizacaoId], references: [id], onDelete: Cascade)
+
+  @@unique([organizacaoId, data], map: "uk_feriados_organizacao_data")
+  @@map("feriados")
+}
+
+model LogAuditoria {
+  id            String   @id @default(cuid()) @map("id")
+  organizacaoId String   @map("organizacao_id")
+  usuarioAtorId String?  @map("usuario_ator_id")
+  acao          String   @map("acao")
+  entidade      String   @map("entidade")
+  entidadeId    String   @map("entidade_id")
+  dados         Json?    @map("dados")
+  createdAt     DateTime @default(now()) @map("criado_em")
+
+  organizacao Organizacao @relation(fields: [organizacaoId], references: [id], onDelete: Cascade)
+  usuarioAtor Usuario?    @relation(fields: [usuarioAtorId], references: [id])
+
+  @@index([organizacaoId, createdAt], map: "idx_logs_auditoria_organizacao_criado_em")
+  @@map("logs_auditoria")
+}
+
+//////////////////////////////////////////////////////
+// AFD
+//////////////////////////////////////////////////////
+
+model ImportacaoAfd {
+  id            String   @id @default(cuid()) @map("id")
+  organizacaoId String   @map("organizacao_id")
+  source        String?  @map("origem")
+  createdAt     DateTime @default(now()) @map("criado_em")
+
+  organizacao Organizacao  @relation(fields: [organizacaoId], references: [id], onDelete: Cascade)
+  arquivos    ArquivoAfd[]
+
+  @@map("importacoes_afd")
+}
+
+model ArquivoAfd {
+  id             String           @id @default(cuid()) @map("id")
+  importacaoId   String           @map("importacao_id")
+  nomeOriginal   String           @map("nome_original")
+  nomeArmazenado String           @map("nome_armazenado")
+  caminhoArquivo String           @map("caminho_arquivo")
+  sha256         String           @map("sha256")
+  tamanhoBytes   Int              @map("tamanho_bytes")
+  mimeType       String?          @map("mime_type")
+  textoBruto     String?          @map("texto_bruto") @db.Text
+  jsonParseado   Json?            @map("json_parseado")
+  status         StatusArquivoAfd @default(PENDENTE) @map("status")
+  mensagemErro   String?          @map("mensagem_erro") @db.Text
+  createdAt      DateTime         @default(now()) @map("criado_em")
+  processadoEm   DateTime?        @map("processado_em")
+
+  importacao ImportacaoAfd @relation(fields: [importacaoId], references: [id], onDelete: Cascade)
+
+  @@map("arquivos_afd")
 }

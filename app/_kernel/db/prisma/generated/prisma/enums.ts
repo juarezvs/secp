@@ -9,20 +9,20 @@
 * 🟢 You can import this file directly.
 */
 
-export const SessionEndReason = {
+export const MotivoEncerramentoSessao = {
   LOGOUT: 'LOGOUT',
-  CLIENT_CLOSE: 'CLIENT_CLOSE',
+  FECHAMENTO_CLIENTE: 'FECHAMENTO_CLIENTE',
   TIMEOUT: 'TIMEOUT',
-  EXPIRED: 'EXPIRED',
-  ADMIN_REVOKE: 'ADMIN_REVOKE'
+  EXPIRADA: 'EXPIRADA',
+  REVOGADA_ADMIN: 'REVOGADA_ADMIN'
 } as const
 
-export type SessionEndReason = (typeof SessionEndReason)[keyof typeof SessionEndReason]
+export type MotivoEncerramentoSessao = (typeof MotivoEncerramentoSessao)[keyof typeof MotivoEncerramentoSessao]
 
 
-export const Role = {
-  SERVER: 'SERVER',
-  MANAGER: 'MANAGER',
+export const PapelSistema = {
+  SERVIDOR: 'SERVIDOR',
+  GESTOR: 'GESTOR',
   NUTEC: 'NUTEC',
   SECAP: 'SECAP',
   DIREF: 'DIREF',
@@ -30,7 +30,7 @@ export const Role = {
   ADMIN: 'ADMIN'
 } as const
 
-export type Role = (typeof Role)[keyof typeof Role]
+export type PapelSistema = (typeof PapelSistema)[keyof typeof PapelSistema]
 
 
 export const RegimeTrabalho = {
@@ -42,36 +42,36 @@ export const RegimeTrabalho = {
 export type RegimeTrabalho = (typeof RegimeTrabalho)[keyof typeof RegimeTrabalho]
 
 
-export const JornadaTipo = {
+export const TipoJornada = {
   SETE_HORAS: 'SETE_HORAS',
   OITO_HORAS: 'OITO_HORAS',
   ESPECIAL: 'ESPECIAL',
-  DIFERENCIADO: 'DIFERENCIADO'
+  DIFERENCIADA: 'DIFERENCIADA'
 } as const
 
-export type JornadaTipo = (typeof JornadaTipo)[keyof typeof JornadaTipo]
+export type TipoJornada = (typeof TipoJornada)[keyof typeof TipoJornada]
 
 
-export const PunchKind = {
-  IN: 'IN',
-  OUT: 'OUT',
-  BREAK_OUT: 'BREAK_OUT',
-  BREAK_IN: 'BREAK_IN'
+export const TipoMarcacao = {
+  ENTRADA: 'ENTRADA',
+  SAIDA: 'SAIDA',
+  SAIDA_INTERVALO: 'SAIDA_INTERVALO',
+  RETORNO_INTERVALO: 'RETORNO_INTERVALO'
 } as const
 
-export type PunchKind = (typeof PunchKind)[keyof typeof PunchKind]
+export type TipoMarcacao = (typeof TipoMarcacao)[keyof typeof TipoMarcacao]
 
 
-export const PunchSource = {
-  BIOMETRIC_DEVICE: 'BIOMETRIC_DEVICE',
-  ALTERNATIVE_METHOD: 'ALTERNATIVE_METHOD',
-  MANUAL_EXCEPTION: 'MANUAL_EXCEPTION'
+export const OrigemMarcacao = {
+  DISPOSITIVO_BIOMETRICO: 'DISPOSITIVO_BIOMETRICO',
+  METODO_ALTERNATIVO: 'METODO_ALTERNATIVO',
+  EXCECAO_MANUAL: 'EXCECAO_MANUAL'
 } as const
 
-export type PunchSource = (typeof PunchSource)[keyof typeof PunchSource]
+export type OrigemMarcacao = (typeof OrigemMarcacao)[keyof typeof OrigemMarcacao]
 
 
-export const AttendanceStatus = {
+export const StatusApuracao = {
   OK: 'OK',
   INCONSISTENTE: 'INCONSISTENTE',
   PENDENTE_REGULARIZACAO: 'PENDENTE_REGULARIZACAO',
@@ -79,54 +79,71 @@ export const AttendanceStatus = {
   FECHADO: 'FECHADO'
 } as const
 
-export type AttendanceStatus = (typeof AttendanceStatus)[keyof typeof AttendanceStatus]
+export type StatusApuracao = (typeof StatusApuracao)[keyof typeof StatusApuracao]
 
 
-export const LedgerEntryType = {
-  CREDIT: 'CREDIT',
-  DEBIT: 'DEBIT',
-  COMPENSATION: 'COMPENSATION',
-  EXCESS_SAT: 'EXCESS_SAT',
-  EXCESS_SUN_HOL: 'EXCESS_SUN_HOL',
-  NIGHT_EXCESS: 'NIGHT_EXCESS',
-  UNAUTHORIZED: 'UNAUTHORIZED',
-  ABOVE_LIMIT: 'ABOVE_LIMIT',
-  ADJUSTMENT: 'ADJUSTMENT'
+export const TipoLancamentoBancoHoras = {
+  CREDITO: 'CREDITO',
+  DEBITO: 'DEBITO',
+  COMPENSACAO: 'COMPENSACAO',
+  EXCEDENTE_SABADO: 'EXCEDENTE_SABADO',
+  EXCEDENTE_DOMINGO_FERIADO: 'EXCEDENTE_DOMINGO_FERIADO',
+  EXCEDENTE_NOTURNO: 'EXCEDENTE_NOTURNO',
+  NAO_AUTORIZADO: 'NAO_AUTORIZADO',
+  ACIMA_LIMITE: 'ACIMA_LIMITE',
+  AJUSTE: 'AJUSTE'
 } as const
 
-export type LedgerEntryType = (typeof LedgerEntryType)[keyof typeof LedgerEntryType]
+export type TipoLancamentoBancoHoras = (typeof TipoLancamentoBancoHoras)[keyof typeof TipoLancamentoBancoHoras]
 
 
-export const AuthorizationType = {
-  WORK_EXTRA_CREDIT: 'WORK_EXTRA_CREDIT',
-  COMPENSATE_DEBIT: 'COMPENSATE_DEBIT',
-  FRUIR_CREDIT: 'FRUIR_CREDIT',
-  EXTERNAL_ACTIVITY: 'EXTERNAL_ACTIVITY',
-  TRAVEL: 'TRAVEL',
-  TRAINING: 'TRAINING',
+export const TipoAutorizacao = {
+  HORA_EXTRA_CREDITO: 'HORA_EXTRA_CREDITO',
+  COMPENSAR_DEBITO: 'COMPENSAR_DEBITO',
+  FRUIR_CREDITO: 'FRUIR_CREDITO',
+  ATIVIDADE_EXTERNA: 'ATIVIDADE_EXTERNA',
+  VIAGEM: 'VIAGEM',
+  CAPACITACAO: 'CAPACITACAO',
   DISPENSA_PONTO: 'DISPENSA_PONTO',
-  RATIFY_ABOVE_LIMIT: 'RATIFY_ABOVE_LIMIT'
+  REFERENDO_ACIMA_LIMITE: 'REFERENDO_ACIMA_LIMITE'
 } as const
 
-export type AuthorizationType = (typeof AuthorizationType)[keyof typeof AuthorizationType]
+export type TipoAutorizacao = (typeof TipoAutorizacao)[keyof typeof TipoAutorizacao]
 
 
-export const AuthorizationStatus = {
-  DRAFT: 'DRAFT',
-  SUBMITTED: 'SUBMITTED',
-  APPROVED: 'APPROVED',
-  REJECTED: 'REJECTED',
-  CANCELLED: 'CANCELLED'
+export const StatusAutorizacao = {
+  RASCUNHO: 'RASCUNHO',
+  ENVIADA: 'ENVIADA',
+  APROVADA: 'APROVADA',
+  REJEITADA: 'REJEITADA',
+  CANCELADA: 'CANCELADA'
 } as const
 
-export type AuthorizationStatus = (typeof AuthorizationStatus)[keyof typeof AuthorizationStatus]
+export type StatusAutorizacao = (typeof StatusAutorizacao)[keyof typeof StatusAutorizacao]
 
 
-export const AfdFileStatus = {
-  PENDING: 'PENDING',
-  PROCESSING: 'PROCESSING',
-  DONE: 'DONE',
-  ERROR: 'ERROR'
+export const TipoUnidadeOrganizacional = {
+  JUSTICA_FEDERAL: 'JUSTICA_FEDERAL',
+  SECAO_JUDICIARIA: 'SECAO_JUDICIARIA',
+  SUBSECAO_JUDICIARIA: 'SUBSECAO_JUDICIARIA',
+  DIRETORIA: 'DIRETORIA',
+  DEPARTAMENTO: 'DEPARTAMENTO',
+  SECRETARIA: 'SECRETARIA',
+  NUCLEO: 'NUCLEO',
+  SECAO: 'SECAO',
+  SETOR: 'SETOR',
+  SERVICO: 'SERVICO',
+  SUBDEPARTAMENTO: 'SUBDEPARTAMENTO'
 } as const
 
-export type AfdFileStatus = (typeof AfdFileStatus)[keyof typeof AfdFileStatus]
+export type TipoUnidadeOrganizacional = (typeof TipoUnidadeOrganizacional)[keyof typeof TipoUnidadeOrganizacional]
+
+
+export const StatusArquivoAfd = {
+  PENDENTE: 'PENDENTE',
+  PROCESSANDO: 'PROCESSANDO',
+  CONCLUIDO: 'CONCLUIDO',
+  ERRO: 'ERRO'
+} as const
+
+export type StatusArquivoAfd = (typeof StatusArquivoAfd)[keyof typeof StatusArquivoAfd]

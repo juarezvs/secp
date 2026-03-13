@@ -18,132 +18,132 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
- * Model UserProfile
+ * Model Organizacao
  * 
  */
-export type UserProfile = Prisma.UserProfileModel
+export type Organizacao = Prisma.OrganizacaoModel
 /**
- * Model Account
+ * Model UnidadeOrganizacional
  * 
  */
-export type Account = Prisma.AccountModel
+export type UnidadeOrganizacional = Prisma.UnidadeOrganizacionalModel
 /**
- * Model Session
+ * Model PerfilUsuario
  * 
  */
-export type Session = Prisma.SessionModel
+export type PerfilUsuario = Prisma.PerfilUsuarioModel
 /**
- * Model VerificationToken
+ * Model Usuario
  * 
  */
-export type VerificationToken = Prisma.VerificationTokenModel
+export type Usuario = Prisma.UsuarioModel
 /**
- * Model Authenticator
+ * Model Conta
  * 
  */
-export type Authenticator = Prisma.AuthenticatorModel
+export type Conta = Prisma.ContaModel
 /**
- * Model AuditSession
+ * Model Sessao
  * 
  */
-export type AuditSession = Prisma.AuditSessionModel
+export type Sessao = Prisma.SessaoModel
 /**
- * Model Tenant
+ * Model TokenVerificacao
  * 
  */
-export type Tenant = Prisma.TenantModel
+export type TokenVerificacao = Prisma.TokenVerificacaoModel
 /**
- * Model Unit
+ * Model Autenticador
  * 
  */
-export type Unit = Prisma.UnitModel
+export type Autenticador = Prisma.AutenticadorModel
 /**
- * Model User
+ * Model SessaoAuditoria
  * 
  */
-export type User = Prisma.UserModel
+export type SessaoAuditoria = Prisma.SessaoAuditoriaModel
 /**
- * Model Employee
+ * Model Servidor
  * 
  */
-export type Employee = Prisma.EmployeeModel
+export type Servidor = Prisma.ServidorModel
 /**
- * Model WorkSchedule
+ * Model JornadaTrabalho
  * 
  */
-export type WorkSchedule = Prisma.WorkScheduleModel
+export type JornadaTrabalho = Prisma.JornadaTrabalhoModel
 /**
- * Model ScheduleAssignment
+ * Model AtribuicaoJornada
  * 
  */
-export type ScheduleAssignment = Prisma.ScheduleAssignmentModel
+export type AtribuicaoJornada = Prisma.AtribuicaoJornadaModel
 /**
- * Model BiometricDevice
+ * Model DispositivoBiometrico
  * 
  */
-export type BiometricDevice = Prisma.BiometricDeviceModel
+export type DispositivoBiometrico = Prisma.DispositivoBiometricoModel
 /**
- * Model PunchEvent
+ * Model MarcacaoPonto
  * 
  */
-export type PunchEvent = Prisma.PunchEventModel
+export type MarcacaoPonto = Prisma.MarcacaoPontoModel
 /**
- * Model ExternalActivity
+ * Model AtividadeExterna
  * 
  */
-export type ExternalActivity = Prisma.ExternalActivityModel
+export type AtividadeExterna = Prisma.AtividadeExternaModel
 /**
- * Model Travel
+ * Model Viagem
  * 
  */
-export type Travel = Prisma.TravelModel
+export type Viagem = Prisma.ViagemModel
 /**
- * Model Training
+ * Model Capacitacao
  * 
  */
-export type Training = Prisma.TrainingModel
+export type Capacitacao = Prisma.CapacitacaoModel
 /**
- * Model AttendanceDay
+ * Model ApuracaoDiaria
  * 
  */
-export type AttendanceDay = Prisma.AttendanceDayModel
+export type ApuracaoDiaria = Prisma.ApuracaoDiariaModel
 /**
- * Model AttendanceMonth
+ * Model ApuracaoMensal
  * 
  */
-export type AttendanceMonth = Prisma.AttendanceMonthModel
+export type ApuracaoMensal = Prisma.ApuracaoMensalModel
 /**
- * Model BankHourLedgerEntry
+ * Model LancamentoBancoHoras
  * 
  */
-export type BankHourLedgerEntry = Prisma.BankHourLedgerEntryModel
+export type LancamentoBancoHoras = Prisma.LancamentoBancoHorasModel
 /**
- * Model AuthorizationRequest
+ * Model SolicitacaoAutorizacao
  * 
  */
-export type AuthorizationRequest = Prisma.AuthorizationRequestModel
+export type SolicitacaoAutorizacao = Prisma.SolicitacaoAutorizacaoModel
 /**
- * Model Delegation
+ * Model Delegacao
  * 
  */
-export type Delegation = Prisma.DelegationModel
+export type Delegacao = Prisma.DelegacaoModel
 /**
- * Model Holiday
+ * Model Feriado
  * 
  */
-export type Holiday = Prisma.HolidayModel
+export type Feriado = Prisma.FeriadoModel
 /**
- * Model AuditLog
+ * Model LogAuditoria
  * 
  */
-export type AuditLog = Prisma.AuditLogModel
+export type LogAuditoria = Prisma.LogAuditoriaModel
 /**
- * Model AfdImport
+ * Model ImportacaoAfd
  * 
  */
-export type AfdImport = Prisma.AfdImportModel
+export type ImportacaoAfd = Prisma.ImportacaoAfdModel
 /**
- * Model AfdFile
+ * Model ArquivoAfd
  * 
  */
-export type AfdFile = Prisma.AfdFileModel
+export type ArquivoAfd = Prisma.ArquivoAfdModel

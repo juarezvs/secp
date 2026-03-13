@@ -51,32 +51,32 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  UserProfile: 'UserProfile',
-  Account: 'Account',
-  Session: 'Session',
-  VerificationToken: 'VerificationToken',
-  Authenticator: 'Authenticator',
-  AuditSession: 'AuditSession',
-  Tenant: 'Tenant',
-  Unit: 'Unit',
-  User: 'User',
-  Employee: 'Employee',
-  WorkSchedule: 'WorkSchedule',
-  ScheduleAssignment: 'ScheduleAssignment',
-  BiometricDevice: 'BiometricDevice',
-  PunchEvent: 'PunchEvent',
-  ExternalActivity: 'ExternalActivity',
-  Travel: 'Travel',
-  Training: 'Training',
-  AttendanceDay: 'AttendanceDay',
-  AttendanceMonth: 'AttendanceMonth',
-  BankHourLedgerEntry: 'BankHourLedgerEntry',
-  AuthorizationRequest: 'AuthorizationRequest',
-  Delegation: 'Delegation',
-  Holiday: 'Holiday',
-  AuditLog: 'AuditLog',
-  AfdImport: 'AfdImport',
-  AfdFile: 'AfdFile'
+  Organizacao: 'Organizacao',
+  UnidadeOrganizacional: 'UnidadeOrganizacional',
+  PerfilUsuario: 'PerfilUsuario',
+  Usuario: 'Usuario',
+  Conta: 'Conta',
+  Sessao: 'Sessao',
+  TokenVerificacao: 'TokenVerificacao',
+  Autenticador: 'Autenticador',
+  SessaoAuditoria: 'SessaoAuditoria',
+  Servidor: 'Servidor',
+  JornadaTrabalho: 'JornadaTrabalho',
+  AtribuicaoJornada: 'AtribuicaoJornada',
+  DispositivoBiometrico: 'DispositivoBiometrico',
+  MarcacaoPonto: 'MarcacaoPonto',
+  AtividadeExterna: 'AtividadeExterna',
+  Viagem: 'Viagem',
+  Capacitacao: 'Capacitacao',
+  ApuracaoDiaria: 'ApuracaoDiaria',
+  ApuracaoMensal: 'ApuracaoMensal',
+  LancamentoBancoHoras: 'LancamentoBancoHoras',
+  SolicitacaoAutorizacao: 'SolicitacaoAutorizacao',
+  Delegacao: 'Delegacao',
+  Feriado: 'Feriado',
+  LogAuditoria: 'LogAuditoria',
+  ImportacaoAfd: 'ImportacaoAfd',
+  ArquivoAfd: 'ArquivoAfd'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -95,392 +95,394 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const UserProfileScalarFieldEnum = {
+export const OrganizacaoScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  isOnboarded: 'isOnboarded',
-  sarhUf: 'sarhUf',
+  sigla: 'sigla',
+  nome: 'nome',
+  ativa: 'ativa',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrganizacaoScalarFieldEnum = (typeof OrganizacaoScalarFieldEnum)[keyof typeof OrganizacaoScalarFieldEnum]
+
+
+export const UnidadeOrganizacionalScalarFieldEnum = {
+  id: 'id',
+  organizacaoId: 'organizacaoId',
+  unidadePaiId: 'unidadePaiId',
+  gestorId: 'gestorId',
+  nome: 'nome',
+  sigla: 'sigla',
+  tipo: 'tipo',
+  ativa: 'ativa',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UnidadeOrganizacionalScalarFieldEnum = (typeof UnidadeOrganizacionalScalarFieldEnum)[keyof typeof UnidadeOrganizacionalScalarFieldEnum]
+
+
+export const PerfilUsuarioScalarFieldEnum = {
+  id: 'id',
+  usuarioId: 'usuarioId',
+  onboardingConcluido: 'onboardingConcluido',
   matricula: 'matricula',
   cpf: 'cpf',
-  companyId: 'companyId',
-  branchId: 'branchId',
+  unidadeOrganizacionalId: 'unidadeOrganizacionalId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type UserProfileScalarFieldEnum = (typeof UserProfileScalarFieldEnum)[keyof typeof UserProfileScalarFieldEnum]
+export type PerfilUsuarioScalarFieldEnum = (typeof PerfilUsuarioScalarFieldEnum)[keyof typeof PerfilUsuarioScalarFieldEnum]
 
 
-export const AccountScalarFieldEnum = {
+export const UsuarioScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  type: 'type',
-  provider: 'provider',
-  providerAccountId: 'providerAccountId',
-  refresh_token: 'refresh_token',
-  access_token: 'access_token',
-  expires_at: 'expires_at',
-  token_type: 'token_type',
+  organizacaoId: 'organizacaoId',
+  matricula: 'matricula',
+  email: 'email',
+  nome: 'nome',
+  cpf: 'cpf',
+  emailVerified: 'emailVerified',
+  papeis: 'papeis',
+  ativo: 'ativo',
+  imagem: 'imagem',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]
+
+
+export const ContaScalarFieldEnum = {
+  id: 'id',
+  usuarioId: 'usuarioId',
+  tipo: 'tipo',
+  provedor: 'provedor',
+  contaProvedorId: 'contaProvedorId',
+  refreshToken: 'refreshToken',
+  accessToken: 'accessToken',
+  expiresAt: 'expiresAt',
+  tokenType: 'tokenType',
   scope: 'scope',
-  id_token: 'id_token',
-  session_state: 'session_state',
+  idToken: 'idToken',
+  sessionState: 'sessionState',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
+export type ContaScalarFieldEnum = (typeof ContaScalarFieldEnum)[keyof typeof ContaScalarFieldEnum]
 
 
-export const SessionScalarFieldEnum = {
+export const SessaoScalarFieldEnum = {
   id: 'id',
-  sessionToken: 'sessionToken',
-  userId: 'userId',
-  expires: 'expires',
+  tokenSessao: 'tokenSessao',
+  usuarioId: 'usuarioId',
+  expiraEm: 'expiraEm',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+export type SessaoScalarFieldEnum = (typeof SessaoScalarFieldEnum)[keyof typeof SessaoScalarFieldEnum]
 
 
-export const VerificationTokenScalarFieldEnum = {
-  identifier: 'identifier',
+export const TokenVerificacaoScalarFieldEnum = {
+  identificador: 'identificador',
   token: 'token',
-  expires: 'expires'
+  expiraEm: 'expiraEm'
 } as const
 
-export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFieldEnum)[keyof typeof VerificationTokenScalarFieldEnum]
+export type TokenVerificacaoScalarFieldEnum = (typeof TokenVerificacaoScalarFieldEnum)[keyof typeof TokenVerificacaoScalarFieldEnum]
 
 
-export const AuthenticatorScalarFieldEnum = {
-  credentialID: 'credentialID',
-  userId: 'userId',
-  providerAccountId: 'providerAccountId',
-  credentialPublicKey: 'credentialPublicKey',
-  counter: 'counter',
-  credentialDeviceType: 'credentialDeviceType',
-  credentialBackedUp: 'credentialBackedUp',
-  transports: 'transports'
+export const AutenticadorScalarFieldEnum = {
+  credencialId: 'credencialId',
+  usuarioId: 'usuarioId',
+  contaProvedorId: 'contaProvedorId',
+  chavePublicaCredencial: 'chavePublicaCredencial',
+  contador: 'contador',
+  tipoDispositivo: 'tipoDispositivo',
+  backupRealizado: 'backupRealizado',
+  transportes: 'transportes'
 } as const
 
-export type AuthenticatorScalarFieldEnum = (typeof AuthenticatorScalarFieldEnum)[keyof typeof AuthenticatorScalarFieldEnum]
+export type AutenticadorScalarFieldEnum = (typeof AutenticadorScalarFieldEnum)[keyof typeof AutenticadorScalarFieldEnum]
 
 
-export const AuditSessionScalarFieldEnum = {
+export const SessaoAuditoriaScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  tenantId: 'tenantId',
-  loginAt: 'loginAt',
-  lastSeenAt: 'lastSeenAt',
-  endedAt: 'endedAt',
-  endReason: 'endReason',
+  usuarioId: 'usuarioId',
+  organizacaoId: 'organizacaoId',
+  loginEm: 'loginEm',
+  ultimoAcessoEm: 'ultimoAcessoEm',
+  encerradaEm: 'encerradaEm',
+  motivoEncerramento: 'motivoEncerramento',
   ip: 'ip',
   userAgent: 'userAgent',
   jwtId: 'jwtId'
 } as const
 
-export type AuditSessionScalarFieldEnum = (typeof AuditSessionScalarFieldEnum)[keyof typeof AuditSessionScalarFieldEnum]
+export type SessaoAuditoriaScalarFieldEnum = (typeof SessaoAuditoriaScalarFieldEnum)[keyof typeof SessaoAuditoriaScalarFieldEnum]
 
 
-export const TenantScalarFieldEnum = {
+export const ServidorScalarFieldEnum = {
   id: 'id',
-  externalSarhId: 'externalSarhId',
-  name: 'name',
-  nickname: 'nickname',
-  active: 'active',
-  createdAt: 'createdAt'
-} as const
-
-export type TenantScalarFieldEnum = (typeof TenantScalarFieldEnum)[keyof typeof TenantScalarFieldEnum]
-
-
-export const UnitScalarFieldEnum = {
-  id: 'id',
-  externalSarhId: 'externalSarhId',
-  tenantId: 'tenantId',
-  name: 'name',
-  code: 'code',
-  parentId: 'parentId',
-  managerId: 'managerId'
-} as const
-
-export type UnitScalarFieldEnum = (typeof UnitScalarFieldEnum)[keyof typeof UnitScalarFieldEnum]
-
-
-export const UserScalarFieldEnum = {
-  id: 'id',
+  organizacaoId: 'organizacaoId',
+  usuarioId: 'usuarioId',
+  unidadeOrganizacionalId: 'unidadeOrganizacionalId',
   matricula: 'matricula',
-  tenantId: 'tenantId',
-  email: 'email',
-  name: 'name',
-  cpf: 'cpf',
-  emailVerified: 'emailVerified',
-  roles: 'roles',
-  isActive: 'isActive',
-  image: 'image',
+  regimeTrabalho: 'regimeTrabalho',
+  tipoJornada: 'tipoJornada',
+  comissionado: 'comissionado',
+  oficialJustica: 'oficialJustica',
+  dispensaPonto: 'dispensaPonto',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+export type ServidorScalarFieldEnum = (typeof ServidorScalarFieldEnum)[keyof typeof ServidorScalarFieldEnum]
 
 
-export const EmployeeScalarFieldEnum = {
+export const JornadaTrabalhoScalarFieldEnum = {
   id: 'id',
-  tenantId: 'tenantId',
-  userId: 'userId',
-  unitId: 'unitId',
-  matricula: 'matricula',
-  regime: 'regime',
-  jornadaTipo: 'jornadaTipo',
-  isComissionado: 'isComissionado',
-  isOficialJustica: 'isOficialJustica',
-  isDispensaPonto: 'isDispensaPonto'
+  nome: 'nome',
+  tipoJornada: 'tipoJornada',
+  minutosPorDia: 'minutosPorDia',
+  intervaloMinimoMin: 'intervaloMinimoMin',
+  intervaloMaximoMin: 'intervaloMaximoMin',
+  flexEntradaMin: 'flexEntradaMin',
+  flexSaidaMin: 'flexSaidaMin',
+  permiteAntesSeis: 'permiteAntesSeis',
+  permiteAposDezenove: 'permiteAposDezenove',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
+export type JornadaTrabalhoScalarFieldEnum = (typeof JornadaTrabalhoScalarFieldEnum)[keyof typeof JornadaTrabalhoScalarFieldEnum]
 
 
-export const WorkScheduleScalarFieldEnum = {
+export const AtribuicaoJornadaScalarFieldEnum = {
   id: 'id',
-  tenantId: 'tenantId',
-  name: 'name',
-  jornadaTipo: 'jornadaTipo',
-  minutesPerDay: 'minutesPerDay',
-  breakMinMinutes: 'breakMinMinutes',
-  breakMaxMinutes: 'breakMaxMinutes',
-  flexInMinutes: 'flexInMinutes',
-  flexOutMinutes: 'flexOutMinutes',
-  allowBefore6: 'allowBefore6',
-  allowAfter19: 'allowAfter19'
+  servidorId: 'servidorId',
+  jornadaId: 'jornadaId',
+  vigenciaIni: 'vigenciaIni',
+  vigenciaFim: 'vigenciaFim'
 } as const
 
-export type WorkScheduleScalarFieldEnum = (typeof WorkScheduleScalarFieldEnum)[keyof typeof WorkScheduleScalarFieldEnum]
+export type AtribuicaoJornadaScalarFieldEnum = (typeof AtribuicaoJornadaScalarFieldEnum)[keyof typeof AtribuicaoJornadaScalarFieldEnum]
 
 
-export const ScheduleAssignmentScalarFieldEnum = {
+export const DispositivoBiometricoScalarFieldEnum = {
   id: 'id',
-  tenantId: 'tenantId',
-  employeeId: 'employeeId',
-  scheduleId: 'scheduleId',
-  validFrom: 'validFrom',
-  validTo: 'validTo'
-} as const
-
-export type ScheduleAssignmentScalarFieldEnum = (typeof ScheduleAssignmentScalarFieldEnum)[keyof typeof ScheduleAssignmentScalarFieldEnum]
-
-
-export const BiometricDeviceScalarFieldEnum = {
-  id: 'id',
-  tenantId: 'tenantId',
-  unitId: 'unitId',
-  name: 'name',
+  unidadeOrganizacionalId: 'unidadeOrganizacionalId',
+  nome: 'nome',
   serial: 'serial',
-  isActive: 'isActive'
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type BiometricDeviceScalarFieldEnum = (typeof BiometricDeviceScalarFieldEnum)[keyof typeof BiometricDeviceScalarFieldEnum]
+export type DispositivoBiometricoScalarFieldEnum = (typeof DispositivoBiometricoScalarFieldEnum)[keyof typeof DispositivoBiometricoScalarFieldEnum]
 
 
-export const PunchEventScalarFieldEnum = {
+export const MarcacaoPontoScalarFieldEnum = {
   id: 'id',
-  tenantId: 'tenantId',
-  employeeId: 'employeeId',
-  occurredAt: 'occurredAt',
-  kind: 'kind',
-  source: 'source',
-  deviceId: 'deviceId',
-  rawPayload: 'rawPayload',
-  integrityHash: 'integrityHash',
+  servidorId: 'servidorId',
+  ocorridaEm: 'ocorridaEm',
+  tipoMarcacao: 'tipoMarcacao',
+  origemMarcacao: 'origemMarcacao',
+  dispositivoId: 'dispositivoId',
+  payloadBruto: 'payloadBruto',
+  hashIntegridade: 'hashIntegridade',
   createdAt: 'createdAt'
 } as const
 
-export type PunchEventScalarFieldEnum = (typeof PunchEventScalarFieldEnum)[keyof typeof PunchEventScalarFieldEnum]
+export type MarcacaoPontoScalarFieldEnum = (typeof MarcacaoPontoScalarFieldEnum)[keyof typeof MarcacaoPontoScalarFieldEnum]
 
 
-export const ExternalActivityScalarFieldEnum = {
+export const AtividadeExternaScalarFieldEnum = {
   id: 'id',
-  tenantId: 'tenantId',
-  employeeId: 'employeeId',
-  startsAt: 'startsAt',
-  endsAt: 'endsAt',
-  description: 'description',
-  proofDocUrl: 'proofDocUrl',
-  authorizationId: 'authorizationId'
+  servidorId: 'servidorId',
+  inicioEm: 'inicioEm',
+  fimEm: 'fimEm',
+  descricao: 'descricao',
+  urlDocumentoComprovante: 'urlDocumentoComprovante',
+  solicitacaoAutorizacaoId: 'solicitacaoAutorizacaoId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type ExternalActivityScalarFieldEnum = (typeof ExternalActivityScalarFieldEnum)[keyof typeof ExternalActivityScalarFieldEnum]
+export type AtividadeExternaScalarFieldEnum = (typeof AtividadeExternaScalarFieldEnum)[keyof typeof AtividadeExternaScalarFieldEnum]
 
 
-export const TravelScalarFieldEnum = {
+export const ViagemScalarFieldEnum = {
   id: 'id',
-  tenantId: 'tenantId',
-  employeeId: 'employeeId',
-  startsAt: 'startsAt',
-  endsAt: 'endsAt',
-  destination: 'destination',
-  authorizationId: 'authorizationId'
+  servidorId: 'servidorId',
+  inicioEm: 'inicioEm',
+  fimEm: 'fimEm',
+  destino: 'destino',
+  solicitacaoAutorizacaoId: 'solicitacaoAutorizacaoId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type TravelScalarFieldEnum = (typeof TravelScalarFieldEnum)[keyof typeof TravelScalarFieldEnum]
+export type ViagemScalarFieldEnum = (typeof ViagemScalarFieldEnum)[keyof typeof ViagemScalarFieldEnum]
 
 
-export const TrainingScalarFieldEnum = {
+export const CapacitacaoScalarFieldEnum = {
   id: 'id',
-  tenantId: 'tenantId',
-  employeeId: 'employeeId',
-  date: 'date',
-  hours: 'hours',
-  isInternal: 'isInternal',
-  proofDocUrl: 'proofDocUrl',
-  authorizationId: 'authorizationId'
+  servidorId: 'servidorId',
+  data: 'data',
+  horas: 'horas',
+  interna: 'interna',
+  urlDocumentoComprovante: 'urlDocumentoComprovante',
+  solicitacaoAutorizacaoId: 'solicitacaoAutorizacaoId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type TrainingScalarFieldEnum = (typeof TrainingScalarFieldEnum)[keyof typeof TrainingScalarFieldEnum]
+export type CapacitacaoScalarFieldEnum = (typeof CapacitacaoScalarFieldEnum)[keyof typeof CapacitacaoScalarFieldEnum]
 
 
-export const AttendanceDayScalarFieldEnum = {
+export const ApuracaoDiariaScalarFieldEnum = {
   id: 'id',
-  tenantId: 'tenantId',
-  employeeId: 'employeeId',
-  date: 'date',
-  scheduledMin: 'scheduledMin',
-  workedMin: 'workedMin',
-  breakMin: 'breakMin',
-  debitMin: 'debitMin',
-  creditMin: 'creditMin',
-  unauthorizedMin: 'unauthorizedMin',
-  aboveLimitMin: 'aboveLimitMin',
-  excessSatMin: 'excessSatMin',
-  excessSunHolMin: 'excessSunHolMin',
-  nightExcessMin: 'nightExcessMin',
+  servidorId: 'servidorId',
+  data: 'data',
+  minutosPrevistos: 'minutosPrevistos',
+  minutosTrabalhados: 'minutosTrabalhados',
+  minutosIntervalo: 'minutosIntervalo',
+  minutosDebito: 'minutosDebito',
+  minutosCredito: 'minutosCredito',
+  minutosNaoAutorizados: 'minutosNaoAutorizados',
+  minutosAcimaLimite: 'minutosAcimaLimite',
+  minutosExcedenteSabado: 'minutosExcedenteSabado',
+  minutosExcedenteDomingoFeriado: 'minutosExcedenteDomingoFeriado',
+  minutosExcedenteNoturno: 'minutosExcedenteNoturno',
   status: 'status',
   flags: 'flags'
 } as const
 
-export type AttendanceDayScalarFieldEnum = (typeof AttendanceDayScalarFieldEnum)[keyof typeof AttendanceDayScalarFieldEnum]
+export type ApuracaoDiariaScalarFieldEnum = (typeof ApuracaoDiariaScalarFieldEnum)[keyof typeof ApuracaoDiariaScalarFieldEnum]
 
 
-export const AttendanceMonthScalarFieldEnum = {
+export const ApuracaoMensalScalarFieldEnum = {
   id: 'id',
-  tenantId: 'tenantId',
-  employeeId: 'employeeId',
-  monthRef: 'monthRef',
-  scheduledMin: 'scheduledMin',
-  workedMin: 'workedMin',
-  debitMin: 'debitMin',
-  creditMin: 'creditMin',
-  saldoMin: 'saldoMin',
+  servidorId: 'servidorId',
+  referenciaMes: 'referenciaMes',
+  minutosPrevistos: 'minutosPrevistos',
+  minutosTrabalhados: 'minutosTrabalhados',
+  minutosDebito: 'minutosDebito',
+  minutosCredito: 'minutosCredito',
+  saldoMinutos: 'saldoMinutos',
   status: 'status',
-  homologatedAt: 'homologatedAt',
-  homologatedBy: 'homologatedBy'
+  homologadoEm: 'homologadoEm',
+  homologadoPor: 'homologadoPor'
 } as const
 
-export type AttendanceMonthScalarFieldEnum = (typeof AttendanceMonthScalarFieldEnum)[keyof typeof AttendanceMonthScalarFieldEnum]
+export type ApuracaoMensalScalarFieldEnum = (typeof ApuracaoMensalScalarFieldEnum)[keyof typeof ApuracaoMensalScalarFieldEnum]
 
 
-export const BankHourLedgerEntryScalarFieldEnum = {
+export const LancamentoBancoHorasScalarFieldEnum = {
   id: 'id',
-  tenantId: 'tenantId',
-  employeeId: 'employeeId',
-  monthRef: 'monthRef',
-  type: 'type',
-  minutes: 'minutes',
-  factor: 'factor',
-  sourceRef: 'sourceRef',
+  servidorId: 'servidorId',
+  referenciaMes: 'referenciaMes',
+  tipoLancamento: 'tipoLancamento',
+  minutos: 'minutos',
+  fator: 'fator',
+  referenciaOrigem: 'referenciaOrigem',
   createdAt: 'createdAt'
 } as const
 
-export type BankHourLedgerEntryScalarFieldEnum = (typeof BankHourLedgerEntryScalarFieldEnum)[keyof typeof BankHourLedgerEntryScalarFieldEnum]
+export type LancamentoBancoHorasScalarFieldEnum = (typeof LancamentoBancoHorasScalarFieldEnum)[keyof typeof LancamentoBancoHorasScalarFieldEnum]
 
 
-export const AuthorizationRequestScalarFieldEnum = {
+export const SolicitacaoAutorizacaoScalarFieldEnum = {
   id: 'id',
-  tenantId: 'tenantId',
-  employeeId: 'employeeId',
-  type: 'type',
+  servidorId: 'servidorId',
+  tipoAutorizacao: 'tipoAutorizacao',
   status: 'status',
-  requestedAt: 'requestedAt',
-  startsAt: 'startsAt',
-  endsAt: 'endsAt',
-  minutes: 'minutes',
-  reason: 'reason',
-  decidedAt: 'decidedAt',
-  decidedBy: 'decidedBy',
-  decisionNote: 'decisionNote'
+  solicitadaEm: 'solicitadaEm',
+  inicioEm: 'inicioEm',
+  fimEm: 'fimEm',
+  minutos: 'minutos',
+  justificativa: 'justificativa',
+  decididaEm: 'decididaEm',
+  decididaPor: 'decididaPor',
+  observacaoDecisao: 'observacaoDecisao'
 } as const
 
-export type AuthorizationRequestScalarFieldEnum = (typeof AuthorizationRequestScalarFieldEnum)[keyof typeof AuthorizationRequestScalarFieldEnum]
+export type SolicitacaoAutorizacaoScalarFieldEnum = (typeof SolicitacaoAutorizacaoScalarFieldEnum)[keyof typeof SolicitacaoAutorizacaoScalarFieldEnum]
 
 
-export const DelegationScalarFieldEnum = {
+export const DelegacaoScalarFieldEnum = {
   id: 'id',
-  tenantId: 'tenantId',
-  unitId: 'unitId',
-  fromUserId: 'fromUserId',
-  toUserId: 'toUserId',
-  validFrom: 'validFrom',
-  validTo: 'validTo',
-  note: 'note',
-  userId: 'userId'
+  unidadeOrganizacionalId: 'unidadeOrganizacionalId',
+  usuarioDeleganteId: 'usuarioDeleganteId',
+  usuarioDelegadoId: 'usuarioDelegadoId',
+  vigenciaInicio: 'vigenciaInicio',
+  vigenciaFim: 'vigenciaFim',
+  observacao: 'observacao',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type DelegationScalarFieldEnum = (typeof DelegationScalarFieldEnum)[keyof typeof DelegationScalarFieldEnum]
+export type DelegacaoScalarFieldEnum = (typeof DelegacaoScalarFieldEnum)[keyof typeof DelegacaoScalarFieldEnum]
 
 
-export const HolidayScalarFieldEnum = {
+export const FeriadoScalarFieldEnum = {
   id: 'id',
-  tenantId: 'tenantId',
-  date: 'date',
-  name: 'name',
-  isNational: 'isNational'
-} as const
-
-export type HolidayScalarFieldEnum = (typeof HolidayScalarFieldEnum)[keyof typeof HolidayScalarFieldEnum]
-
-
-export const AuditLogScalarFieldEnum = {
-  id: 'id',
-  tenantId: 'tenantId',
-  actorUserId: 'actorUserId',
-  action: 'action',
-  entity: 'entity',
-  entityId: 'entityId',
+  organizacaoId: 'organizacaoId',
   data: 'data',
+  nome: 'nome',
+  nacional: 'nacional'
+} as const
+
+export type FeriadoScalarFieldEnum = (typeof FeriadoScalarFieldEnum)[keyof typeof FeriadoScalarFieldEnum]
+
+
+export const LogAuditoriaScalarFieldEnum = {
+  id: 'id',
+  organizacaoId: 'organizacaoId',
+  usuarioAtorId: 'usuarioAtorId',
+  acao: 'acao',
+  entidade: 'entidade',
+  entidadeId: 'entidadeId',
+  dados: 'dados',
   createdAt: 'createdAt'
 } as const
 
-export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+export type LogAuditoriaScalarFieldEnum = (typeof LogAuditoriaScalarFieldEnum)[keyof typeof LogAuditoriaScalarFieldEnum]
 
 
-export const AfdImportScalarFieldEnum = {
+export const ImportacaoAfdScalarFieldEnum = {
   id: 'id',
-  tenantId: 'tenantId',
-  createdAt: 'createdAt',
-  source: 'source'
+  organizacaoId: 'organizacaoId',
+  source: 'source',
+  createdAt: 'createdAt'
 } as const
 
-export type AfdImportScalarFieldEnum = (typeof AfdImportScalarFieldEnum)[keyof typeof AfdImportScalarFieldEnum]
+export type ImportacaoAfdScalarFieldEnum = (typeof ImportacaoAfdScalarFieldEnum)[keyof typeof ImportacaoAfdScalarFieldEnum]
 
 
-export const AfdFileScalarFieldEnum = {
+export const ArquivoAfdScalarFieldEnum = {
   id: 'id',
-  importId: 'importId',
-  originalName: 'originalName',
-  storedName: 'storedName',
-  filePath: 'filePath',
+  importacaoId: 'importacaoId',
+  nomeOriginal: 'nomeOriginal',
+  nomeArmazenado: 'nomeArmazenado',
+  caminhoArquivo: 'caminhoArquivo',
   sha256: 'sha256',
-  sizeBytes: 'sizeBytes',
+  tamanhoBytes: 'tamanhoBytes',
   mimeType: 'mimeType',
-  rawText: 'rawText',
-  parsedJson: 'parsedJson',
+  textoBruto: 'textoBruto',
+  jsonParseado: 'jsonParseado',
   status: 'status',
-  errorMessage: 'errorMessage',
+  mensagemErro: 'mensagemErro',
   createdAt: 'createdAt',
-  processedAt: 'processedAt'
+  processadoEm: 'processadoEm'
 } as const
 
-export type AfdFileScalarFieldEnum = (typeof AfdFileScalarFieldEnum)[keyof typeof AfdFileScalarFieldEnum]
+export type ArquivoAfdScalarFieldEnum = (typeof ArquivoAfdScalarFieldEnum)[keyof typeof ArquivoAfdScalarFieldEnum]
 
 
 export const SortOrder = {

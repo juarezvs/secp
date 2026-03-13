@@ -37,7 +37,8 @@ function getUploadDir() {
 // >>> Ajuste para sua realidade (Auth.js / session / header etc.)
 async function resolveTenantId() {
   // Ex.: buscar do token / session. Aqui fica fixo para compilar.
-  return "AFD_DEMO";
+  const org = await prisma.organizacao.findFirst();
+  return org?.id;
 }
 
 export async function POST(req: Request) {
@@ -57,8 +58,8 @@ export async function POST(req: Request) {
     }
 
     // 1 import por request
-    const afdImport = await prisma.afdImport.create({
-      data: { tenantId, source: "upload-manual" },
+    const afdImport = await prisma.importacaoAfd.create({
+      data: { organizacaoId: tenantId, source: "upload-manual" },
     });
 
     const created: Array<{
@@ -83,16 +84,16 @@ export async function POST(req: Request) {
       const buf = Buffer.from(await entry.arrayBuffer());
       await fs.writeFile(dest, buf);
 
-      const afdFile = await prisma.afdFile.create({
+      const afdFile = await prisma.arquivoAfd.create({
         data: {
-          importId: afdImport.id,
-          originalName: original,
-          storedName: unique,
-          filePath: dest,
+          importacaoId: afdImport.id,
+          nomeOriginal: original,
+          nomeArmazenado: unique,
+          caminhoArquivo: dest,
           sha256: sha256(buf),
-          sizeBytes: buf.length,
+          tamanhoBytes: buf.length,
           mimeType: entry.type || null,
-          status: "PENDING",
+          status: "PENDENTE",
         },
       });
 
