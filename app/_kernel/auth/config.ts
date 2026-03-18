@@ -1,13 +1,13 @@
 import "server-only";
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import Google from "next-auth/providers/google";
-import MicrosoftEntraID from "next-auth/providers/microsoft-entra-id";
-import Apple from "next-auth/providers/apple";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/app/_kernel/db/prisma/client";
 import { ApiLoginDadaServerLogged, ApiLoginResponse } from "./types";
-import type { SessionEndReason } from "../db/prisma/generated/prisma/enums";
+import {
+  MotivoEncerramentoSessao,
+  PapelSistema,
+} from "../db/prisma/generated/prisma/enums";
 
 const getRequestIp = (headers: Headers) => {
   const xff = headers.get("x-forwarded-for");
@@ -54,7 +54,8 @@ export const authConfig: NextAuthConfig = {
         if (!user) return null;
 
         const res = await fetch(
-          "http://pontojus.api.am.trf1.gov.br/auth/login",
+          `${process.env.AUTH_LOGIN_AD}`,
+          // "http://pontojus.api.am.trf1.gov.br/auth/login",
           {
             method: "POST",
             headers: {
@@ -70,11 +71,12 @@ export const authConfig: NextAuthConfig = {
           return null;
         }
         const data = (await res.json()) as ApiLoginResponse;
-       // console.log(data);
+        // console.log(data);
 
         // buscar dados do servidor logado no sarh
         const resServer = await fetch(
-          `http://sarh.api.am.trf1.gov.br/servidores/${data.username}`,
+          `${process.env.API_SARH}/servidores/${data.username}`,
+          // `http://sarh.api.am.trf1.gov.br/servidores/${data.username}`,
           {
             method: "GET",
             headers: {
@@ -84,13 +86,16 @@ export const authConfig: NextAuthConfig = {
           },
         );
 
+        //  console.log(resServer.url);
+        // console.log(await resServer.json());
+
         if (!resServer.ok) {
           return null;
         }
         //
         //
         const dataServer = (await resServer.json()) as ApiLoginDadaServerLogged;
-       // console.log("Dados do servidor: ", dataServer);
+        // console.log("Dados do servidor: ", dataServer);
         // fim buscar dados do servidor logado no sarh
 
         if (!dataServer) return null;
@@ -99,48 +104,53 @@ export const authConfig: NextAuthConfig = {
         // Como usamos PrismaAdapter, se o user ainda não existir, o adapter cria ao autenticar,
         // mas no Credentials pode variar; estratégia segura: upsert aqui.
 
+        const organizacao = await prisma.organizacao.findFirst();
+        if (!organizacao) return null;
+        // console.log(organizacao);
+
+        const papeis: PapelSistema[] = data.groups
+          .map((role) => role.replace(/^GRP_PONTOJUS_/, ""))
+          .filter(
+            (role): role is keyof typeof PapelSistema => role in PapelSistema,
+          )
+          .map((role) => PapelSistema[role]);
+
         const dbUser = await prisma.usuario.upsert({
           where: { matricula: user.matricula },
           update: {
             nome: dataServer.nome,
+            email: data.email,
+            papeis: papeis,
           },
           create: {
-            tenantId: "1",
-            matricula: dataServer.matricula,
-            name: dataServer.nome,
-            cpf: dataServer.cpfServidor.dados.cpf.toString(),
+            organizacaoId: organizacao?.id,
+            matricula: user.matricula,
+            email: data.email,
+            papeis: papeis,
+            nome: dataServer.nome,
+            cpf: dataServer.cpf.toString(),
           },
         });
 
         return {
-          //  id: data.user.id,
+          id: dbUser.id,
           name: dataServer.nome,
-          email: dataServer.lotacao.lotacao.email ?? undefined,
+          email: data.email,
 
           // campos extras:
           matricula: dataServer.matricula,
-          roles: data.groups
-            ? data.groups.map((group) => group.replace("GRP_PONTOJUS ", ""))
-            : [],
+          roles: papeis,
 
           // guarde o token da sua API aqui pra pegar no callback jwt:
           apiToken: data.token,
         } as any;
       },
     }),
-
-    // OAuth: ajuste envs e scopes conforme sua política
-    Google,
-    MicrosoftEntraID({
-      clientId: process.env.AUTH_MICROSOFT_ENTRA_ID_ID,
-      clientSecret: process.env.AUTH_MICROSOFT_ENTRA_ID_SECRET,
-      issuer: process.env.AUTH_MICROSOFT_ENTRA_ID_ISSUER,
-    }),
-    Apple,
   ],
 
   callbacks: {
     async signIn({ user, token }) {
+      // console.log("CALLBACKS - SIGNIN: ", user);
       // regra: se email existe e é corporativo, ok.
       // se for OAuth sem email, negue (raríssimo)
       if (user?.email) return true;
@@ -148,37 +158,39 @@ export const authConfig: NextAuthConfig = {
     },
 
     async jwt({ token, user, account, trigger, session }) {
-      // enriquecer token com profile
-      if (token.sub) {
-        const profile = await prisma.userProfile.findUnique({
-          where: { userId: token.sub },
-        });
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
 
-        token.isOnboarded = profile?.isOnboarded ?? false;
-        token.sarhUf = profile?.sarhUf ?? null;
-        token.matricula = profile?.matricula ?? null;
-        token.companyId = profile?.companyId ?? null;
-        token.branchId = profile?.branchId ?? null;
+        token.matricula = (user as any).matricula;
+        token.roles = (user as any).roles;
+        token.apiToken = (user as any).apiToken;
       }
+      console.log("token: ", token);
       return token;
     },
 
     async session({ session, token }) {
-      // disponibiliza na sessão
-      (session as any).userId = token.sub;
-      (session as any).isOnboarded = (token as any).isOnboarded;
-      (session as any).sarhUf = (token as any).sarhUf;
-      (session as any).matricula = (token as any).matricula;
-      (session as any).companyId = (token as any).companyId;
-      (session as any).branchId = (token as any).branchId;
+      console.log("SESSAO: ", session);
+
+      if (session.user) {
+        (session.user as any).id = token.id;
+        (session.user as any).matricula = token.matricula;
+        (session.user as any).roles = token.roles;
+        (session.user as any).apiToken = token.apiToken;
+      }
+
       return session;
     },
 
-    async redirect({ url, baseUrl }) {
-      // regra simples: sempre voltar para baseUrl
-      if (url.startsWith(baseUrl)) return url;
-      return baseUrl;
-    },
+    // async redirect({ url, baseUrl }) {
+    //   // regra simples: sempre voltar para baseUrl
+
+    //   console.log("CALLBACKS - REDIRECT: ", url, baseUrl);
+    //   if (url.startsWith(baseUrl)) return url;
+    //   return baseUrl;
+    // },
   },
   events: {
     async signOut(message: any) {
@@ -188,12 +200,12 @@ export const authConfig: NextAuthConfig = {
           (message.session as any)?.auditSessionId;
 
         if (!auditSessionId) return;
-        await prisma.auditSession.update({
+        await prisma.sessaoAuditoria.update({
           where: { id: auditSessionId },
           data: {
-            endedAt: new Date(),
-            endReason: "LOGOUT" satisfies SessionEndReason,
-            lastSeenAt: new Date(),
+            encerradaEm: new Date(),
+            motivoEncerramento: "LOGOUT" satisfies MotivoEncerramentoSessao,
+            ultimoAcessoEm: new Date(),
           },
         });
       } catch {}

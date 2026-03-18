@@ -5,7 +5,11 @@ import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-import { UnitLoginType } from "../definitions";
+const DASHBOARD_BY_ROLE = {
+  ADMIN: "/dashboard/admin",
+  GESTOR: "/dashboard/gestor",
+  SERVIDOR: "/dashboard/servidor",
+};
 
 // export default function LoginForm({ tenants }: { tenants: UnitLoginType[] }) {
 export default function LoginForm() {
@@ -33,19 +37,19 @@ export default function LoginForm() {
       callbackUrl,
     });
 
+    console.log("res: ", res);
+
     setLoading(false);
 
     if (!res) {
       setError("Falha ao autenticar.");
       return;
     }
-
+    console.log("Error login: ", res.error);
     if (res.error) {
       setError("Matrícula, senha ou unidade inválidas.");
       return;
     }
-
-    router.push(res.url ?? callbackUrl);
   }
 
   return (
