@@ -2442,7 +2442,7 @@ export const UsuarioScalarFieldEnum = {
   nome: 'nome',
   cpf: 'cpf',
   emailVerified: 'emailVerified',
-  papeis: 'papeis',
+  papel: 'papel',
   ativo: 'ativo',
   imagem: 'imagem',
   createdAt: 'createdAt',
@@ -2879,16 +2879,16 @@ export type ListEnumTipoUnidadeOrganizacionalFieldRefInput<$PrismaModel> = Field
 
 
 /**
- * Reference to a field of type 'PapelSistema[]'
+ * Reference to a field of type 'PapelSistema'
  */
-export type ListEnumPapelSistemaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PapelSistema[]'>
+export type EnumPapelSistemaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PapelSistema'>
     
 
 
 /**
- * Reference to a field of type 'PapelSistema'
+ * Reference to a field of type 'PapelSistema[]'
  */
-export type EnumPapelSistemaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PapelSistema'>
+export type ListEnumPapelSistemaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PapelSistema[]'>
     
 
 

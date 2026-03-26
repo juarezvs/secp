@@ -8,6 +8,7 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     "PONTO_REGISTROS_VIEW",
     "PONTO_OCORRENCIAS_VIEW",
     "PONTO_SOLICITACOES_CREATE",
+    
   ],
   GESTOR: [
     "DASHBOARD_VIEW",
@@ -78,4 +79,5 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     "AUDITORIA_VIEW",
     "PARAMETROS_EDIT",
   ],
+  RH: ["DASHBOARD_VIEW", "PONTO_ESPELHO_VIEW"],
 };

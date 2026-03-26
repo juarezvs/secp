@@ -2,7 +2,7 @@
 
 import { LockIcon, UserIcon } from "lucide-react";
 import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const DASHBOARD_BY_ROLE = {
@@ -32,12 +32,8 @@ export default function LoginForm() {
     const res = await signIn("credentials", {
       username,
       password,
-
       redirect: false,
-      callbackUrl,
     });
-
-    console.log("res: ", res);
 
     setLoading(false);
 
@@ -45,11 +41,12 @@ export default function LoginForm() {
       setError("Falha ao autenticar.");
       return;
     }
-    console.log("Error login: ", res.error);
     if (res.error) {
       setError("Matrícula, senha ou unidade inválidas.");
       return;
     }
+
+    redirect("dashboard");
   }
 
   return (

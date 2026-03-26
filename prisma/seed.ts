@@ -885,7 +885,7 @@ async function main() {
       nome: "Juarez de Vasconcelos da Silva",
       email: "juarez.silva@trf1.jus.br",
       cpf: "65717422253",
-      papeis: [PapelSistema.ADMIN, PapelSistema.GESTOR],
+      papel: PapelSistema.GESTOR,
       ativo: true,
     },
     create: {
@@ -894,7 +894,7 @@ async function main() {
       nome: "JUAREZ DE VASCONCELOS DA SILVA",
       email: "nutec.am@trf1.jus.br",
       cpf: "65717422253",
-      papeis: [PapelSistema.ADMIN, PapelSistema.GESTOR],
+      papel: PapelSistema.GESTOR,
       ativo: true,
     },
   });
@@ -906,7 +906,7 @@ async function main() {
       nome: "ADELSON ALVES SILVA",
       email: "nucad.am@trf1.jus.br",
       cpf: "21552533204",
-      papeis: [PapelSistema.GESTOR],
+      papel: PapelSistema.GESTOR,
       ativo: true,
     },
     create: {
@@ -915,7 +915,7 @@ async function main() {
       nome: "ADELSON ALVES SILVA",
       email: "nucad.am@trf1.jus.br",
       cpf: "21552533204",
-      papeis: [PapelSistema.GESTOR],
+      papel: PapelSistema.GESTOR,
       ativo: true,
     },
   });
@@ -951,7 +951,7 @@ async function main() {
   });
   console.log("✅ perfis vinculados.");
   // 12) SERVIDORES EXEMPLO
-  const servidorAdmin = await prisma.servidor.upsert({
+  const servidorJuarez = await prisma.servidor.upsert({
     where: { matricula: "AM200401" },
     update: {
       organizacaoId: organizacao.id,
@@ -976,7 +976,7 @@ async function main() {
     },
   });
 
-  const servidorNutec = await prisma.servidor.upsert({
+  const servidorAdelson = await prisma.servidor.upsert({
     where: { matricula: "AM24403" },
     update: {
       organizacaoId: organizacao.id,
@@ -1005,14 +1005,14 @@ async function main() {
   await prisma.atribuicaoJornada.upsert({
     where: { id: "atr-000001" },
     update: {
-      servidorId: juarez.id,
+      servidorId: servidorJuarez.id,
       jornadaId: jornada7h.id,
       vigenciaIni: new Date("2026-01-01T00:00:00.000Z"),
       vigenciaFim: null,
     },
     create: {
       id: "atr-000001",
-      servidorId: juarez.id,
+      servidorId: servidorJuarez.id,
       jornadaId: jornada7h.id,
       vigenciaIni: new Date("2026-01-01T00:00:00.000Z"),
       vigenciaFim: null,
@@ -1022,14 +1022,14 @@ async function main() {
   await prisma.atribuicaoJornada.upsert({
     where: { id: "atr-000002" },
     update: {
-      servidorId: adelson.id,
+      servidorId: servidorAdelson.id,
       jornadaId: jornada7h.id,
       vigenciaIni: new Date("2026-01-01T00:00:00.000Z"),
       vigenciaFim: null,
     },
     create: {
       id: "atr-000002",
-      servidorId: adelson.id,
+      servidorId: servidorAdelson.id,
       jornadaId: jornada7h.id,
       vigenciaIni: new Date("2026-01-01T00:00:00.000Z"),
       vigenciaFim: null,

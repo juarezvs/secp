@@ -1,7 +1,6 @@
 // src/app/(public)/login/page.tsx
 import Image from "next/image";
 import LoginForm from "./_components/login-form";
-import { fetchFilteredTenant } from "@/app/(private)/dashboard/admin/tenant/lib/tenant.action";
 
 export default async function LoginPage() {
   // Server-side: pode await e pode chamar server action/repo
@@ -69,11 +68,12 @@ export default async function LoginPage() {
               width={220}
               height={220}
               priority
-              className="h-auto w-55"
+              className="h-auto w-auto"
+              // className="h-auto w-55 "
             />
           </div>
 
-          <LoginForm  />
+          <LoginForm />
         </div>
       </section>
     </main>

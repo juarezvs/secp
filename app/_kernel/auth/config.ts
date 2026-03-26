@@ -1,31 +1,12 @@
 import "server-only";
-import type { NextAuthConfig } from "next-auth";
+import type { NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/app/_kernel/db/prisma/client";
 import { ApiLoginDadaServerLogged, ApiLoginResponse } from "./types";
-import {
-  MotivoEncerramentoSessao,
-  PapelSistema,
-} from "../db/prisma/generated/prisma/enums";
-
-const getRequestIp = (headers: Headers) => {
-  const xff = headers.get("x-forwarded-for");
-  if (xff) return xff.split(",")[0].trim();
-  return headers.get("x-real-ip") ?? undefined;
-};
+import { PapelSistema } from "../db/prisma/generated/prisma/enums";
 
 async function validateCorporateLogin(matricula: string, password: string) {
-  // 1) Validar domínio
-  // if (!email.toLowerCase().endsWith("@trf1.jus.br")) return null;
-
-  // 2) Aqui você chama seu validador de AD/LDAP
-  // Exemplo: POST http(s)://.../auth/ldap/validate { email, password }
-  // Retorne pelo menos { name, email }.
-  // IMPORTANTE: não persistir senha.
-  //
-  // Placeholder:
-
   if (!matricula || matricula.length < 6) return null;
   if (!password || password.length < 6) return null;
 
@@ -35,7 +16,10 @@ async function validateCorporateLogin(matricula: string, password: string) {
 export const authConfig: NextAuthConfig = {
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
-
+  pages: {
+    signIn: "/login",
+    signOut: "/logout",
+  },
   providers: [
     Credentials({
       name: "TRF1 (Email corporativo)",
@@ -44,6 +28,8 @@ export const authConfig: NextAuthConfig = {
         password: { label: "Senha", type: "password" },
       },
       authorize: async (credentials) => {
+        console.log("=== AUTHORIZE START ===");
+
         const matricula = String(credentials?.username || "")
           .trim()
           .toUpperCase();
@@ -51,7 +37,10 @@ export const authConfig: NextAuthConfig = {
 
         const user = await validateCorporateLogin(matricula, password);
 
-        if (!user) return null;
+        // console.log("Dados do usuário: ", user);
+        if (!process.env.AUTH_LOGIN_AD) {
+          throw new Error("AUTH_LOGIN_AD não definido");
+        }
 
         const res = await fetch(
           `${process.env.AUTH_LOGIN_AD}`,
@@ -71,7 +60,11 @@ export const authConfig: NextAuthConfig = {
           return null;
         }
         const data = (await res.json()) as ApiLoginResponse;
-        // console.log(data);
+        // console.log("Dados da resposta de login: ", data);
+
+        if (!process.env.API_SARH) {
+          throw new Error("API_SARH não definido");
+        }
 
         // buscar dados do servidor logado no sarh
         const resServer = await fetch(
@@ -105,51 +98,60 @@ export const authConfig: NextAuthConfig = {
         // mas no Credentials pode variar; estratégia segura: upsert aqui.
 
         const organizacao = await prisma.organizacao.findFirst();
+
         if (!organizacao) return null;
         // console.log(organizacao);
 
-        const papeis: PapelSistema[] = data.groups
+        const papeis: PapelSistema[] = (data.groups ?? [])
           .map((role) => role.replace(/^GRP_PONTOJUS_/, ""))
           .filter(
             (role): role is keyof typeof PapelSistema => role in PapelSistema,
           )
           .map((role) => PapelSistema[role]);
 
+        let role: PapelSistema = PapelSistema.SERVIDOR;
+
+        if (papeis.includes("MASTER")) {
+          role = PapelSistema.MASTER;
+        } else if (papeis.includes("ADMIN")) {
+          role = PapelSistema.ADMIN;
+        } else if (papeis.includes("RH")) {
+          role = PapelSistema.RH;
+        } else if (papeis.includes("GESTOR")) {
+          role = PapelSistema.GESTOR;
+        }
         const dbUser = await prisma.usuario.upsert({
           where: { matricula: user.matricula },
           update: {
             nome: dataServer.nome,
             email: data.email,
-            papeis: papeis,
+            papel: role,
           },
           create: {
             organizacaoId: organizacao?.id,
             matricula: user.matricula,
             email: data.email,
-            papeis: papeis,
+            papel: role,
             nome: dataServer.nome,
             cpf: dataServer.cpf.toString(),
           },
         });
 
+        if (!dbUser) return null;
+
         return {
           id: dbUser.id,
           name: dataServer.nome,
           email: data.email,
-
-          // campos extras:
           matricula: dataServer.matricula,
-          roles: papeis,
-
-          // guarde o token da sua API aqui pra pegar no callback jwt:
-          apiToken: data.token,
-        } as any;
+          role: role,
+        } as User;
       },
     }),
   ],
 
   callbacks: {
-    async signIn({ user, token }) {
+    async signIn({ user }) {
       // console.log("CALLBACKS - SIGNIN: ", user);
       // regra: se email existe e é corporativo, ok.
       // se for OAuth sem email, negue (raríssimo)
@@ -157,62 +159,32 @@ export const authConfig: NextAuthConfig = {
       return false;
     },
 
-    async jwt({ token, user, account, trigger, session }) {
+    async jwt({ token, user }) {
       if (user) {
+        // console.log("User data for JWT: ", user);
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
-
-        token.matricula = (user as any).matricula;
-        token.roles = (user as any).roles;
-        token.apiToken = (user as any).apiToken;
+        token.matricula = user.matricula;
+        if (user.role) token.role = user.role;
       }
-      console.log("token: ", token);
+
       return token;
     },
 
     async session({ session, token }) {
-      console.log("SESSAO: ", session);
+      // console.log("SESSAO: ", session);
 
       if (session.user) {
-        (session.user as any).id = token.id;
-        (session.user as any).matricula = token.matricula;
-        (session.user as any).roles = token.roles;
-        (session.user as any).apiToken = token.apiToken;
+        // console.log("Session user data: ", session.user);
+        session.user.id = token.id;
+        session.user.email = token.email;
+        session.user.name = token.name;
+        session.user.matricula = token.matricula;
+        session.user.role = token.role;
       }
 
       return session;
     },
-
-    // async redirect({ url, baseUrl }) {
-    //   // regra simples: sempre voltar para baseUrl
-
-    //   console.log("CALLBACKS - REDIRECT: ", url, baseUrl);
-    //   if (url.startsWith(baseUrl)) return url;
-    //   return baseUrl;
-    // },
-  },
-  events: {
-    async signOut(message: any) {
-      try {
-        const auditSessionId =
-          (message.token as any)?.auditSessionId ??
-          (message.session as any)?.auditSessionId;
-
-        if (!auditSessionId) return;
-        await prisma.sessaoAuditoria.update({
-          where: { id: auditSessionId },
-          data: {
-            encerradaEm: new Date(),
-            motivoEncerramento: "LOGOUT" satisfies MotivoEncerramentoSessao,
-            ultimoAcessoEm: new Date(),
-          },
-        });
-      } catch {}
-    },
-  },
-
-  pages: {
-    signIn: "/login",
   },
 };

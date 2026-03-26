@@ -7,8 +7,10 @@ import {
   ComboboxItem,
   ComboboxList,
 } from "@/app/_ui/components/shadcn/combobox";
+import { auth } from "@/auth";
 
 import { FileClock } from "lucide-react";
+import { redirect } from "next/navigation";
 
 // src/app/(private)/dashboard/page.tsx
 
@@ -20,7 +22,13 @@ const frameworks = [
   "Astro",
 ] as const;
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const session = await auth();
+
+  if (!session?.user) {
+    redirect("/login");
+  }
+
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">

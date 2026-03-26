@@ -1,5 +1,5 @@
 // src/lib/rbac/types.ts
-export type Role = "SERVIDOR" | "GESTOR" | "ADMIN" | "MASTER";
+export type Role = "SERVIDOR" | "GESTOR" | "ADMIN" | "MASTER" | "RH";
 
 export type Permission =
   | "DASHBOARD_VIEW"

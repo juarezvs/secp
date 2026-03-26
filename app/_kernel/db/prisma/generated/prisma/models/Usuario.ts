@@ -32,6 +32,7 @@ export type UsuarioMinAggregateOutputType = {
   nome: string | null
   cpf: string | null
   emailVerified: Date | null
+  papel: $Enums.PapelSistema | null
   ativo: boolean | null
   imagem: string | null
   createdAt: Date | null
@@ -46,6 +47,7 @@ export type UsuarioMaxAggregateOutputType = {
   nome: string | null
   cpf: string | null
   emailVerified: Date | null
+  papel: $Enums.PapelSistema | null
   ativo: boolean | null
   imagem: string | null
   createdAt: Date | null
@@ -60,7 +62,7 @@ export type UsuarioCountAggregateOutputType = {
   nome: number
   cpf: number
   emailVerified: number
-  papeis: number
+  papel: number
   ativo: number
   imagem: number
   createdAt: number
@@ -77,6 +79,7 @@ export type UsuarioMinAggregateInputType = {
   nome?: true
   cpf?: true
   emailVerified?: true
+  papel?: true
   ativo?: true
   imagem?: true
   createdAt?: true
@@ -91,6 +94,7 @@ export type UsuarioMaxAggregateInputType = {
   nome?: true
   cpf?: true
   emailVerified?: true
+  papel?: true
   ativo?: true
   imagem?: true
   createdAt?: true
@@ -105,7 +109,7 @@ export type UsuarioCountAggregateInputType = {
   nome?: true
   cpf?: true
   emailVerified?: true
-  papeis?: true
+  papel?: true
   ativo?: true
   imagem?: true
   createdAt?: true
@@ -193,7 +197,7 @@ export type UsuarioGroupByOutputType = {
   nome: string
   cpf: string
   emailVerified: Date | null
-  papeis: $Enums.PapelSistema[]
+  papel: $Enums.PapelSistema
   ativo: boolean
   imagem: string | null
   createdAt: Date
@@ -229,7 +233,7 @@ export type UsuarioWhereInput = {
   nome?: Prisma.StringFilter<"Usuario"> | string
   cpf?: Prisma.StringFilter<"Usuario"> | string
   emailVerified?: Prisma.DateTimeNullableFilter<"Usuario"> | Date | string | null
-  papeis?: Prisma.EnumPapelSistemaNullableListFilter<"Usuario">
+  papel?: Prisma.EnumPapelSistemaFilter<"Usuario"> | $Enums.PapelSistema
   ativo?: Prisma.BoolFilter<"Usuario"> | boolean
   imagem?: Prisma.StringNullableFilter<"Usuario"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Usuario"> | Date | string
@@ -255,7 +259,7 @@ export type UsuarioOrderByWithRelationInput = {
   nome?: Prisma.SortOrder
   cpf?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrderInput | Prisma.SortOrder
-  papeis?: Prisma.SortOrder
+  papel?: Prisma.SortOrder
   ativo?: Prisma.SortOrder
   imagem?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -284,7 +288,7 @@ export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
   organizacaoId?: Prisma.StringFilter<"Usuario"> | string
   nome?: Prisma.StringFilter<"Usuario"> | string
   emailVerified?: Prisma.DateTimeNullableFilter<"Usuario"> | Date | string | null
-  papeis?: Prisma.EnumPapelSistemaNullableListFilter<"Usuario">
+  papel?: Prisma.EnumPapelSistemaFilter<"Usuario"> | $Enums.PapelSistema
   ativo?: Prisma.BoolFilter<"Usuario"> | boolean
   imagem?: Prisma.StringNullableFilter<"Usuario"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Usuario"> | Date | string
@@ -310,7 +314,7 @@ export type UsuarioOrderByWithAggregationInput = {
   nome?: Prisma.SortOrder
   cpf?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrderInput | Prisma.SortOrder
-  papeis?: Prisma.SortOrder
+  papel?: Prisma.SortOrder
   ativo?: Prisma.SortOrder
   imagem?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -331,7 +335,7 @@ export type UsuarioScalarWhereWithAggregatesInput = {
   nome?: Prisma.StringWithAggregatesFilter<"Usuario"> | string
   cpf?: Prisma.StringWithAggregatesFilter<"Usuario"> | string
   emailVerified?: Prisma.DateTimeNullableWithAggregatesFilter<"Usuario"> | Date | string | null
-  papeis?: Prisma.EnumPapelSistemaNullableListFilter<"Usuario">
+  papel?: Prisma.EnumPapelSistemaWithAggregatesFilter<"Usuario"> | $Enums.PapelSistema
   ativo?: Prisma.BoolWithAggregatesFilter<"Usuario"> | boolean
   imagem?: Prisma.StringNullableWithAggregatesFilter<"Usuario"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Usuario"> | Date | string
@@ -345,7 +349,7 @@ export type UsuarioCreateInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -371,7 +375,7 @@ export type UsuarioUncheckedCreateInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -395,7 +399,7 @@ export type UsuarioUpdateInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -421,7 +425,7 @@ export type UsuarioUncheckedUpdateInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -446,7 +450,7 @@ export type UsuarioCreateManyInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -460,7 +464,7 @@ export type UsuarioUpdateManyMutationInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -475,7 +479,7 @@ export type UsuarioUncheckedUpdateManyInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -502,14 +506,6 @@ export type UsuarioScalarRelationFilter = {
   isNot?: Prisma.UsuarioWhereInput
 }
 
-export type EnumPapelSistemaNullableListFilter<$PrismaModel = never> = {
-  equals?: $Enums.PapelSistema[] | Prisma.ListEnumPapelSistemaFieldRefInput<$PrismaModel> | null
-  has?: $Enums.PapelSistema | Prisma.EnumPapelSistemaFieldRefInput<$PrismaModel> | null
-  hasEvery?: $Enums.PapelSistema[] | Prisma.ListEnumPapelSistemaFieldRefInput<$PrismaModel>
-  hasSome?: $Enums.PapelSistema[] | Prisma.ListEnumPapelSistemaFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
-}
-
 export type UsuarioCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   organizacaoId?: Prisma.SortOrder
@@ -518,7 +514,7 @@ export type UsuarioCountOrderByAggregateInput = {
   nome?: Prisma.SortOrder
   cpf?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
-  papeis?: Prisma.SortOrder
+  papel?: Prisma.SortOrder
   ativo?: Prisma.SortOrder
   imagem?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -533,6 +529,7 @@ export type UsuarioMaxOrderByAggregateInput = {
   nome?: Prisma.SortOrder
   cpf?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
+  papel?: Prisma.SortOrder
   ativo?: Prisma.SortOrder
   imagem?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -547,6 +544,7 @@ export type UsuarioMinOrderByAggregateInput = {
   nome?: Prisma.SortOrder
   cpf?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
+  papel?: Prisma.SortOrder
   ativo?: Prisma.SortOrder
   imagem?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -625,17 +623,12 @@ export type UsuarioUpdateOneRequiredWithoutPerfilNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UsuarioUpdateToOneWithWhereWithoutPerfilInput, Prisma.UsuarioUpdateWithoutPerfilInput>, Prisma.UsuarioUncheckedUpdateWithoutPerfilInput>
 }
 
-export type UsuarioCreatepapeisInput = {
-  set: $Enums.PapelSistema[]
-}
-
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
 
-export type UsuarioUpdatepapeisInput = {
-  set?: $Enums.PapelSistema[]
-  push?: $Enums.PapelSistema | $Enums.PapelSistema[]
+export type EnumPapelSistemaFieldUpdateOperationsInput = {
+  set?: $Enums.PapelSistema
 }
 
 export type UsuarioCreateNestedOneWithoutContasInput = {
@@ -761,7 +754,7 @@ export type UsuarioCreateWithoutOrganizacaoInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -785,7 +778,7 @@ export type UsuarioUncheckedCreateWithoutOrganizacaoInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -839,7 +832,7 @@ export type UsuarioScalarWhereInput = {
   nome?: Prisma.StringFilter<"Usuario"> | string
   cpf?: Prisma.StringFilter<"Usuario"> | string
   emailVerified?: Prisma.DateTimeNullableFilter<"Usuario"> | Date | string | null
-  papeis?: Prisma.EnumPapelSistemaNullableListFilter<"Usuario">
+  papel?: Prisma.EnumPapelSistemaFilter<"Usuario"> | $Enums.PapelSistema
   ativo?: Prisma.BoolFilter<"Usuario"> | boolean
   imagem?: Prisma.StringNullableFilter<"Usuario"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Usuario"> | Date | string
@@ -853,7 +846,7 @@ export type UsuarioCreateWithoutUnidadesGerenciadasInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -878,7 +871,7 @@ export type UsuarioUncheckedCreateWithoutUnidadesGerenciadasInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -917,7 +910,7 @@ export type UsuarioUpdateWithoutUnidadesGerenciadasInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -942,7 +935,7 @@ export type UsuarioUncheckedUpdateWithoutUnidadesGerenciadasInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -965,7 +958,7 @@ export type UsuarioCreateWithoutPerfilInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -990,7 +983,7 @@ export type UsuarioUncheckedCreateWithoutPerfilInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1029,7 +1022,7 @@ export type UsuarioUpdateWithoutPerfilInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1054,7 +1047,7 @@ export type UsuarioUncheckedUpdateWithoutPerfilInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1077,7 +1070,7 @@ export type UsuarioCreateWithoutContasInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1102,7 +1095,7 @@ export type UsuarioUncheckedCreateWithoutContasInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1141,7 +1134,7 @@ export type UsuarioUpdateWithoutContasInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1166,7 +1159,7 @@ export type UsuarioUncheckedUpdateWithoutContasInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1189,7 +1182,7 @@ export type UsuarioCreateWithoutSessoesInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1214,7 +1207,7 @@ export type UsuarioUncheckedCreateWithoutSessoesInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1253,7 +1246,7 @@ export type UsuarioUpdateWithoutSessoesInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1278,7 +1271,7 @@ export type UsuarioUncheckedUpdateWithoutSessoesInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1301,7 +1294,7 @@ export type UsuarioCreateWithoutAutenticadoresInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1326,7 +1319,7 @@ export type UsuarioUncheckedCreateWithoutAutenticadoresInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1365,7 +1358,7 @@ export type UsuarioUpdateWithoutAutenticadoresInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1390,7 +1383,7 @@ export type UsuarioUncheckedUpdateWithoutAutenticadoresInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1413,7 +1406,7 @@ export type UsuarioCreateWithoutSessoesAuditadasInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1438,7 +1431,7 @@ export type UsuarioUncheckedCreateWithoutSessoesAuditadasInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1477,7 +1470,7 @@ export type UsuarioUpdateWithoutSessoesAuditadasInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1502,7 +1495,7 @@ export type UsuarioUncheckedUpdateWithoutSessoesAuditadasInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1525,7 +1518,7 @@ export type UsuarioCreateWithoutServidorInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1550,7 +1543,7 @@ export type UsuarioUncheckedCreateWithoutServidorInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1589,7 +1582,7 @@ export type UsuarioUpdateWithoutServidorInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1614,7 +1607,7 @@ export type UsuarioUncheckedUpdateWithoutServidorInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1637,7 +1630,7 @@ export type UsuarioCreateWithoutDelegacoesCedidasInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1662,7 +1655,7 @@ export type UsuarioUncheckedCreateWithoutDelegacoesCedidasInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1690,7 +1683,7 @@ export type UsuarioCreateWithoutDelegacoesRecebidasInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1715,7 +1708,7 @@ export type UsuarioUncheckedCreateWithoutDelegacoesRecebidasInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1754,7 +1747,7 @@ export type UsuarioUpdateWithoutDelegacoesCedidasInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1779,7 +1772,7 @@ export type UsuarioUncheckedUpdateWithoutDelegacoesCedidasInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1813,7 +1806,7 @@ export type UsuarioUpdateWithoutDelegacoesRecebidasInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1838,7 +1831,7 @@ export type UsuarioUncheckedUpdateWithoutDelegacoesRecebidasInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1861,7 +1854,7 @@ export type UsuarioCreateWithoutLogsAuditoriaInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1886,7 +1879,7 @@ export type UsuarioUncheckedCreateWithoutLogsAuditoriaInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1925,7 +1918,7 @@ export type UsuarioUpdateWithoutLogsAuditoriaInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1950,7 +1943,7 @@ export type UsuarioUncheckedUpdateWithoutLogsAuditoriaInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1973,7 +1966,7 @@ export type UsuarioCreateManyOrganizacaoInput = {
   nome: string
   cpf: string
   emailVerified?: Date | string | null
-  papeis?: Prisma.UsuarioCreatepapeisInput | $Enums.PapelSistema[]
+  papel?: $Enums.PapelSistema
   ativo?: boolean
   imagem?: string | null
   createdAt?: Date | string
@@ -1987,7 +1980,7 @@ export type UsuarioUpdateWithoutOrganizacaoInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2011,7 +2004,7 @@ export type UsuarioUncheckedUpdateWithoutOrganizacaoInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2035,7 +2028,7 @@ export type UsuarioUncheckedUpdateManyWithoutOrganizacaoInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  papeis?: Prisma.UsuarioUpdatepapeisInput | $Enums.PapelSistema[]
+  papel?: Prisma.EnumPapelSistemaFieldUpdateOperationsInput | $Enums.PapelSistema
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   imagem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2144,7 +2137,7 @@ export type UsuarioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   nome?: boolean
   cpf?: boolean
   emailVerified?: boolean
-  papeis?: boolean
+  papel?: boolean
   ativo?: boolean
   imagem?: boolean
   createdAt?: boolean
@@ -2171,7 +2164,7 @@ export type UsuarioSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   nome?: boolean
   cpf?: boolean
   emailVerified?: boolean
-  papeis?: boolean
+  papel?: boolean
   ativo?: boolean
   imagem?: boolean
   createdAt?: boolean
@@ -2187,7 +2180,7 @@ export type UsuarioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   nome?: boolean
   cpf?: boolean
   emailVerified?: boolean
-  papeis?: boolean
+  papel?: boolean
   ativo?: boolean
   imagem?: boolean
   createdAt?: boolean
@@ -2203,14 +2196,14 @@ export type UsuarioSelectScalar = {
   nome?: boolean
   cpf?: boolean
   emailVerified?: boolean
-  papeis?: boolean
+  papel?: boolean
   ativo?: boolean
   imagem?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UsuarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizacaoId" | "matricula" | "email" | "nome" | "cpf" | "emailVerified" | "papeis" | "ativo" | "imagem" | "createdAt" | "updatedAt", ExtArgs["result"]["usuario"]>
+export type UsuarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizacaoId" | "matricula" | "email" | "nome" | "cpf" | "emailVerified" | "papel" | "ativo" | "imagem" | "createdAt" | "updatedAt", ExtArgs["result"]["usuario"]>
 export type UsuarioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organizacao?: boolean | Prisma.OrganizacaoDefaultArgs<ExtArgs>
   servidor?: boolean | Prisma.Usuario$servidorArgs<ExtArgs>
@@ -2255,7 +2248,7 @@ export type $UsuarioPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     nome: string
     cpf: string
     emailVerified: Date | null
-    papeis: $Enums.PapelSistema[]
+    papel: $Enums.PapelSistema
     ativo: boolean
     imagem: string | null
     createdAt: Date
@@ -2701,7 +2694,7 @@ export interface UsuarioFieldRefs {
   readonly nome: Prisma.FieldRef<"Usuario", 'String'>
   readonly cpf: Prisma.FieldRef<"Usuario", 'String'>
   readonly emailVerified: Prisma.FieldRef<"Usuario", 'DateTime'>
-  readonly papeis: Prisma.FieldRef<"Usuario", 'PapelSistema[]'>
+  readonly papel: Prisma.FieldRef<"Usuario", 'PapelSistema'>
   readonly ativo: Prisma.FieldRef<"Usuario", 'Boolean'>
   readonly imagem: Prisma.FieldRef<"Usuario", 'String'>
   readonly createdAt: Prisma.FieldRef<"Usuario", 'DateTime'>

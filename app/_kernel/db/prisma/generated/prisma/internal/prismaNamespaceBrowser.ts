@@ -145,7 +145,7 @@ export const UsuarioScalarFieldEnum = {
   nome: 'nome',
   cpf: 'cpf',
   emailVerified: 'emailVerified',
-  papeis: 'papeis',
+  papel: 'papel',
   ativo: 'ativo',
   imagem: 'imagem',
   createdAt: 'createdAt',

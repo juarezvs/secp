@@ -201,7 +201,7 @@ export type MarcacaoPontoWhereInput = {
   AND?: Prisma.MarcacaoPontoWhereInput | Prisma.MarcacaoPontoWhereInput[]
   OR?: Prisma.MarcacaoPontoWhereInput[]
   NOT?: Prisma.MarcacaoPontoWhereInput | Prisma.MarcacaoPontoWhereInput[]
-  id?: Prisma.StringFilter<"MarcacaoPonto"> | string
+  id?: Prisma.UuidFilter<"MarcacaoPonto"> | string
   servidorId?: Prisma.StringFilter<"MarcacaoPonto"> | string
   ocorridaEm?: Prisma.DateTimeFilter<"MarcacaoPonto"> | Date | string
   tipoMarcacao?: Prisma.EnumTipoMarcacaoFilter<"MarcacaoPonto"> | $Enums.TipoMarcacao
@@ -230,6 +230,7 @@ export type MarcacaoPontoOrderByWithRelationInput = {
 
 export type MarcacaoPontoWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  servidorId_ocorridaEm_origemMarcacao?: Prisma.MarcacaoPontoServidorIdOcorridaEmOrigemMarcacaoCompoundUniqueInput
   AND?: Prisma.MarcacaoPontoWhereInput | Prisma.MarcacaoPontoWhereInput[]
   OR?: Prisma.MarcacaoPontoWhereInput[]
   NOT?: Prisma.MarcacaoPontoWhereInput | Prisma.MarcacaoPontoWhereInput[]
@@ -243,7 +244,7 @@ export type MarcacaoPontoWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"MarcacaoPonto"> | Date | string
   servidor?: Prisma.XOR<Prisma.ServidorScalarRelationFilter, Prisma.ServidorWhereInput>
   dispositivo?: Prisma.XOR<Prisma.DispositivoBiometricoNullableScalarRelationFilter, Prisma.DispositivoBiometricoWhereInput> | null
-}, "id">
+}, "id" | "servidorId_ocorridaEm_origemMarcacao">
 
 export type MarcacaoPontoOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -264,7 +265,7 @@ export type MarcacaoPontoScalarWhereWithAggregatesInput = {
   AND?: Prisma.MarcacaoPontoScalarWhereWithAggregatesInput | Prisma.MarcacaoPontoScalarWhereWithAggregatesInput[]
   OR?: Prisma.MarcacaoPontoScalarWhereWithAggregatesInput[]
   NOT?: Prisma.MarcacaoPontoScalarWhereWithAggregatesInput | Prisma.MarcacaoPontoScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"MarcacaoPonto"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"MarcacaoPonto"> | string
   servidorId?: Prisma.StringWithAggregatesFilter<"MarcacaoPonto"> | string
   ocorridaEm?: Prisma.DateTimeWithAggregatesFilter<"MarcacaoPonto"> | Date | string
   tipoMarcacao?: Prisma.EnumTipoMarcacaoWithAggregatesFilter<"MarcacaoPonto"> | $Enums.TipoMarcacao
@@ -365,6 +366,12 @@ export type MarcacaoPontoListRelationFilter = {
 
 export type MarcacaoPontoOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type MarcacaoPontoServidorIdOcorridaEmOrigemMarcacaoCompoundUniqueInput = {
+  servidorId: string
+  ocorridaEm: Date | string
+  origemMarcacao: $Enums.OrigemMarcacao
 }
 
 export type MarcacaoPontoCountOrderByAggregateInput = {
@@ -545,7 +552,7 @@ export type MarcacaoPontoScalarWhereInput = {
   AND?: Prisma.MarcacaoPontoScalarWhereInput | Prisma.MarcacaoPontoScalarWhereInput[]
   OR?: Prisma.MarcacaoPontoScalarWhereInput[]
   NOT?: Prisma.MarcacaoPontoScalarWhereInput | Prisma.MarcacaoPontoScalarWhereInput[]
-  id?: Prisma.StringFilter<"MarcacaoPonto"> | string
+  id?: Prisma.UuidFilter<"MarcacaoPonto"> | string
   servidorId?: Prisma.StringFilter<"MarcacaoPonto"> | string
   ocorridaEm?: Prisma.DateTimeFilter<"MarcacaoPonto"> | Date | string
   tipoMarcacao?: Prisma.EnumTipoMarcacaoFilter<"MarcacaoPonto"> | $Enums.TipoMarcacao

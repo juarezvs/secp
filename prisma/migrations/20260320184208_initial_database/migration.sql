@@ -2,7 +2,7 @@
 CREATE TYPE "MotivoEncerramentoSessao" AS ENUM ('LOGOUT', 'FECHAMENTO_CLIENTE', 'TIMEOUT', 'EXPIRADA', 'REVOGADA_ADMIN');
 
 -- CreateEnum
-CREATE TYPE "PapelSistema" AS ENUM ('SERVIDOR', 'GESTOR', 'NUTEC', 'SECAP', 'DIREF', 'AUDITOR', 'ADMIN');
+CREATE TYPE "PapelSistema" AS ENUM ('SERVIDOR', 'GESTOR', 'ADMIN');
 
 -- CreateEnum
 CREATE TYPE "RegimeTrabalho" AS ENUM ('PRESENCIAL', 'TELETRABALHO', 'HIBRIDO');
@@ -29,7 +29,7 @@ CREATE TYPE "TipoAutorizacao" AS ENUM ('HORA_EXTRA_CREDITO', 'COMPENSAR_DEBITO',
 CREATE TYPE "StatusAutorizacao" AS ENUM ('RASCUNHO', 'ENVIADA', 'APROVADA', 'REJEITADA', 'CANCELADA');
 
 -- CreateEnum
-CREATE TYPE "TipoUnidadeOrganizacional" AS ENUM ('JUSTICA_FEDERAL', 'SECAO_JUDICIARIA', 'SUBSECAO_JUDICIARIA', 'DEPARTAMENTO', 'SUBDEPARTAMENTO');
+CREATE TYPE "TipoUnidadeOrganizacional" AS ENUM ('JUSTICA_FEDERAL', 'SECAO_JUDICIARIA', 'SUBSECAO_JUDICIARIA', 'DIRETORIA', 'DEPARTAMENTO', 'SECRETARIA', 'NUCLEO', 'SECAO', 'SETOR', 'SERVICO', 'SUBDEPARTAMENTO');
 
 -- CreateEnum
 CREATE TYPE "StatusArquivoAfd" AS ENUM ('PENDENTE', 'PROCESSANDO', 'CONCLUIDO', 'ERRO');
@@ -85,7 +85,7 @@ CREATE TABLE "usuarios" (
     "nome" TEXT NOT NULL,
     "cpf" TEXT NOT NULL,
     "email_verificado_em" TIMESTAMP(3),
-    "papeis" "PapelSistema"[],
+    "papel" "PapelSistema" NOT NULL DEFAULT 'SERVIDOR',
     "ativo" BOOLEAN NOT NULL DEFAULT true,
     "imagem" TEXT,
     "criado_em" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -225,7 +225,7 @@ CREATE TABLE "dispositivos_biometricos" (
 
 -- CreateTable
 CREATE TABLE "marcacoes_ponto" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL,
     "servidor_id" TEXT NOT NULL,
     "ocorrida_em" TIMESTAMP(3) NOT NULL,
     "tipo_marcacao" "TipoMarcacao" NOT NULL,
@@ -487,6 +487,9 @@ CREATE UNIQUE INDEX "dispositivos_biometricos_serial_key" ON "dispositivos_biome
 
 -- CreateIndex
 CREATE INDEX "idx_marcacoes_servidor_ocorrida" ON "marcacoes_ponto"("servidor_id", "ocorrida_em");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "uq_marcacao_servidor_data_origem" ON "marcacoes_ponto"("servidor_id", "ocorrida_em", "origem_marcacao");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "atividades_externas_solicitacao_autorizacao_id_key" ON "atividades_externas"("solicitacao_autorizacao_id");

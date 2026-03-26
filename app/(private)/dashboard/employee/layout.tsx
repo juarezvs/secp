@@ -5,7 +5,7 @@ import { AsideNav } from "@/app/_ui/components/private/aside-nav";
 import type { Role } from "@/app/_kernel/lib/rbac/types";
 // import { auth } from "@/auth"; // exemplo
 
-import { EMPLOYEE_ASIDE } from "@/app/_kernel/lib/nav/asides";
+import { SERVIDOR_ASIDE } from "@/app/_kernel/lib/nav/asides";
 import { PageTitle } from "@/app/_ui/components/private/page-title";
 
 export default async function DashboardLayout({
@@ -19,8 +19,8 @@ export default async function DashboardLayout({
 
   return (
     <PrivateShell
-      pagetitle={<PageTitle config={EMPLOYEE_ASIDE} role={role} />}
-      aside={<AsideNav config={EMPLOYEE_ASIDE} role={role} />}
+      pagetitle={<PageTitle config={SERVIDOR_ASIDE} role={role} />}
+      aside={<AsideNav config={SERVIDOR_ASIDE} role={role} />}
     >
       {children}
     </PrivateShell>
