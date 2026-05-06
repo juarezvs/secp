@@ -4,9 +4,16 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// generator client {
+//   provider = "prisma-client"
+//   output   = "../app/_kernel/db/prisma/generated/prisma"
+// }
 generator client {
-  provider = "prisma-client"
-  output   = "../app/_kernel/db/prisma/generated/prisma"
+  provider               = "prisma-client"
+  output                 = "../app/_generated/prisma"
+  moduleFormat           = "esm"
+  generatedFileExtension = "ts"
+  importFileExtension    = "ts"
 }
 
 datasource db {

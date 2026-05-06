@@ -1,10 +1,11 @@
 import "server-only";
 import type { NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@auth/prisma-adapter";
+// import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/app/_kernel/db/prisma/client";
 import { ApiLoginDadaServerLogged, ApiLoginResponse } from "./types";
-import { PapelSistema } from "../db/prisma/generated/prisma/enums";
+import { PapelSistema } from "@/app/_generated/prisma/enums";
+import { tryCatch } from "bullmq";
 
 async function validateCorporateLogin(matricula: string, password: string) {
   if (!matricula || matricula.length < 6) return null;
@@ -14,7 +15,7 @@ async function validateCorporateLogin(matricula: string, password: string) {
 }
 
 export const authConfig: NextAuthConfig = {
-  adapter: PrismaAdapter(prisma),
+  // adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
   pages: {
     signIn: "/login",
@@ -37,28 +38,35 @@ export const authConfig: NextAuthConfig = {
 
         const user = await validateCorporateLogin(matricula, password);
 
+        if (!user) {
+          return null;
+        }
+
         // console.log("Dados do usuário: ", user);
         if (!process.env.AUTH_LOGIN_AD) {
           throw new Error("AUTH_LOGIN_AD não definido");
         }
 
-        const res = await fetch(
-          `${process.env.AUTH_LOGIN_AD}`,
-          // "http://pontojus.api.am.trf1.gov.br/auth/login",
-          {
+        try {
+          const res = await fetch(`${process.env.AUTH_LOGIN_AD}`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
               Accept: "application/json",
             },
             body: JSON.stringify({ username: matricula, password }),
+            credentials: "include",
             // se sua API usa cookie/sessão: credentials: "include",
-          },
-        );
+          });
 
-        if (!res.ok) {
+          if (!res.ok) {
+            return null;
+          }
+        } catch (error) {
+          console.error("Erro na requisição de login: ", error);
           return null;
         }
+
         const data = (await res.json()) as ApiLoginResponse;
         // console.log("Dados da resposta de login: ", data);
 
@@ -111,13 +119,13 @@ export const authConfig: NextAuthConfig = {
 
         let role: PapelSistema = PapelSistema.SERVIDOR;
 
-        if (papeis.includes("MASTER")) {
+        if (papeis.includes(PapelSistema.MASTER)) {
           role = PapelSistema.MASTER;
-        } else if (papeis.includes("ADMIN")) {
+        } else if (papeis.includes(PapelSistema.ADMIN)) {
           role = PapelSistema.ADMIN;
-        } else if (papeis.includes("RH")) {
+        } else if (papeis.includes(PapelSistema.RH)) {
           role = PapelSistema.RH;
-        } else if (papeis.includes("GESTOR")) {
+        } else if (papeis.includes(PapelSistema.GESTOR)) {
           role = PapelSistema.GESTOR;
         }
         const dbUser = await prisma.usuario.upsert({
@@ -152,11 +160,7 @@ export const authConfig: NextAuthConfig = {
 
   callbacks: {
     async signIn({ user }) {
-      // console.log("CALLBACKS - SIGNIN: ", user);
-      // regra: se email existe e é corporativo, ok.
-      // se for OAuth sem email, negue (raríssimo)
-      if (user?.email) return true;
-      return false;
+      return Boolean(user?.email);
     },
 
     async jwt({ token, user }) {
@@ -166,7 +170,7 @@ export const authConfig: NextAuthConfig = {
         token.name = user.name;
         token.email = user.email;
         token.matricula = user.matricula;
-        if (user.role) token.role = user.role;
+        token.role = user.role;
       }
 
       return token;
