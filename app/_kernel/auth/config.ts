@@ -5,7 +5,6 @@ import Credentials from "next-auth/providers/credentials";
 import { prisma } from "@/app/_kernel/db/prisma/client";
 import { ApiLoginDadaServerLogged, ApiLoginResponse } from "./types";
 import { PapelSistema } from "@/app/_generated/prisma/enums";
-import { tryCatch } from "bullmq";
 
 async function validateCorporateLogin(matricula: string, password: string) {
   if (!matricula || matricula.length < 6) return null;
@@ -42,33 +41,31 @@ export const authConfig: NextAuthConfig = {
           return null;
         }
 
-        // console.log("Dados do usuário: ", user);
+        console.log("Dados do usuário: ", user);
         if (!process.env.AUTH_LOGIN_AD) {
           throw new Error("AUTH_LOGIN_AD não definido");
         }
 
-        try {
-          const res = await fetch(`${process.env.AUTH_LOGIN_AD}`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify({ username: matricula, password }),
-            credentials: "include",
-            // se sua API usa cookie/sessão: credentials: "include",
-          });
+        const res = await fetch(`${process.env.AUTH_LOGIN_AD}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            username: user.matricula,
+            password: user.password,
+          }),
+          // credentials: "include",
+          // se sua API usa cookie/sessão: credentials: "include",
+        });
 
-          if (!res.ok) {
-            return null;
-          }
-        } catch (error) {
-          console.error("Erro na requisição de login: ", error);
+        if (!res.ok) {
           return null;
         }
 
         const data = (await res.json()) as ApiLoginResponse;
-        // console.log("Dados da resposta de login: ", data);
+        console.log("Dados da resposta de login: ", data);
 
         if (!process.env.API_SARH) {
           throw new Error("API_SARH não definido");
@@ -77,7 +74,6 @@ export const authConfig: NextAuthConfig = {
         // buscar dados do servidor logado no sarh
         const resServer = await fetch(
           `${process.env.API_SARH}/servidores/${data.username}`,
-          // `http://sarh.api.am.trf1.gov.br/servidores/${data.username}`,
           {
             method: "GET",
             headers: {

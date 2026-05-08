@@ -16,6 +16,7 @@ export function SectionTitle(props: {
       {props.descripton && (
         <p className="mt-2 max-w-2xl text-zinc-700">{props.descripton}</p>
       )}
+      
     </div>
 
     // </div>

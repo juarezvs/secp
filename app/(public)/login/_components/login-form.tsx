@@ -70,7 +70,7 @@ export default function LoginForm() {
           label="Matrícula"
           placeholder="Digite sua matrícula"
           icon={<UserIcon />}
-          autoComplete="username"
+          autoComplete="off"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />

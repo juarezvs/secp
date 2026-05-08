@@ -2,6 +2,7 @@
 import { GradientBorder } from "../shared/gradient-border";
 import { LogoSECP } from "@/app/(landinpage)/_components/LogoSECP";
 import { signOut } from "next-auth/react";
+import SheetMenu from "./sheet-menu";
 
 export function Header() {
   const handleLogout = async () => {
@@ -9,8 +10,13 @@ export function Header() {
       callbackUrl: "/", // redireciona após logout
     });
   };
+
   return (
     <header className="sticky top-0 z-30 bg-[#002F6C] text-white shadow">
+      <div className="absolute m-4">
+        <SheetMenu />
+      </div>
+
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
         <LogoSECP />
         <nav
