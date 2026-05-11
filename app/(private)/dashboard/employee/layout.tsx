@@ -5,8 +5,9 @@ import { AsideNav } from "@/app/_ui/components/private/aside-nav";
 import type { Role } from "@/app/_kernel/lib/rbac/types";
 // import { auth } from "@/auth"; // exemplo
 
-import { SERVIDOR_ASIDE } from "@/app/_kernel/lib/nav/asides";
+
 import { PageTitle } from "@/app/_ui/components/private/page-title";
+import { SERVIDOR_ASIDE } from "@/app/_kernel/lib/nav/asides_perfis";
 
 export default async function DashboardLayout({
   children,

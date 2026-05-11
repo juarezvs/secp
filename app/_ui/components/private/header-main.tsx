@@ -1,0 +1,53 @@
+import { Bell, Moon, Sun, ChevronRight, Menu } from "lucide-react";
+
+interface HeaderProps {
+  toggleSidebar: () => void;
+}
+
+export function HeaderMain({ toggleSidebar }: HeaderProps) {
+  return (
+    <header className="h-32 bg-white border-b px-8 flex items-center justify-between shrink-0">
+      {/* Coluna da Esquerda */}
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center gap-2 text-xs text-gray-400">
+          <button
+            onClick={toggleSidebar}
+            className="mr-2 hover:bg-gray-100 p-1 rounded"
+          >
+            <Menu size={18} />
+          </button>
+          <span>Dashboard</span>
+          <ChevronRight size={12} />
+          <span className="text-blue-500">Mensagens</span>
+        </div>
+        <h1 className="text-2xl font-bold text-gray-800">Caixa de Entrada</h1>
+        <p className="text-sm text-gray-500">
+          Gerencie suas comunicações e notificações recentes.
+        </p>
+      </div>
+
+      {/* Coluna da Direita */}
+      <div className="flex items-center gap-6">
+        <div className="flex items-center gap-4">
+          <button className="text-gray-500 hover:text-blue-600">
+            <Bell size={20} />
+          </button>
+          <button className="text-gray-500 hover:text-blue-600">
+            <Moon size={20} />
+          </button>
+          <div className="w-[1px] h-8 bg-gray-200 mx-2" />
+        </div>
+
+        <div className="flex items-center gap-3 text-right">
+          <div className="flex flex-col">
+            <span className="text-sm font-bold text-gray-800">Juarez</span>
+            <span className="text-xs text-gray-500">Arquiteto de Software</span>
+          </div>
+          <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+            J
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}

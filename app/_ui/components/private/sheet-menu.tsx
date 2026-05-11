@@ -13,8 +13,6 @@ import {
   SheetTrigger,
 } from "@/app/ui/components/shadcn/sheet";
 import { MenuIcon } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { Group, isActive } from "./aside-nav";
 
 export default function SheetMenu() {
   //     {
@@ -27,7 +25,7 @@ export default function SheetMenu() {
   //   const pathname = usePathname();
   //   const filtered = filterAside(config, role);
   return (
-    <Sheet key="right">
+    <Sheet key="left">
       <SheetTrigger>
         <MenuIcon className="cursor-pointer" />
       </SheetTrigger>

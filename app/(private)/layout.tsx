@@ -2,6 +2,7 @@
 import type { ReactNode } from "react";
 import { Toaster } from "../ui/components/shadcn/sonner";
 import "../globals.css";
+import LayoutWrapper from "../_ui/components/private/layout-main-wrapper";
 
 export default function PrivateGroupLayout({
   children,
@@ -10,7 +11,7 @@ export default function PrivateGroupLayout({
 }) {
   // aqui você colocaria proteção de rota, providers, etc.
   return (
-    <>
+    <LayoutWrapper>
       {children}
       <Toaster
         position="top-right"
@@ -26,6 +27,6 @@ export default function PrivateGroupLayout({
           },
         }}
       />
-    </>
+    </LayoutWrapper>
   );
 }

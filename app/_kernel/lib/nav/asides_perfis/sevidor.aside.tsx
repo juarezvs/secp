@@ -1,0 +1,83 @@
+import {
+  BellDotIcon,
+  CalendarClockIcon,
+  ClipboardCheckIcon,
+  ClipboardListIcon,
+  Clock3Icon,
+  ClockIcon,
+  FileClockIcon,
+  FileIcon,
+  FileWarningIcon,
+  FingerprintIcon,
+  HouseIcon,
+  NotebookPenIcon,
+  NotepadTextIcon,
+  TimerResetIcon,
+  UserCircleIcon,
+} from "lucide-react";
+import { AsideConfig } from "../types";
+
+export const SERVIDOR_ASIDE: AsideConfig = {
+  title: "Dashboard",
+  icon: <HouseIcon className="w-6 h-6" />,
+  items: [
+    {
+      label: "Meu Ponto",
+      icon: <Clock3Icon className="w-6 h-6" />,
+      description: "Veja suas marcações diariamente",
+      href: "/dashboard/employee/timecard/record",
+      requireAny: ["SERVIDOR_MEU_PONTO"],
+      // requireAny: ["PONTO_REGISTROS_VIEW"],
+    },
+    {
+      label: "Espelho de Ponto",
+      icon: <ClipboardCheckIcon className="w-6 h-6" />,
+      description: "Veja suas marcações diariamente",
+      href: "/dashboard/employee/timecard/record",
+      requireAny: ["SERVIDOR_MEU_PONTO"],
+      // requireAny: ["PONTO_REGISTROS_VIEW"],
+    },
+    {
+      label: "Registro de Ponto",
+      icon: <FingerprintIcon className="w-6 h-6" />,
+      description: "Veja suas marcações mensais",
+      href: "/dashboard/employee/timecard/report",
+      requireAny: ["SERVIDOR_REGISTRO_PONTO"],
+    },
+    {
+      label: "Banco de Horas",
+      icon: <TimerResetIcon className="w-6 h-6" />,
+      description: "Veja suas marcações do dia",
+      href: "/dashboard/employee/timecard/report",
+      requireAny: ["SERVIDOR_BANCO_HORAS"],
+    },
+    {
+      label: "Justificativas",
+      icon: <FileWarningIcon className="w-6 h-6" />,
+      description: "Veja suas marcações do dia",
+      href: "/dashboard/employee/timecard/report",
+      requireAny: ["SERVIDOR_JUSTIFICATIVA"],
+    },
+    {
+      label: "Solicitações",
+      icon: <ClipboardListIcon className="w-6 h-6" />,
+      description: "Veja suas marcações do dia",
+      href: "/dashboard/employee/timecard/report",
+      requireAny: ["SERVIDOR_SOLICITACOES"],
+    },
+    {
+      label: "Convocações",
+      icon: <BellDotIcon className="w-6 h-6" />,
+      description: "Veja suas marcações do dia",
+      href: "/dashboard/employee/timecard/report",
+      requireAny: ["SERVIDOR_RELATORIOS"],
+    },
+    {
+      label: "Meus Dados",
+      icon: <UserCircleIcon className="w-6 h-6" />,
+      description: "Veja suas marcações do dia",
+      href: "/dashboard/employee/timecard/report",
+      requireAny: ["SERVIDOR_BANCO_HORAS"],
+    },
+  ],
+};
