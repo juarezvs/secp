@@ -23,9 +23,8 @@ export type MotivoEncerramentoSessao = (typeof MotivoEncerramentoSessao)[keyof t
 export const PapelSistema = {
   SERVIDOR: 'SERVIDOR',
   GESTOR: 'GESTOR',
-  ADMIN: 'ADMIN',
-  MASTER: 'MASTER',
-  RH: 'RH'
+  ADMINISTRADOR: 'ADMINISTRADOR',
+  MASTER: 'MASTER'
 } as const
 
 export type PapelSistema = (typeof PapelSistema)[keyof typeof PapelSistema]

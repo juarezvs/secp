@@ -35,9 +35,8 @@ enum MotivoEncerramentoSessao {
 enum PapelSistema {
   SERVIDOR
   GESTOR
-  ADMIN
+  ADMINISTRADOR
   MASTER
-  RH
 }
 
 enum RegimeTrabalho {

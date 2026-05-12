@@ -22,7 +22,7 @@ export function PageTitle({
             {filtered.icon ? (
               <span className="text-base">{filtered.icon}</span>
             ) : null}
-            <span className="text-xl/none font-semibold">{filtered.title}</span>
+            <span className="text-xl/none font-semibold">{filtered.title} </span>
           </div>
         )}
       </div>

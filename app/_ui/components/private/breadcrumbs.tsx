@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { resolveBreadcrumbLabel } from "@/app/_kernel/lib/breadcrumbs/resolve";
+import { ChevronRight } from "lucide-react";
 
 function labelizeFallback(seg: string) {
   return seg.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
@@ -23,18 +24,22 @@ export function Breadcrumbs() {
     <div className="text-sm text-gray-700">
       <nav className="flex flex-wrap items-center gap-2">
         <Link href="/dashboard" className=" hover:underline">
-          Início
+          Menu
         </Link>
 
-        {crumbs.map((c) => (
+        {crumbs.map((c, idx) => (
           <span key={c.href} className="flex items-center gap-2">
-            <span className="text-gray-400">/</span>
-            <Link
-              href={c.href}
-              className="hover:underline hover:text-secp-blue "
-            >
-              {c.label}
-            </Link>
+            <ChevronRight size={12} />
+            {idx === crumbs.length - 1 ? (
+              <span className="text-blue-600">{c.label}</span>
+            ) : (
+              <Link
+                href={c.href}
+                className="hover:underline hover:text-secp-blue "
+              >
+                {c.label}
+              </Link>
+            )}
           </span>
         ))}
       </nav>

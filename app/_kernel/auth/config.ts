@@ -113,14 +113,14 @@ export const authConfig: NextAuthConfig = {
           )
           .map((role) => PapelSistema[role]);
 
+        console.log("Papeis do usuário: ", papeis);
+
         let role: PapelSistema = PapelSistema.SERVIDOR;
 
         if (papeis.includes(PapelSistema.MASTER)) {
           role = PapelSistema.MASTER;
-        } else if (papeis.includes(PapelSistema.ADMIN)) {
-          role = PapelSistema.ADMIN;
-        } else if (papeis.includes(PapelSistema.RH)) {
-          role = PapelSistema.RH;
+        } else if (papeis.includes(PapelSistema.ADMINISTRADOR)) {
+          role = PapelSistema.ADMINISTRADOR;
         } else if (papeis.includes(PapelSistema.GESTOR)) {
           role = PapelSistema.GESTOR;
         }
@@ -141,6 +141,7 @@ export const authConfig: NextAuthConfig = {
           },
         });
 
+        console.log("Role atribuído ao usuário: ", role);
         if (!dbUser) return null;
 
         return {

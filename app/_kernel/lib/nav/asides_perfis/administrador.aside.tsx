@@ -1,11 +1,16 @@
 import {
   HouseIcon,
-  UsersIcon,
   CalendarClockIcon,
-  FileClockIcon,
-  NotepadTextIcon,
-  NotebookPenIcon,
-  FileTextIcon,
+  UserRoundPlusIcon,
+  Building2Icon,
+  UserCogIcon,
+  CalendarRangeIcon,
+  BriefcaseBusinessIcon,
+  BadgeCheckIcon,
+  CalendarDaysIcon,
+  CalendarCogIcon,
+  FileSignatureIcon,
+  MonitorCogIcon,
 } from "lucide-react";
 import { AsideConfig } from "../types";
 
@@ -15,45 +20,76 @@ export const ADMINISTRADOR_ASIDE: AsideConfig = {
 
   items: [
     {
-      label: "Minha equipe",
-      icon: <UsersIcon className="w-5" />,
+      label: "Cadastro de Servidores",
+      description: "Base funcional confiável para todo o controle de ponto.",
+      icon: <UserRoundPlusIcon className="w-5" />,
       href: "/gestao/solicitacoes",
-      requireAny: ["GESTOR_MINHA_EQUIPE"],
+      requireAny: ["ADMINISTRADOR_SERVIDORES"],
     },
     {
-      label: "Registro de ponto",
+      label: "Unidades Organizacionais",
+      description: "Estrutura institucional refletida com precisão no sistema.",
+      href: "/gestao/solicitacoes",
+      icon: <Building2Icon className="w-5" />,
+      requireAny: ["ADMINISTRADOR_ORGANIZACOES"],
+    },
+    {
+      label: "Chefias e Gestores",
+      description:
+        "Responsabilidades formalizadas para validação da frequência.",
+      href: "/gestao/solicitacoes",
+      icon: <UserCogIcon className="w-5" />,
+      requireAny: ["ADMINISTRADOR_PERFIS_PERMISSOES"],
+    },
+    {
+      label: "Jornadas e Horários",
+      description:
+        "Regras de expediente aderentes à norma e à realidade local.",
       href: "/gestao/solicitacoes",
       icon: <CalendarClockIcon className="w-5" />,
-      requireAny: ["GESTOR_ESPELHO_PONTO_EQUIPE"],
+      requireAny: ["ADMINISTRADOR_JORNADAS_ESCALAS"],
     },
+
     {
-      label: "Banco de horas",
+      label: "Regimes de Jornada",
+      description: "Tratamento adequado para cada vínculo funcional.",
       href: "/gestao/solicitacoes",
-      icon: <FileClockIcon className="w-5" />,
-      requireAny: ["GESTOR_BANCO_HORAS_EQUIPE"],
-    },
-    {
-      label: "Justificativas",
-      href: "/gestao/solicitacoes",
-      icon: <NotepadTextIcon className="w-5" />,
-      requireAny: ["GESTOR_JUSTIFICATIVA_EQUIPE"],
-    },
-    {
-      label: "Solicitações",
-      href: "/gestao/solicitacoes",
-      icon: <NotebookPenIcon className="w-5" />,
-      requireAny: ["GESTOR_SOLICITACOES_EQUIPE"],
-    },
-    {
-      label: "Compensações",
-      href: "/gestao/solicitacoes",
-      icon: <NotebookPenIcon className="w-5" />,
+      icon: <BriefcaseBusinessIcon className="w-5" />,
       requireAny: ["GESTOR_COMPENSACOES_EQUIPE"],
     },
     {
-      label: "Relatórios",
+      label: "Cargos Isentos de Ponto",
+      description: "Exceções configuradas com segurança normativa.",
       href: "/gestao/solicitacoes",
-      icon: <FileTextIcon className="w-5" />,
+      icon: <BadgeCheckIcon className="w-5" />,
+      requireAny: ["ADMINISTRADOR_CARGO_ISENTO_PONTO"],
+    },
+    {
+      label: "Calendário Institucional",
+      description: "Feriados, recessos e expedientes especiais sob controle.",
+      href: "/gestao/solicitacoes",
+      icon: <CalendarDaysIcon className="w-5" />,
+      requireAny: ["GESTOR_RELATORIOS_EQUIPE"],
+    },
+    {
+      label: "Recesso Forense",
+      description: "Gestão completa dos ciclos anuais de recesso.",
+      href: "/gestao/solicitacoes",
+      icon: <CalendarCogIcon className="w-5" />,
+      requireAny: ["GESTOR_RELATORIOS_EQUIPE"],
+    },
+    {
+      label: "Portarias de Convocação",
+      description: "Convocações registradas por servidor, data e modalidade.",
+      href: "/gestao/solicitacoes",
+      icon: <FileSignatureIcon className="w-5" />,
+      requireAny: ["GESTOR_RELATORIOS_EQUIPE"],
+    },
+    {
+      label: "Equipamentos de Ponto",
+      description: "Relógios e totens gerenciados por unidade e organização.",
+      href: "/gestao/solicitacoes",
+      icon: <MonitorCogIcon className="w-5" />,
       requireAny: ["GESTOR_RELATORIOS_EQUIPE"],
     },
     // {

@@ -15,7 +15,7 @@ export default async function DashboardPage() {
 
   const role: Role = isRole(session.user.role) ? session.user.role : "SERVIDOR";
   const asideConfig = ASIDE_BY_ROLE[role];
-  console.log("Papel do Usuário:", role, asideConfig);
+  // console.log("Papel do Usuário:", role, asideConfig);
 
   return (
     <section>

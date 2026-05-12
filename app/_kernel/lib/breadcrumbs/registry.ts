@@ -5,13 +5,14 @@ export const BREADCRUMB_ROUTES: BreadcrumbRoute[] = [
   { pattern: "/dashboard", label: "Painel" },
 
   // servidor
-  { pattern: "/dashboard/employee", label: "Servidor" },
-  { pattern: "/dashboard/employee/timecard", label: "Frequência" },
-  { pattern: "/dashboard/employee/timecard/report", label: "Espelho de ponto" },
-  {
-    pattern: "/dashboard/employee/timecard/record",
-    label: "Meu ponto",
-  },
+  { pattern: "/servidor/meu-ponto", label: "Meu Ponto" },
+  { pattern: "/servidor/espelho-ponto", label: "Espelho de Ponto" },
+  { pattern: "/servidor/registro-ponto", label: "Registro de Ponto" },
+  { pattern: "/servidor/banco-horas", label: "Banco de Horas" },
+  { pattern: "/servidor/justificativas", label: "Justificativas" },
+  { pattern: "/servidor/solicitacoes", label: "Solicitações" },
+  { pattern: "/servidor/convocacoes", label: "Convocações" },
+  { pattern: "/servidor/meus-dados", label: "Meus Dados" },
 
   // Gestão
   { pattern: "/gestao", label: "Gestão" },
@@ -47,7 +48,10 @@ export const BREADCRUMB_ROUTES: BreadcrumbRoute[] = [
 
   { pattern: "/dashboard/admin/afd", label: "Arquivo de fonte dados " },
   { pattern: "/dashboard/admin/afd/import", label: "Importação de AFD" },
-  { pattern: "/dashboard/admin/afd/list", label: "Últimas importações realizadas" },
+  {
+    pattern: "/dashboard/admin/afd/list",
+    label: "Últimas importações realizadas",
+  },
   {
     pattern: "/dashboard/admin/afd/historico",
     label: "Histórico de Importações",

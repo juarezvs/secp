@@ -48,14 +48,13 @@ export function AsideNav({
     <aside className="w-full md:w-64 shrink-0">
       <div className="rounded-xl border bg-white p-3">
         {filtered.title && (
-          <div className="flex px-2 gap-1 pb-2 text-base text-secp-blue font-semibold uppercase">
+          <div className="flex px-2 gap-1 pb-2 text-xs text-secp-blue uppercase">
             {/* Titulo do Menu */}
 
-            {filtered.icon ? (
-                          <span className="text-base">{filtered.icon}</span>
-                        ) : null}
-                        <span>{filtered.title}</span>
-
+            {/* {filtered.icon ? (
+              <span className="text-">{filtered.icon}</span>
+            ) : null} */}
+            <span>{filtered.title}</span>
           </div>
         )}
 
@@ -80,7 +79,7 @@ export function AsideNav({
                         {c.icon ? (
                           <span className="text-base">{c.icon}</span>
                         ) : null}
-                        <span>{c.label}</span>
+                        <span>{c.label} </span>
                       </Link>
                     );
                   })}
@@ -91,7 +90,7 @@ export function AsideNav({
             const active = isActive(pathname, item);
             return (
               <Link
-                key={item.href ?? item.label}
+                key={item.label}
                 href={item.href ?? "#"}
                 className={[
                   "flex items-center gap-2 rounded-lg px-2 py-2 text-sm ",
@@ -103,7 +102,7 @@ export function AsideNav({
                 {item.icon ? (
                   <span className="text-base">{item.icon}</span>
                 ) : null}
-                <span>{item.label}</span>
+                <span>{item.label} </span>
               </Link>
             );
           })}
