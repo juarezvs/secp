@@ -39,6 +39,77 @@
   color: #991b1b !important;
 }
 :root {
+  /* cores usadas no componente de reconhecimento facial, para manter a consistência com a identidade visual do SECP */
+  --backgroundface: 220 25% 98%;
+  --foregroundface: 222 47% 11%;
+
+  --cardface: 0 0% 100%;
+  --card-foregroundface: 222 47% 11%;
+
+  --popoverface: 0 0% 100%;
+  --popover-foregroundface: 222 47% 11%;
+
+  --primaryface: 222 89% 55%;
+  --primary-foregroundface: 0 0% 100%;
+  --primary-glowface: 230 95% 65%;
+
+  --secondaryface: 220 20% 95%;
+  --secondary-foregroundface: 222 47% 11%;
+
+  --mutedface: 220 16% 94%;
+  --muted-foregroundface: 220 10% 45%;
+
+  --accentface: 222 89% 95%;
+  --accent-foregroundface: 222 89% 35%;
+
+  --successface: 152 70% 42%;
+  --success-foregroundface: 0 0% 100%;
+
+  --warningface: 38 92% 50%;
+  --warning-foregroundface: 0 0% 100%;
+
+  --destructiveface: 0 75% 55%;
+  --destructive-foregroundface: 0 0% 100%;
+
+  --borderface: 220 15% 90%;
+  --inputface: 220 15% 90%;
+  --ringface: 222 89% 55%;
+
+  --radiusface: 1rem;
+
+  --gradient-primaryface: linear-gradient(
+    135deg,
+    hsl(222 89% 55%),
+    hsl(230 95% 65%)
+  );
+  --gradient-subtleface: linear-gradient(
+    180deg,
+    hsl(220 25% 98%),
+    hsl(220 20% 95%)
+  );
+  --gradient-glowface: radial-gradient(
+    circle at 50% 0%,
+    hsl(222 89% 55% / 0.15),
+    transparent 70%
+  );
+
+  --shadow-smface: 0 1px 2px hsl(222 47% 11% / 0.04);
+  --shadow-mdface: 0 4px 16px -2px hsl(222 47% 11% / 0.08);
+  --shadow-lgface: 0 12px 40px -8px hsl(222 89% 55% / 0.18);
+  --shadow-glowface: 0 0 32px hsl(222 89% 55% / 0.25);
+
+  --transition-smoothface: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --sidebar-backgroundface: 0 0% 98%;
+  --sidebar-foregroundface: 240 5.3% 26.1%;
+  --sidebar-primaryface: 240 5.9% 10%;
+  --sidebar-primary-foregroundface: 0 0% 98%;
+  --sidebar-accentface: 240 4.8% 95.9%;
+  --sidebar-accent-foregroundface: 240 5.9% 10%;
+  --sidebar-borderface: 220 13% 91%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+  /* cores usadas no componente de reconhecimento facial, para manter a consistência com a identidade visual do SECP */
+
   --blue-cjf: #002f6c;
   --green-cjf: #007a33;
   --gray-cjf: #97999f;

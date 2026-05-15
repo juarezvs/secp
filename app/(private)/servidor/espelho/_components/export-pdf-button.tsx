@@ -6,7 +6,7 @@ import { FileTextIcon, Loader2Icon } from "lucide-react";
 import { RelatorioPontoPDF } from "./relatorio-pdf";
 
 interface ExportPdfButtonProps {
-  dados: any[];
+  dados: unknown[];
   filename?: string;
 }
 
