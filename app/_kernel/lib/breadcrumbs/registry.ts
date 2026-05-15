@@ -2,96 +2,32 @@
 import type { BreadcrumbRoute } from "./types";
 
 export const BREADCRUMB_ROUTES: BreadcrumbRoute[] = [
-  { pattern: "/dashboard", label: "Painel" },
-
   // servidor
-  { pattern: "/servidor/meu-ponto", label: "Meu Ponto" },
-  { pattern: "/servidor/espelho-ponto", label: "Espelho de Ponto" },
-  { pattern: "/servidor/registro-ponto", label: "Registro de Ponto" },
+  { pattern: "/servidor/dashboard", label: "Dashboard" },
+  { pattern: "/servidor/registrar-ponto", label: "Registrar Ponto" },
+  { pattern: "/servidor/espelho", label: "Espelho de Ponto" },
   { pattern: "/servidor/banco-horas", label: "Banco de Horas" },
-  { pattern: "/servidor/justificativas", label: "Justificativas" },
-  { pattern: "/servidor/solicitacoes", label: "Solicitações" },
-  { pattern: "/servidor/convocacoes", label: "Convocações" },
-  { pattern: "/servidor/meus-dados", label: "Meus Dados" },
-
-  // Gestão
-  { pattern: "/gestao", label: "Gestão" },
-  { pattern: "/gestao/equipe", label: "Equipe" },
-  { pattern: "/gestao/solicitacoes", label: "Aprovar Solicitações" },
-  { pattern: "/gestao/relatorios", label: "Relatórios" },
-  { pattern: "/gestao/relatorios/horas", label: "Horas & Saldo" },
-  { pattern: "/gestao/relatorios/inconsistencias", label: "Inconsistências" },
-  { pattern: "/gestao/relatorios/exportar", label: "Exportar" },
-
-  // Admin
-  { pattern: "/dashboard/admin", label: "Administração" },
-
-  { pattern: "/dashboard/admin/employee", label: "Servidores" },
-  { pattern: "/dashboard/admin/employee/new", label: "Novo Servidor" },
-  {
-    pattern: "/dashboard/admin/employee/import",
-    label: "Importar servidor do SARH",
-  },
-  { pattern: "/dashboard/admin/employee/list", label: "Consultar" },
-  {
-    pattern: "/dashboard/admin/employee/sync",
-    label: "Sincronizar dados do SARH",
-  },
+  { pattern: "/servidor/justificativa", label: "Justificativa" },
+  { pattern: "/servidor/compensacoes", label: "Compensações" },
+  { pattern: "/servidor/recesso", label: "Recesso Forense" },
+  { pattern: "/servidor/notificacoes", label: "Notificações" },
+  { pattern: "/servidor/perfil", label: "Meu Perfil" },
+  // gestor
+  { pattern: "/gestor/dashboard", label: "Dashboard da Equipe" },
+  { pattern: "/gestor/equipe", label: "Equipe" },
+  { pattern: "/gestor/frequencia", label: "Frequência da Unidade" },
+  { pattern: "/gestor/justificativas", label: "Justificativas da Equipe" },
+  { pattern: "/gestor/compensacoes", label: "Compensações da Equipe" },
+  { pattern: "/gestor/banco-horas", label: "Banco de Horas da Equipe" },
+  { pattern: "/gestor/homologacoes", label: "Homologações" },
+  { pattern: "/gestor/recesso", label: "Recesso Forense" },
+  { pattern: "/gestor/relatorios", label: "Relatórios da Unidade" },
+  { pattern: "/gestor/Pendências", label: "Pendências" },
   {
     pattern: "/dashboard/admin/employee/[id]",
     label: ({ params }) => `Servidor ${params.id}`, // ou "Detalhes do Funcionário"
   },
 
-  { pattern: "/dashboard/admin/clocks", label: "Relógios" },
-  { pattern: "/dashboard/admin/clocks/new", label: "Novo Relógio" },
-  { pattern: "/dashboard/admin/clocks/maintenance", label: "Manutenção" },
-
-  { pattern: "/dashboard/admin/afd", label: "Arquivo de fonte dados " },
-  { pattern: "/dashboard/admin/afd/import", label: "Importação de AFD" },
-  {
-    pattern: "/dashboard/admin/afd/list",
-    label: "Últimas importações realizadas",
-  },
-  {
-    pattern: "/dashboard/admin/afd/historico",
-    label: "Histórico de Importações",
-  },
-
-  { pattern: "/dashboard/admin/escalas", label: "Escalas & Jornadas" },
-  { pattern: "/dashboard/admin/escalas/jornadas", label: "Jornadas" },
-  { pattern: "/dashboard/admin/escalas/escalas", label: "Escalas" },
-  { pattern: "/dashboard/admin/escalas/regras", label: "Regras" },
-
-  { pattern: "/dashboard/admin/parametros", label: "Parâmetros" },
-  { pattern: "/dashboard/admin/parametros/feriados", label: "Feriados" },
-  { pattern: "/dashboard/admin/parametros/tolerancias", label: "Tolerâncias" },
-  { pattern: "/dashboard/admin/parametros/fechamento", label: "Fechamento" },
-
-  { pattern: "/dashboard/admin/auditoria", label: "Auditoria" },
-  { pattern: "/dashboard/admin/auditoria/ponto", label: "Auditoria de Ponto" },
-  {
-    pattern: "/dashboard/admin/auditoria/admin",
-    label: "Auditoria Administrativa",
-  },
-
-  // Master
-  { pattern: "/dashboard/admin/permissoes", label: "Permissões" },
-  { pattern: "/dashboard/admin/permissoes/perfis", label: "Perfis" },
-  { pattern: "/dashboard/admin/permissoes/usuarios", label: "Usuários" },
-  {
-    pattern: "/dashboard/admin/permissoes/auditoria",
-    label: "Auditoria de Acesso",
-  },
-
-  { pattern: "/dashboard/admin/tenant", label: "Órgãos da Justiça" },
-  { pattern: "/dashboard/admin/tenant/unit", label: "Subseção Judicária" },
-  { pattern: "/dashboard/admin/tenant/switch", label: "Trocar Unidade" },
-  { pattern: "/dashboard/admin/tenant/new", label: "Nova Unidade" },
-  { pattern: "/dashboard/admin/tenant/list", label: "Seção Judiciária" },
-  {
-    pattern: "/dashboard/admin/tenant/import",
-    label: "Importar do SARH",
-  },
   {
     pattern: "/dashboard/admin/tenant/[id]",
     label: ({ params }) => `Unidade ${params.id}`,

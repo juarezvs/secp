@@ -25,7 +25,7 @@ export default function LayoutMainWrapper({
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-gray-50">
+    <div className="flex h-screen w-full overflow-hidden bg-blue-50">
       {/* Coluna 1: Sidebar (Fixa) */}
       <SidebarMain
         isCollapsed={isCollapsed}
@@ -47,7 +47,7 @@ export default function LayoutMainWrapper({
 
         {/* Área de Conteúdo (Scrollable) */}
         <main className="flex-1 overflow-y-auto p-8">
-          <div className="max-w-7xl mx-auto">{children}</div>
+          <div className="mx-auto">{children}</div>
         </main>
       </div>
     </div>

@@ -1,8 +1,11 @@
+"use client";
 import { Bell, Moon, Sun, ChevronRight, Menu } from "lucide-react";
 import { Breadcrumbs } from "./breadcrumbs";
 import { PageTitleMain } from "./page-title-main";
 import { AsideConfig } from "@/app/_kernel/lib/nav/types";
 import { Role } from "@/app/_kernel/lib/rbac/types";
+import { useState } from "react";
+import { signOut } from "next-auth/react";
 
 type HeaderMainProps = {
   isCollapsed: boolean;
@@ -21,6 +24,23 @@ export function HeaderMain({
   menuItems,
   role,
 }: HeaderMainProps) {
+  const [isLogginOut, setIsLoggingOut] = useState(false);
+
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true);
+      await signOut({
+        callbackUrl: "/", // redireciona após logout
+      });
+    } catch (error) {
+      console.error("Error logging out:", error);
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
+
+  const userInitial = user?.name?.trim()?.charAt(0)?.toUpperCase() ?? "U";
+
   return (
     <header className="h-32 bg-white border-b px-8 flex items-center justify-between shrink-0">
       {/* Coluna da Esquerda */}
@@ -50,18 +70,30 @@ export function HeaderMain({
           <button className="text-gray-500 hover:text-blue-600">
             <Moon size={20} />
           </button>
-          <div className="w-[1px] h-8 bg-gray-200 mx-2" />
+          <div className="w-px h-8 bg-gray-200 mx-2" />
         </div>
 
         <div className="flex items-center gap-3 text-right">
           <div className="flex flex-col">
             <span className="text-sm font-bold text-gray-800">{user.name}</span>
-            <span className="text-xs text-gray-500">Arquiteto de Software</span>
+            <span className="text-xs text-gray-500">
+              {" "}
+              {user.role ?? "Servidor"}
+            </span>
           </div>
           <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
-            J
+            {userInitial}
           </div>
         </div>
+        <button
+          type="button"
+          onClick={handleLogout}
+          disabled={isLogginOut}
+          aria-label="Sair do Sistema"
+          className="inline-flex items-center gap-2 rounded-lg border border-red-100 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:opacity-60"
+        >
+          {isLogginOut ? "Saindo..." : "Sair"}
+        </button>
       </div>
     </header>
   );

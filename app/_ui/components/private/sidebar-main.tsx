@@ -1,21 +1,10 @@
 import { filterAside } from "@/app/_kernel/lib/nav/filter";
 import { AsideConfig, NavItem } from "@/app/_kernel/lib/nav/types";
-import { ASIDE_BY_ROLE, isRole } from "@/app/_kernel/lib/rbac/guard";
 import { Role } from "@/app/_kernel/lib/rbac/types";
-import { auth } from "@/auth";
-import {
-  File,
-  HomeIcon,
-  ClockIcon,
-  FileClockIcon,
-  CalendarClock,
-  NotepadTextIcon,
-  NotebookPenIcon,
-  CircleUserRoundIcon,
-} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import imgLogoSecp from "@/public/brand/secp-logo.png";
+import Image from "next/image";
 type SidebarMainProps = {
   isCollapsed: boolean;
   menuItems: AsideConfig;
@@ -61,14 +50,20 @@ export default function SidebarMain({
 }: SidebarMainProps) {
   const pathname = usePathname();
   const filtered = filterAside(menuItems, role);
- 
+
   return (
     <aside
       className={`${isCollapsed ? "w-20" : "w-64"} bg-white border-r h-screen flex flex-col transition-all duration-300 ease-in-out
      shrink-0`}
     >
-      <div className="h-16 flex items-center px-6 border-b font-bold text-xl text-blue-600 truncate">
-        {isCollapsed ? "CP" : "Controle de Ponto"}
+      <div className="h-32 flex items-center px-6 border-b font-bold text-xl text-blue-600 truncate">
+        <Image src={imgLogoSecp} alt="Logo SECP" width={0} height={70} priority />
+        {!isCollapsed && (
+          <div className="ml-2 text-xs bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">
+            <h5>Sistema Eletrônico</h5>
+            <h6>de Controle de Ponto</h6>
+          </div>
+        )}
       </div>
 
       <nav className="flex-1 p-4 space-y-2 overflow-y-auto overflow-x-hidden">
@@ -78,16 +73,15 @@ export default function SidebarMain({
         )}
         {/* Fim Titulo menu */}
         {filtered.items.map((item) => (
-          <div
+          <Link
             key={item.label}
-            // className="flex items-center gap-2 p-1 hover:bg-blue-50 rounded-lg cursor-pointer text-gray-600 hover:text-blue-600 transition-colors group"
+            href={item.href ?? "#"}
             className={[
               "flex items-center gap-2 p-1 text-sm rounded-sm cursor-pointer  transition-colors group",
               isActive(pathname, item)
                 ? " bg-green-100 text-green-950 font-semibold"
                 : " hover:bg-blue-50 hover:text-blue-600 ",
             ].join(" ")}
-            title={isCollapsed ? item.label : ""}
           >
             <div className="shrink-0 text-green-700">{item.icon}</div>
             <div
@@ -96,17 +90,9 @@ export default function SidebarMain({
                 ${isCollapsed ? "w-0 opacity-0" : "w-full opacity-100"}
               `}
             >
-              {
-                <Link
-                  key={item.label}
-                  href={item.href ?? "#"}
-                  className="truncate"
-                >
-                  {item.label}
-                </Link>
-              }
+              {item.label}
             </div>
-          </div>
+          </Link>
         ))}
       </nav>
     </aside>

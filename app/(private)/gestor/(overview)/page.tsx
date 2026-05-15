@@ -19,12 +19,7 @@ export default async function DashboardPage() {
 
   return (
     <section>
-      
-      <SectionTitle
-        title="Menu"
-        descripton="Estes são os paineis que você tem acesso."
-      />
-      <CardPage config={asideConfig} role={role} />
+      <h1>teste</h1>
     </section>
   );
 }

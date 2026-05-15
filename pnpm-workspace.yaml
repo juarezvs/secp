@@ -1,0 +1,9 @@
+allowBuilds:
+  '@prisma/engines': true
+  esbuild: false
+  msgpackr-extract: false
+  oracledb: false
+  prisma: true
+  sharp: false
+  sqlite3: false
+  unrs-resolver: false
