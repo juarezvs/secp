@@ -46,7 +46,7 @@ export default function LayoutMainWrapper({
         />
 
         {/* Área de Conteúdo (Scrollable) */}
-        <main className="flex-1 overflow-y-auto p-8">
+        <main className="flex-1 overflow-y-auto p-2">
           <div className="mx-auto">{children}</div>
         </main>
       </div>

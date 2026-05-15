@@ -19,19 +19,20 @@ export const ServidorMiniCard = ({
   valueTextColor = "text-slate-800", // Valor padrão caso não seja enviado
 }: ServidorMiniCardProps) => {
   return (
-    <div className="flex flex-1 gap-4 border rounded-md p-4 text-sm font-semibold min-w-52">
-      {/* 
-          Utilizamos template literals para injetar a classe. 
-          Certifique-se de que a string passada em iconBgColor seja uma classe completa do Tailwind.
-      */}
+    <div className="flex  gap-4 border rounded-xl  shadow-sm p-4 text-xs sm:text-sm md:text-base font-semibold ">
+      {/* <div className="bg-white border border-slate-200 p-4 rounded-xl shadow-sm" > */}
       <div
-        className={`flex items-center justify-center size-10 rounded-full shrink-0 ${iconBgColor} ${iconTextColor}`}
+        className={`flex items-center justify-center  size-6 sm:size-8 rounded-full shrink-0 ${iconBgColor} ${iconTextColor}  `}
       >
         {icon}
       </div>
       <div>
-        <p className={`font-medium ${titleTextColor}`}>{title}</p>
-        <p className={`text-2xl font-bold ${valueTextColor}`}>{value}</p>
+        <p
+          className={`text-xs ${titleTextColor} sm:text-green-500 md:text-red-500 lg:text-sky-500 xl:text-yellow-500`}
+        >
+          {title}
+        </p>
+        <p className={`text-lg font-bold ${valueTextColor}`}>{value}</p>
         {subTitle && (
           <p className="text-xs text-muted-foreground">{subTitle}</p>
         )}

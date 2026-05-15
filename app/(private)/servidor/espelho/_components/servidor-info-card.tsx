@@ -33,14 +33,14 @@ export const ServidorInfoCard = ({
   register = "",
 }: ServidorInfoCardProps) => {
   return (
-    <div className="flex flex-1 gap-4 border rounded-md p-4 text-sm font-semibold min-w-120">
+    <div className="flex flex-1 gap-4  p-4 text-sm font-semibold">
       {/* 
           Utilizamos template literals para injetar a classe. 
           Certifique-se de que a string passada em iconBgColor seja uma classe completa do Tailwind.
       */}
       <div className="size-15 bg-emerald-500 rounded-full"></div>
       <div className="flex flex-col justify-start gap-2 text-xs">
-        <div className="flex flex-row items-center gap-2">
+        <div className="flex flex-row items-center gap-2 ">
           <p className="text-lg">{name}</p>
           <span className="bg-green-100 text-green-600 rounded-2xl px-4">
             {status}

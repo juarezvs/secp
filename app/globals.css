@@ -2,7 +2,42 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+/* Classes de Fallback estritas para o Motor do html2canvas */
+.print-pdf-mode {
+  background-color: #ffffff !important;
+  color: #0f172a !important; /* slate-900 */
+}
 
+.print-pdf-mode table {
+  background-color: #ffffff !important;
+}
+
+.print-pdf-mode tr.bg-slate-50 {
+  background-color: #f8fafc !important; /* Fallback HEX para slate-50 */
+}
+
+.print-pdf-mode th.bg-slate-100\/50 {
+  background-color: rgba(241, 245, 249, 0.5) !important; /* Fallback RGBA */
+}
+
+.print-pdf-mode td {
+  color: #334155 !important; /* Fallback HEX para text-slate-700 */
+}
+
+.print-pdf-mode span.bg-emerald-100 {
+  background-color: #d1fae5 !important;
+  color: #065f46 !important;
+}
+
+.print-pdf-mode span.bg-amber-100 {
+  background-color: #fef3c7 !important;
+  color: #92400e !important;
+}
+
+.print-pdf-mode span.bg-red-100 {
+  background-color: #fee2e2 !important;
+  color: #991b1b !important;
+}
 :root {
   --blue-cjf: #002f6c;
   --green-cjf: #007a33;
